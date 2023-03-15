@@ -14,13 +14,16 @@ class Knight extends APiece{
         for (let i = 0; i < op_amount; i++) {
             let x=this.pos.x+moves[i].x;
             let y= this.pos.y+moves[i].y;
-            if(veld[x][y]!==0){
-                possiblemoves.push(new Coordinate(x,y));
-            }else{
-                if(this.color!==veld[y][x].color){
+            if(x<=7 && x>=0 && y<=7 && y>=0){
+                if(veld[x][y]!==0){
                     possiblemoves.push(new Coordinate(x,y));
+                }else{
+                    if(this.color!==veld[y][x].color){
+                        possiblemoves.push(new Coordinate(x,y));
+                    }
                 }
             }
+
         }
         return possiblemoves;
     }

@@ -24,10 +24,10 @@ class Rook extends APiece{
                     blocked=true;
                 }else{
                     let move= new Coordinate(x,y)
-                    if(veld[x][y]===null){ // checks if no piece on square
+                    if(veld[y][x]===null){ // checks if no piece on square
                         possiblemoves.push(move);
                     }else{
-                        let apiece=veld[x][y];
+                        let apiece=veld[y][x];
                         if (apiece.kleur!==this.kleur){ // checks if piece is enemy
                             possiblemoves.push(move); // this is a possible move
                             blocked=true;

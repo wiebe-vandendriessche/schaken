@@ -6,11 +6,12 @@ export {APiece}
  */
 class APiece {
 
-    constructor(pos,value,kleur) {
+    constructor(pos,value,kleur,img) {
         this.value=value;
         this.taken=false;
         this.pos=pos;
         this.kleur=kleur;
+        this.image=img;
         if (this.constructor == APiece) {
             throw new Error("Abstract classes can't be instantiated.");
         }

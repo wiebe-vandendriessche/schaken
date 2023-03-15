@@ -3,10 +3,11 @@ let square_size = len / 8
 let canvas = document.getElementById("canvas");
 let ctx = canvas.getContext("2d");
 let ofsetPiece=5;
+let list =[["picture/b_rook_png_128px.png","picture/b_knight_png_128px.png","picture/b_bishop_png_128px.png","picture/b_queen_png_128px.png","picture/b_king_png_128px.png","picture/b_bishop_png_128px.png","picture/b_knight_png_128px.png","picture/b_rook_png_128px.png"],["picture/b_pawn_png_128px.png","picture/b_pawn_png_128px.png","picture/b_pawn_png_128px.png","picture/b_pawn_png_128px.png","picture/b_pawn_png_128px.png","picture/b_pawn_png_128px.png","picture/b_pawn_png_128px.png","picture/b_pawn_png_128px.png"],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],["picture/w_pawn_png_128px.png","picture/w_pawn_png_128px.png","picture/w_pawn_png_128px.png","picture/w_pawn_png_128px.png","picture/w_pawn_png_128px.png","picture/w_pawn_png_128px.png","picture/w_pawn_png_128px.png","picture/w_pawn_png_128px.png"],["picture/w_rook_png_128px.png","picture/w_knight_png_128px.png","picture/w_bishop_png_128px.png","picture/w_queen_png_128px.png","picture/w_king_png_128px.png","picture/w_bishop_png_128px.png","picture/w_knight_png_128px.png","picture/w_rook_png_128px.png"]]
+
 
 window.onload=draw_board();
-window.onload=draw_pieces();
-
+window.onload=draw_pieces(list);
 
 function draw_board() {
     canvas.setAttribute("height", len.toString());
@@ -24,15 +25,16 @@ function draw_board() {
         }
     }
 }
- function draw_pieces(){
+ function draw_pieces(list_piece){
      for (let i = 0; i < 8; i++) {
          for (let j = 0; j < 8; j++) {
-             let img=new Image();
-             img.src="picture/b_bishop_png_128px.png";
-             img.onload= () => {
-                 ctx.drawImage(img,square_size*i+ofsetPiece,square_size*j+ofsetPiece,square_size-2*ofsetPiece,square_size-2*ofsetPiece)
-             };
-
+             if(list_piece[i][j]!==0){
+                 let img=new Image();
+                 img.src=list_piece[i][j];
+                 img.onload= () => {
+                     ctx.drawImage(img,square_size*j+ofsetPiece,square_size*i+ofsetPiece,square_size-2*ofsetPiece,square_size-2*ofsetPiece)
+                 };
+             }
          }
      }
  }

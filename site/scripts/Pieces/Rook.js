@@ -12,9 +12,12 @@ class Rook extends APiece{
         let possiblemoves=[];
         let x=this.pos.x; let y= this.pos.y;
         let notblocked=true;
-        while (notblocked){
-            
+        for (let i = 0; i < 4; i++) {
+            while (notblocked){
+                
+            }
         }
+
 
     }
 

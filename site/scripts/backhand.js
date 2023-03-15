@@ -1,10 +1,10 @@
 let len=600
 let square_size = len / 8
 let canvas = document.getElementById("canvas");
+let ofsetPiece
 
-window.onload=draw_board();
+//window.onload=draw_board();
 window.onload=draw_pieces();
-
 
 
 function draw_board() {
@@ -23,7 +23,17 @@ function draw_board() {
             ctx.stroke();
         }
     }
-
 }
-
+ function draw_pieces(){
+     let ctx = canvas.getContext("2d");
+     for (let i = 0; i < 8; i++) {
+         for (let j = 0; j < 8; j++) {
+             let img=new Image();
+             img.onload=function (){
+                 ctx.drawImage(img,square_size*i+ofsetPiece,square_size*j+ofsetPiece,square_size-2*ofsetPiece,square_size-2*ofsetPiece)
+             }
+             img.src="picture/b_bishop_png_128px.png"
+         }
+     }
+ }
 

@@ -11,7 +11,7 @@ class APiece {
         this.taken=false;
         this.pos=pos;
         this.kleur=kleur;
-        this.image=img;
+        this.image="picture/"+img+"_png_128px.png";
         if (this.constructor == APiece) {
             throw new Error("Abstract classes can't be instantiated.");
         }

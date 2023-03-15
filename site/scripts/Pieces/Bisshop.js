@@ -1,0 +1,25 @@
+import {APiece} from "./APiece.js";
+import {Coordinate} from "../Coordinate.js";
+import {pushMoves} from "./Rook.js";
+
+class Bisshop extends APiece{
+
+    constructor(pos,kleur) {
+        super(pos,kleur?30:-30,kleur,kleur?"w_bishop":"b_bishop");
+    }
+    show() {
+        super.show();
+    }
+
+    possibleMoves(bord) {
+        let veld=bord.speelveld; // 2D-array van 64 blokjes met alle pieces erop en nullen waar niks staat
+        let possiblemoves=[]; // container voor alle speelbare moves
+        let moves=[new Coordinate(1,-1), new Coordinate(1,1), new Coordinate(-1,1), new Coordinate(-1,-1)]; // hulparray om forloop te kunnen uitvoeren
+        pushMoves(possiblemoves,moves,this,veld); // imported function
+        return possiblemoves;
+    }
+
+    move(bord) {
+        super.move(bord);
+    }
+}

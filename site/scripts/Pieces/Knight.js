@@ -1,8 +1,7 @@
-
 import {APiece} from "./APiece.js";
 import {Coordinate} from "../Coordinate.js";
 
-class Knight extends APiece{
+export class Knight extends APiece{
 
     constructor(pos,kleur) {
         super(pos,kleur?30:-30,kleur,kleur?"w_knight":"b_knight");
@@ -22,16 +21,16 @@ class Knight extends APiece{
         for (let i = 0; i < op_amount; i++) {
             let x=this.pos.x+moves[i].x;
             let y= this.pos.y+moves[i].y;
+            let piece=veld[y][x];
             if(x<=7 && x>=0 && y<=7 && y>=0){//chek buiten bord
-                if(veld[x][y]!==0){
+                if(piece===0){
                     possiblemoves.push(new Coordinate(x,y));
                 }else{
-                    if(this.color!==veld[y][x].color){
+                    if(this.color!==piece.color){
                         possiblemoves.push(new Coordinate(x,y));
                     }
                 }
             }
-
         }
         return possiblemoves;
     }

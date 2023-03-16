@@ -12,7 +12,7 @@ class Queen extends APiece{
     }
 
     possibleMoves(bord) {
-        let veld=bord.speelveld; // 2D-array van 64 blokjes met alle pieces erop en nullen waar niks staat
+        let veld=bord.getPieces(); // 2D-array van 64 blokjes met alle pieces erop en nullen waar niks staat
         let possiblemoves=[]; // container voor alle speelbare moves
         let moves=[new Coordinate(1,-1), new Coordinate(1,1), new Coordinate(-1,1), new Coordinate(-1,-1)]; // moves van de bisschop
         pushMoves(possiblemoves,moves,this,veld); // imported function

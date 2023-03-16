@@ -1,4 +1,5 @@
 import {Board} from "./Board.js";
+import {Coordinate} from "./Coordinate.js";
 
 let len=600
 let square_size = len / 8
@@ -9,9 +10,14 @@ let ctx = canvas.getContext("2d");
 let ofsetPiece=5;
 let board= new Board();
 console.log(board.getPieces());
-window.onload=draw_board();
-window.onload=draw_pieces(board.getPieces());
+dummy();
+draw_board();
+draw_pieces(board.getPieces());
 
+function dummy(){
+    let bool=board.move(board.getPieces()[0][1],new Coordinate(3,1));
+    console.log(bool);
+}
 
 function draw_board() {
     canvas.setAttribute("height", len.toString());
@@ -32,7 +38,7 @@ function draw_board() {
  function draw_pieces(list_piece){
      for (let i = 0; i < 8; i++) {
          for (let j = 0; j < 8; j++) {
-             if(list_piece[i][j]!==null){//chekken of het vak niet leeg is want dan tekene van een piece
+             if(list_piece[i][j]!==0){//chekken of het vak niet leeg is want dan tekene van een piece
                  let piece= list_piece[i][j];
                  let img= new Image();
                  img.src=piece.image;

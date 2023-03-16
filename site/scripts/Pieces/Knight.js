@@ -8,12 +8,10 @@ export class Knight extends APiece{
     }
 
 
-    move(bord) {
-        super.move(bord);
-    }
 
-    possibleMoves(){
-        let veld = bord.speelveld
+
+    possibleMoves(bord){
+        let veld = bord.getPieces();
         let possiblemoves=[];
         //mogelijke zetten
         let moves=[new Coordinate(-1,2), new Coordinate(1,2), new Coordinate(-1,-2), new Coordinate(1,-2),new Coordinate(-2,-1), new Coordinate(-2,1), new Coordinate(2,-1), new Coordinate(2,1)]; // hulparray om forloop te kunnen uitvoeren
@@ -21,8 +19,9 @@ export class Knight extends APiece{
         for (let i = 0; i < op_amount; i++) {
             let x=this.pos.x+moves[i].x;
             let y= this.pos.y+moves[i].y;
-            let piece=veld[y][x];
-            if(x<=7 && x>=0 && y<=7 && y>=0){//chek buiten bord
+            console.log("checking move ",x,y)
+            if(x<=7 && x>=0 && y<=7 && y>=0){//check buiten bord
+                let piece=veld[y][x];
                 if(piece===0){
                     possiblemoves.push(new Coordinate(x,y));
                 }else{
@@ -36,7 +35,7 @@ export class Knight extends APiece{
     }
 
 
-    move(bord) {
-        super.move(bord);
+    move(cord) {
+        this.pos = cord;
     }
 }

@@ -11,7 +11,7 @@ export class Rook extends APiece{
     }
 
     possibleMoves(bord) {
-        let veld=bord.speelveld; // 2D-array van 64 blokjes met alle pieces erop en nullen waar niks staat
+        let veld=bord.getPieces(); // 2D-array van 64 blokjes met alle pieces erop en nullen waar niks staat
         let possiblemoves=[]; // container voor alle speelbare moves
         let moves=[new Coordinate(0,1), new Coordinate(0,-1), new Coordinate(1,0), new Coordinate(-1,0)]; // hulparray om forloop te kunnen uitvoeren
         pushMoves(possiblemoves,moves,this,veld);
@@ -34,7 +34,7 @@ function pushMoves(possiblemoves,moves,piece,veld){
                 blocked=true;
             }else{
                 let move= new Coordinate(x,y)
-                if(veld[y][x]===null){ // checks if no piece on square
+                if(veld[y][x]===0){ // checks if no piece on square
                     possiblemoves.push(move);
                 }else{
                     let apiece=veld[y][x];

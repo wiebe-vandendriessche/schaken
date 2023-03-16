@@ -15,8 +15,8 @@ class King extends APiece{
         super.move(bord);
     }
 
-    possibleMoves(){
-        let veld = bord.speelveld
+    possibleMoves(bord){
+        let veld = bord.getPieces();
         let possiblemoves=[];
         //mogelijke zetten
         let moves=[new Coordinate(-1,-1), new Coordinate(-1,0), new Coordinate(-1,1), new Coordinate(0,1),new Coordinate(0,-1), new Coordinate(1,-1), new Coordinate(1,0), new Coordinate(1,1)]; // hulparray om forloop te kunnen uitvoeren

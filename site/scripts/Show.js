@@ -9,6 +9,11 @@ let ctx = canvas.getContext("2d");
 //ofset zodat de stukken mooi in het midden staan
 let ofsetPiece=5;
 let board= new Board();
+
+let clicked=false;
+let possibele=[];
+let clicked_piece=0;
+
 console.log(board.getPieces());
 dummy();
 draw_board();
@@ -50,4 +55,31 @@ function draw_board() {
          }
      }
  }
+
+ canvas.addEventListener("click",play_move);
+ function play_move(){
+     let x=Math.floor(event.clientX/square_size);
+     let y=Math.floor(event.clientY/square_size);
+     let piece_clicked_now=board.getPieces()[y][x];
+     let cord=new Coordinate(x,y);
+     if(clicked){
+         board.move(clicked_piece,cord);
+         draw_board()
+         draw_pieces(board.getPieces())
+         clicked=false;
+         clicked_piece=0;
+         possibele=[];
+
+
+
+
+     }else{
+         if(piece_clicked_now!==0){
+             possibele = board.possible_moves(cord);
+             clicked_piece=piece_clicked_now
+             clicked=true
+         }
+     }
+ }
+
 

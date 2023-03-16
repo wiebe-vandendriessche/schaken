@@ -20,7 +20,7 @@ export class Bisshop extends APiece{
         return possiblemoves;
     }
 
-    move(bord) {
-        super.move(bord);
+    move(cord){
+        super.move(cord);
     }
 }

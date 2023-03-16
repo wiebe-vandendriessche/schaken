@@ -49,7 +49,7 @@ class Board {
     }
     possible_moves(cord) {
         let piece = this.board[cord.y][cord.x];
-        return piece.possible_moves();
+        return piece.possibleMoves(this);
     }
 
     getPieces() {

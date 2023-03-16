@@ -25,7 +25,7 @@ class APiece {
         throw new Error("Method 'possibleMoves()' must be implemented.");
     }
 
-    move(bord){
-        throw new Error("Method 'possibleMoves()' must be implemented.");
+    move(cord){
+        this.pos = cord;
     }
 }

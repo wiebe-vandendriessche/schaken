@@ -10,7 +10,7 @@ export class Knight extends APiece{
 
 
 
-    possibleMoves(bord){
+    possibleMoves(bord){//zit nog een foutje in
         let veld = bord.getPieces();
         let possiblemoves=[];
         //mogelijke zetten
@@ -25,7 +25,8 @@ export class Knight extends APiece{
                 if(piece===0){
                     possiblemoves.push(new Coordinate(x,y));
                 }else{
-                    if(this.color!==piece.color){
+                    alert(this.kleur+"   "+piece.kleur);
+                    if(this.kleur!==piece.kleur){
                         possiblemoves.push(new Coordinate(x,y));
                     }
                 }

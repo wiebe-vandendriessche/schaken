@@ -8,6 +8,7 @@ class King extends APiece{
 
     constructor(pos,kleur) {
         super(pos,kleur?30:-30,kleur,kleur?"w_king":"b_king");
+        this.moved=false;
     }
 
     // moet dit er wel staan als we deze kunnen invullen in de boven klasse
@@ -86,6 +87,7 @@ class King extends APiece{
 
 
     move(bord) {
-        super.move(bord);
+        this.pos = cord;
+        this.moved=true;
     }
 }

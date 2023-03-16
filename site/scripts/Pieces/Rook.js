@@ -1,7 +1,7 @@
 import {APiece} from "./APiece.js";
 import {Coordinate} from "../Coordinate.js";
 export {pushMoves};
-class Rook extends APiece{
+export class Rook extends APiece{
 
     constructor(pos,kleur) {
         super(pos,kleur?50:-50,kleur,kleur?"w_rook":"b_rook");

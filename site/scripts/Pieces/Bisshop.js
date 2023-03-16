@@ -1,8 +1,9 @@
+
 import {APiece} from "./APiece.js";
 import {Coordinate} from "../Coordinate.js";
 import {pushMoves} from "./Rook.js";
 
-class Bisshop extends APiece{
+export class Bisshop extends APiece{
 
     constructor(pos,kleur) {
         super(pos,kleur?30:-30,kleur,kleur?"w_bishop":"b_bishop");

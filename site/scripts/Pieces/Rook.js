@@ -18,8 +18,8 @@ export class Rook extends APiece{
         return possiblemoves;
     }
 
-    move(bord) {
-        super.move(bord);
+    move(cord) {
+        this.pos = cord;
     }
 }
 
@@ -38,7 +38,7 @@ function pushMoves(possiblemoves,moves,piece,veld){
                     possiblemoves.push(move);
                 }else{
                     let apiece=veld[y][x];
-                    if (apiece.kleur!==this.kleur){ // checks if piece is enemy
+                    if (apiece.kleur!==piece.kleur){ // checks if piece is enemy
                         possiblemoves.push(move); // this is a possible move
                         blocked=true;
                     }else{

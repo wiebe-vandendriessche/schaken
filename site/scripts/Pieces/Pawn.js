@@ -1,7 +1,7 @@
 import {APiece} from "./APiece.js";
 import {Coordinate} from "../Coordinate.js";
-import {pushMoves} from "./Rook";
-
+import {pushMoves} from "./Rook.js";
+export  {Pawn};
 class Pawn extends APiece{
 
     constructor(pos,kleur) {
@@ -26,12 +26,12 @@ class Pawn extends APiece{
             possiblemoves.push(new Coordinate(x,y+1*factor))
         }
         if (x!=7 && veld[y+factor*1][x+1]!=null ){
-            if (veld[y+factor*1][x+1].kleur!=this.kleur){
+            if (veld[y+factor*1][x+1].kleur!==this.kleur){
                 pushMoves(new Coordinate(x+1,y+factor*1));
             }
         }
         if (x!=0 && veld[y+factor*1][x-1]!=null ){
-            if (veld[y+factor*1][x-1].kleur!=this.kleur){
+            if (veld[y+factor*1][x-1].kleur!==this.kleur){
                 pushMoves(new Coordinate(x-1,y+factor*1));
             }
         }

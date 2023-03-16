@@ -3,7 +3,7 @@ import {Coordinate} from "../Coordinate.js";
 import {Bisshop} from "./Bisshop.js"
 import {Rook} from "./Rook.js"
 import {Knight} from "./Knight.js";
-
+export {King};
 class King extends APiece{
 
     constructor(pos,kleur) {

@@ -1,7 +1,9 @@
 let len=600
 let square_size = len / 8
+
 let canvas = document.getElementById("canvas");
 let ctx = canvas.getContext("2d");
+//ofset zodat de stukken mooi in het midden staan
 let ofsetPiece=5;
 let list =[["picture/b_rook_png_128px.png","picture/b_knight_png_128px.png","picture/b_bishop_png_128px.png","picture/b_queen_png_128px.png","picture/b_king_png_128px.png","picture/b_bishop_png_128px.png","picture/b_knight_png_128px.png","picture/b_rook_png_128px.png"],["picture/b_pawn_png_128px.png","picture/b_pawn_png_128px.png","picture/b_pawn_png_128px.png","picture/b_pawn_png_128px.png","picture/b_pawn_png_128px.png","picture/b_pawn_png_128px.png","picture/b_pawn_png_128px.png","picture/b_pawn_png_128px.png"],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],["picture/w_pawn_png_128px.png","picture/w_pawn_png_128px.png","picture/w_pawn_png_128px.png","picture/w_pawn_png_128px.png","picture/w_pawn_png_128px.png","picture/w_pawn_png_128px.png","picture/w_pawn_png_128px.png","picture/w_pawn_png_128px.png"],["picture/w_rook_png_128px.png","picture/w_knight_png_128px.png","picture/w_bishop_png_128px.png","picture/w_queen_png_128px.png","picture/w_king_png_128px.png","picture/w_bishop_png_128px.png","picture/w_knight_png_128px.png","picture/w_rook_png_128px.png"]]
 
@@ -28,7 +30,8 @@ function draw_board() {
  function draw_pieces(list_piece){
      for (let i = 0; i < 8; i++) {
          for (let j = 0; j < 8; j++) {
-             if(list_piece[i][j]!==0){
+             if(list_piece[i][j]!==0){//chekken of het vak niet leeg is want dan tekene van een piece
+                 //tekenen van de pictures
                  let img=new Image();
                  img.src=list_piece[i][j];
                  img.onload= () => {

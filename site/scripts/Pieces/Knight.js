@@ -16,13 +16,13 @@ class Knight extends APiece{
     possibleMoves(){
         let veld = bord.speelveld
         let possiblemoves=[];
-
+        //mogelijke zetten
         let moves=[new Coordinate(-1,2), new Coordinate(1,2), new Coordinate(-1,-2), new Coordinate(1,-2),new Coordinate(-2,-1), new Coordinate(-2,1), new Coordinate(2,-1), new Coordinate(2,1)]; // hulparray om forloop te kunnen uitvoeren
         let op_amount=moves.length;
         for (let i = 0; i < op_amount; i++) {
             let x=this.pos.x+moves[i].x;
             let y= this.pos.y+moves[i].y;
-            if(x<=7 && x>=0 && y<=7 && y>=0){
+            if(x<=7 && x>=0 && y<=7 && y>=0){//chek buiten bord
                 if(veld[x][y]!==0){
                     possiblemoves.push(new Coordinate(x,y));
                 }else{

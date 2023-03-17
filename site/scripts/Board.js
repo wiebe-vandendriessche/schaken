@@ -14,7 +14,7 @@ class Board {
     constructor() {
         this.board = [[], [], [], [], [], [], [], []];
         this.setupPieces();
-
+        this.amountOfMoves=0;
     }
 
     setupPieces() {
@@ -58,7 +58,7 @@ class Board {
 
     move(piece, cord) {
         let possible_moves = piece.possibleMoves(this);
-        console.log(possible_moves);
+        //console.log(possible_moves);
         let good = false;
         let counter = 0;
         while(!good && counter < possible_moves.length){
@@ -71,9 +71,13 @@ class Board {
         this.board[cord.y][cord.x] = piece;
 
         piece.move(cord);
+        this.amountOfMoves+=1;
         return true;
     }
 
+    colorToMove(){
+        return this.amountOfMoves%2===0;
+    }
 
     showMoves() {
 

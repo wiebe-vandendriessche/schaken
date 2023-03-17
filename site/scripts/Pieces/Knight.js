@@ -19,19 +19,20 @@ export class Knight extends APiece{
         for (let i = 0; i < op_amount; i++) {
             let x=this.pos.x+moves[i].x;
             let y= this.pos.y+moves[i].y;
-            console.log("checking move ",x,y)
+            //console.log("checking move ",x,y)
             if(x<=7 && x>=0 && y<=7 && y>=0){//check buiten bord
                 let piece=veld[y][x];
                 if(piece===0){
                     possiblemoves.push(new Coordinate(x,y));
                 }else{
-                    alert(this.kleur+"   "+piece.kleur);
+                    //alert(this.kleur+"   "+piece.kleur);
                     if(this.kleur!==piece.kleur){
                         possiblemoves.push(new Coordinate(x,y));
                     }
                 }
             }
         }
+        console.log(possiblemoves);
         return possiblemoves;
     }
 

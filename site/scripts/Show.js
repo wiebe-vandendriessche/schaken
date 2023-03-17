@@ -1,7 +1,7 @@
 import {Board} from "./Board.js";
 import {Coordinate} from "./Coordinate.js";
 
-let len=600
+let len=720
 let square_size = len / 8
 
 let canvas = document.getElementById("canvas");
@@ -14,8 +14,8 @@ let clicked=false;
 let possibele=[];
 let clicked_piece=0;
 
-console.log(board.getPieces());
-dummy();
+//console.log(board.getPieces());
+//dummy();
 draw_board();
 draw_pieces(board.getPieces());
 
@@ -58,14 +58,16 @@ function draw_board() {
 
  canvas.addEventListener("click",play_move);
  function play_move(){
-     let x=Math.floor(event.clientX/square_size);
-     let y=Math.floor(event.clientY/square_size);
+     let rect=canvas.getBoundingClientRect();
+     let x=Math.floor((event.clientX-rect.x)/square_size);
+     let y=Math.floor((event.clientY-rect.y)/square_size);
      let piece_clicked_now=board.getPieces()[y][x];
      let cord=new Coordinate(x,y);
      if(clicked){
-         board.move(clicked_piece,cord);
-         draw_board()
-         draw_pieces(board.getPieces())
+         if(board.move(clicked_piece,cord)){
+             draw_board()
+             draw_pieces(board.getPieces())
+         }
          clicked=false;
          clicked_piece=0;
          possibele=[];
@@ -74,12 +76,17 @@ function draw_board() {
 
 
      }else{
-         if(piece_clicked_now!==0){
+         let color=board.colorToMove();
+         if(piece_clicked_now!==0 && piece_clicked_now.kleur===color){
+
              possibele = board.possible_moves(cord);
              clicked_piece=piece_clicked_now
              clicked=true
          }
      }
  }
+
+ // temporary
+
 
 

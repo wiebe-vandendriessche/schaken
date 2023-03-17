@@ -28,11 +28,15 @@ class King extends APiece{
             if(x<=7 && x>=0 && y<=7 && y>=0){//chek buiten bord
                 if(veld[y][x]!==0){
                     if(this.color!==veld[y][x].color){
+                        console.log(veld[y][x]);
                         possiblemoves.push(new Coordinate(x,y));
                     }
+                }else{
+                    possiblemoves.push(new Coordinate(x,y))
                 }
             }
         }
+        console.log(possiblemoves);
         return possiblemoves;
     }
 
@@ -81,12 +85,11 @@ class King extends APiece{
                 }
             }
         }
-
         return checked;
     }
 
 
-    move(bord) {
+    move(cord) {
         this.pos = cord;
         this.moved=true;
     }

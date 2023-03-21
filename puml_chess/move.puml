@@ -1,0 +1,82 @@
+@startuml
+participant html
+participant show
+participant board
+participant board
+participant rook
+participant knight
+participant bisshop
+participant queen
+participant king
+participant pawn
+
+activate board
+activate rook
+activate knight
+activate bisshop
+activate queen
+activate king
+activate pawn
+
+html-->>show:event click
+note over html,show 
+    als er nog niet geclicked is 
+    dan staat click op false. 
+    bij de tweede click is deze al true zijn 
+    en wordt deze weer op false gezet
+end note
+alt click:false
+    show->board:getpossiblemoves
+    alt apiece:rook
+        board->rook:possiblemoves        
+        board<<--rook
+    else apiece:knight
+        board->knight:possiblemoves
+        board<<--knight
+    else apiece:bisshop
+        board->bisshop:possiblemoves
+        board<<--bisshop
+    else apiece:queen
+        board->queen:possiblemoves
+        board<<--queen
+    else apiece:king
+        board->king:possiblemoves
+        board<<--king
+    else apiece:pawn
+        board->pawn:possiblemoves
+        board<<--pawn
+    end        
+    show<<--board
+else click:true
+    show->board:move
+    alt apiece:rook
+        board->rook:move
+        board<<--rook
+    else apiece:knight
+        board->knight:move
+        board<<--knight
+    else apiece:bisshop
+        board->bisshop:move
+        board<<--bisshop
+    else apiece:queen
+        board->queen:move
+        board<<--queen
+    else apiece:king
+        board->king:move
+        board<<--king
+    else apiece:pawn
+        board->pawn:move
+        board<<--pawn
+    end        
+    show<<--board
+end
+html<<--show
+
+deactivate board
+deactivate rook
+deactivate knight
+deactivate bisshop
+deactivate queen
+deactivate king
+deactivate pawn
+@enduml

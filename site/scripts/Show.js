@@ -11,7 +11,6 @@ let ofsetPiece=5;
 let board= new Board();
 
 let clicked=false;
-let possibele=[];
 let clicked_piece=0;
 
 //console.log(board.getPieces());
@@ -25,19 +24,23 @@ function dummy(){
 
 }
 
+function draw_square(i,j,colora,colorb){
+    ctx.beginPath();
+    if ((i + j) % 2 === 0) {
+        ctx.fillStyle = colora;
+    } else {
+        ctx.fillStyle = colorb;
+    }
+    ctx.fillRect(square_size * i, square_size * j, square_size, square_size);
+    ctx.stroke();
+}
+
 function draw_board() {
     canvas.setAttribute("height", len.toString());
     canvas.setAttribute("width", len.toString());
     for (let i = 0; i < 8; i++) {
         for (let j = 0; j < 8; j++) {
-            ctx.beginPath();
-            if ((i + j) % 2 === 0) {
-                ctx.fillStyle = "#582b2b";
-            } else {
-                ctx.fillStyle = "#de7070";
-            }
-            ctx.fillRect(square_size * i, square_size * j, square_size, square_size);
-            ctx.stroke();
+            draw_square(i,j,"#de7070","#582b2b");
         }
     }
 }
@@ -56,6 +59,14 @@ function draw_board() {
      }
  }
 
+
+ function draw_posible(cords){
+    for(let i=0;i<cords.length;i++){
+        draw_square(cords[i].x,cords[i].y,"rgb(112,222,156)","rgba(82,43,88,0.5)");
+    }
+ }
+
+
  canvas.addEventListener("click",play_move);
  function play_move(){
      let rect=canvas.getBoundingClientRect();
@@ -70,16 +81,10 @@ function draw_board() {
          }
          clicked=false;
          clicked_piece=0;
-         possibele=[];
-
-
-
-
      }else{
          let color=board.colorToMove();
          if(piece_clicked_now!==0 && piece_clicked_now.kleur===color){
-
-             possibele = board.possible_moves(cord);
+             draw_posible(board.possible_moves(cord));
              clicked_piece=piece_clicked_now
              clicked=true
          }

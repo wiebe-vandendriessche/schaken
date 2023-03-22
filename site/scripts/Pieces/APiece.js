@@ -28,4 +28,8 @@ class APiece {
     move(cord){
         this.pos = cord;
     }
+
+    getPos(){
+        return this.pos
+    }
 }

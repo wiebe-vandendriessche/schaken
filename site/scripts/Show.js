@@ -44,6 +44,7 @@ function draw_board() {
         }
     }
 }
+
  function draw_pieces(list_piece){
      for (let i = 0; i < 8; i++) {
          for (let j = 0; j < 8; j++) {
@@ -62,7 +63,7 @@ function draw_board() {
 
  function draw_posible(cords){
     for(let i=0;i<cords.length;i++){
-        draw_square(cords[i].x,cords[i].y,"rgb(112,222,156)","rgba(82,43,88,0.5)");
+        draw_square(cords[i].x,cords[i].y,"rgba(200,200,200,0.25)","rgba(150,150,150,0.25)");
     }
  }
 
@@ -75,10 +76,9 @@ function draw_board() {
      let piece_clicked_now=board.getPieces()[y][x];
      let cord=new Coordinate(x,y);
      if(clicked){
-         if(board.move(clicked_piece,cord)){
-             draw_board()
-             draw_pieces(board.getPieces())
-         }
+         board.move(clicked_piece,cord);
+         draw_board()
+         draw_pieces(board.getPieces())
          clicked=false;
          clicked_piece=0;
      }else{

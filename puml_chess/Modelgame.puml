@@ -1,0 +1,70 @@
+@startuml Model chessgame
+skinparam classAttributeIconSize 0
+class Board {
+    +board:Apiece[][]
+    +amountOfMoves:int
+    -setupPieces():void
+    +move(piece:Apiece,cord:Coordinate):bool
+    +possibleMoves(piece:Apiece):Coordinate[]
+    +colorToMove():bool
+}
+abstract class Apiece {
+    + value:int
+    # pos:Coordinate
+    +color:bool
+    +image:string 
+    + Apiece(pos:Coordinate,value:int,color:bool,img:string)
+    + possibleMoves(board:Board) {abstract}
+    + move(cord:Coordinate) {abstract}
+}
+
+class King{
+    +King(pos:Coordinate,kleur:bool)
+    +hasMoved:bool
+    +is_checked():bool
+
+}
+class Queen{
+    +Queen(pos:Coordinate,kleur:bool)
+}
+class Knight{
+    +Knight(pos:Coordinate,kleur:bool)
+}
+class Bishop{
+    +Bishop(pos:Coordinate,kleur:bool)
+}
+class Rook{
+    +Rook(pos:Coordinate,kleur:bool)
+}
+class Pawn{
+    
+    +hasMoved:bool
+    +Pawn(pos:Coordinate,kleur:bool)
+}
+class Coordinate{
+    +x:double
+    +y:double
+    +Coordinate(x:double,y:double)
+}
+class Bot{
+    -kleur
+    -diepte
+    -Eval(board:Board)
+    -minMaxalgo(board:Board, depth:int,color:bool)
+    +NextMoves():Coordinate[]
+}
+Apiece <|--King
+Apiece <|--Queen
+Apiece <|--Bishop
+Apiece <|--Knight
+Apiece <|-- Rook
+Apiece <|--Pawn
+Board o-- Apiece
+Apiece -left->Coordinate:has 
+Board ..> Coordinate:uses
+Bot .right.>Board:uses
+Bot ..> Coordinate:uses
+
+
+@enduml
+

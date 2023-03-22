@@ -23,4 +23,8 @@ export class Bisshop extends APiece{
     move(cord){
         super.move(cord);
     }
+    clone() {
+
+        return new Bisshop(new Coordinate(this.pos.x,this.pos.y),this.kleur);
+    }
 }

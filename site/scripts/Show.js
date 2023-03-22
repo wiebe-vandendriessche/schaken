@@ -8,7 +8,7 @@ let canvas = document.getElementById("canvas");
 let ctx = canvas.getContext("2d");
 //ofset zodat de stukken mooi in het midden staan
 let ofsetPiece=5;
-let board= new Board();
+let board= new Board(true);
 
 let clicked=false;
 let clicked_piece=0;
@@ -19,8 +19,7 @@ draw_board();
 draw_pieces(board.getPieces());
 
 function dummy(){
-    let bool=board.move(board.getPieces()[1][0],new Coordinate(0,3));
-    board.move(board.getPieces()[0][0],new Coordinate(0,2));
+
 
 }
 
@@ -40,7 +39,7 @@ function draw_board() {
     canvas.setAttribute("width", len.toString());
     for (let i = 0; i < 8; i++) {
         for (let j = 0; j < 8; j++) {
-            draw_square(i,j,"#de7070","#582b2b");
+            draw_square(i,j,"#cceeea","#386bf3");
         }
     }
 }
@@ -63,7 +62,7 @@ function draw_board() {
 
  function draw_posible(cords){
     for(let i=0;i<cords.length;i++){
-        draw_square(cords[i].x,cords[i].y,"rgba(200,200,200,0.25)","rgba(150,150,150,0.25)");
+        draw_square(cords[i].x,cords[i].y,"rgba(147,239,132,0.5)","rgba(87,173,73,0.5)");
     }
  }
 
@@ -75,14 +74,15 @@ function draw_board() {
      let y=Math.floor((event.clientY-rect.y)/square_size);
      let piece_clicked_now=board.getPieces()[y][x];
      let cord=new Coordinate(x,y);
+     let color=board.colorToMove();
      if(clicked){
-         board.move(clicked_piece,cord);
+         board.moveWithCheck(clicked_piece,cord);
          draw_board()
          draw_pieces(board.getPieces())
          clicked=false;
          clicked_piece=0;
      }else{
-         let color=board.colorToMove();
+
          if(piece_clicked_now!==0 && piece_clicked_now.kleur===color){
              draw_posible(board.possible_moves(cord));
              clicked_piece=piece_clicked_now

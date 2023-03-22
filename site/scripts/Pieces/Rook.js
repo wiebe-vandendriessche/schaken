@@ -21,6 +21,10 @@ export class Rook extends APiece{
     move(cord) {
         this.pos = cord;
     }
+    clone() {
+
+        return new Rook(new Coordinate(this.pos.x,this.pos.y),this.kleur);
+    }
 }
 
 function pushMoves(possiblemoves,moves,piece,veld){

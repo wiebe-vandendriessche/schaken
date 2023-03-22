@@ -32,12 +32,15 @@ export class Knight extends APiece{
                 }
             }
         }
-        console.log(possiblemoves);
         return possiblemoves;
     }
 
 
     move(cord) {
         this.pos = cord;
+    }
+    clone() {
+
+        return new Knight(new Coordinate(this.pos.x,this.pos.y),this.kleur);
     }
 }

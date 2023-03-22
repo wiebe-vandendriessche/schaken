@@ -17,7 +17,7 @@ class APiece {
         }
     }
 
-    show() {
+    clone() {
         throw new Error("Method 'show()' must be implemented.");
     }
 

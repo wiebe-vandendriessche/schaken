@@ -1,0 +1,67 @@
+@startuml
+participant html
+participant show
+participant board
+participant board
+participant rook
+participant knight
+participant bisshop
+participant queen
+participant king
+participant pawn
+participant bot
+
+
+activate board
+activate rook
+activate knight
+activate bisshop
+activate queen
+activate king
+activate pawn
+activate bot
+
+html-->>show:event click
+note over html,show 
+    player has moved
+    bot will move
+end note
+
+show->board:getallpossiblemoves(color)
+group allpossibelmoves
+    loop loop Apiece:rook *2
+        board->rook:possiblemoves        
+        board<<--rook
+    end
+    loop Apiece:knight *2
+        board->knight:possiblemoves
+        board<<--knight
+    end
+    loop loop Apiece:bisshop *2
+        board->bisshop:possiblemoves
+        board<<--bisshop
+    end
+    loop loop Apiece:pawn*8
+        board->pawn:possiblemoves
+        board<<--pawn
+    end
+    board->queen:possiblemoves
+    board<<--queen
+    board->king:possiblemoves
+    board<<--king
+end  
+show<<--board
+show->bot:findposition(allpossibelmoves):string
+bot-->>show:returns 1 move
+show -> board:move
+show <<-- board
+html<<--show:draw position
+
+deactivate board
+deactivate rook
+deactivate knight
+deactivate bisshop
+deactivate queen
+deactivate king
+deactivate pawn
+@enduml

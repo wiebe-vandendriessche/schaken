@@ -15,8 +15,9 @@ draw_board();
 draw_pieces(board.getPieces());
 
 function dummy(){
-    let bool=board.move(board.getPieces()[0][1],new Coordinate(3,1));
-    console.log(bool);
+    let bool=board.move(board.getPieces()[1][0],new Coordinate(0,3));
+    board.move(board.getPieces()[0][0],new Coordinate(0,2));
+
 }
 
 function draw_board() {

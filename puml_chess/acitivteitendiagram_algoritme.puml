@@ -19,6 +19,23 @@ if (depth==0) then (true)
 
  else if (whites turn) then (true)
   :Initialize maxEval to -infinity;
+  :Call first whileloop;
+  :Return maxEval;
+else (false)
+  :Initialize minEval to +infinity;
+  :Call second whileloop;
+  :Return minEval;
+endif
+stop
+
+note
+  After  every move is calculated 
+end note
+
+start
+note right
+whileloop if it's whites turn
+end note
   while(remaining possible moves for black) is (true)
     :Call minimax again with a deep copy 
     of the new board and a new possible move on it
@@ -35,10 +52,13 @@ if (depth==0) then (true)
       break
     endif
   endwhile (false)
-  :Return maxEval;
-else (false)
-  :Initialize minEval to +infinity;
-  while(remaining possible moves for white) is (true)
+stop
+
+start 
+note right
+whileloop if it's blacks turn
+end note
+while(remaining possible moves for white) is (true)
     :Call minimax again with a deep copy 
     of the new board and a new possible move on it
     and a depth of depth-1, minimax will give back
@@ -54,11 +74,5 @@ else (false)
       break
     endif
   endwhile (false)
-  :Return minEval;
-endif
 stop
-
-note
-  After  every move is calculated 
-end note
 @enduml

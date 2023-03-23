@@ -2,6 +2,8 @@
 skinparam classAttributeIconSize 0
 class Board {
     +board:Apiece[][]
+    +attackedsquareswith:int[][]
+    +attackedsquaresblack:int[][]
     +amountOfMoves:int
     -setupPieces():void
     +move(piece:Apiece,cord:Coordinate):bool
@@ -9,13 +11,16 @@ class Board {
     +colorToMove():bool
 }
 abstract class Apiece {
-    + value:int
-    # pos:Coordinate
+    +value:int
+    #pos:Coordinate
     +color:bool
     +image:string 
-    + Apiece(pos:Coordinate,value:int,color:bool,img:string)
-    + possibleMoves(board:Board) {abstract}
-    + move(cord:Coordinate) {abstract}
+    +Apiece(pos:Coordinate,value:int,color:bool,img:string)
+    +possibleMoves(board:Board) {abstract}
+    +move(cord:Coordinate) {abstract}
+}
+class Board_info{
+    +heatmap:int[][]
 }
 
 class King{
@@ -60,9 +65,10 @@ Apiece <|--Knight
 Apiece <|-- Rook
 Apiece <|--Pawn
 Board o-- Apiece
+Board <|-left- Board_info
 Apiece -left->Coordinate:has 
 Board ..> Coordinate:uses
-Bot .right.>Board:uses
+Bot .right.>Board_info:uses
 Bot ..> Coordinate:uses
 
 

@@ -1,0 +1,68 @@
+@startuml
+participant html
+participant show
+participant board
+participant board
+participant rook
+participant knight
+participant bisshop
+participant pawn
+participant queen
+participant king
+participant bot
+
+html-->>show:event onload
+note over html,show 
+    first load
+end note
+
+show->board:getallpossiblemoves(color)
+activate board
+loop creatpieces:black,with
+    loop loop Apiece:rook *2
+        board->rook:constructor
+        activate rook     
+        board<<--rook
+    end
+    loop Apiece:knight *2
+        board->knight:constructor
+        activate knight 
+        board<<--knight
+    end
+    loop loop Apiece:bisshop *2
+        board->bisshop:constructor 
+        activate bisshop
+        board<<--bisshop
+    end
+    loop loop Apiece:pawn*8
+        board->pawn:constructor 
+        activate pawn
+        board<<--pawn
+    end
+    board->queen:constructor 
+    activate queen
+    board<<--queen
+    
+    board->king:constructor 
+    activate king
+    board<<--king
+end  
+alt player
+    show<<--board
+    html<<--show:draw position
+else bot
+    board->bot
+    activate bot
+    board<<--bot
+    show<<--board
+    html<<--show:draw position
+end
+
+deactivate board
+deactivate rook
+deactivate knight
+deactivate bisshop
+deactivate queen
+deactivate king
+deactivate pawn
+@enduml

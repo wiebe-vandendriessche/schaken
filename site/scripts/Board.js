@@ -28,7 +28,7 @@ class Board {
         this.board[7][2] = new Bisshop(new Coordinate(2, 7), true);
         this.board[7][5] = new Bisshop(new Coordinate(5, 7), true);
         this.board[7][1] = new Knight(new Coordinate(1, 7), true);
-        this.board[7][0] = new Rook(new Coordinate(6,7), true);
+        this.board[7][0] = new Rook(new Coordinate(0,7), true);
         this.board[7][6] = new Knight(new Coordinate(6, 7), true);
         this.board[7][7] = new Rook(new Coordinate(7, 7), true);
 

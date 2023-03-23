@@ -1,0 +1,41 @@
+@startuml
+
+
+[*] --> homescreen
+
+homescreen : aanmelden
+chesgame: de hele game
+
+homescreen -right-> history
+history->homescreen
+chesgame-->history
+history-->chesgame
+homescreen-->chesgame
+homescreen-->settings
+settings-->homescreen
+history-->settings
+settings-->history
+settings-->chesgame
+chesgame-->settings
+
+puzzels-->homescreen
+homescreen-->puzzels
+puzzels->settings
+settings->puzzels
+puzzels-->chesgame
+chesgame-->puzzels
+chesgame->homescreen
+history-->puzzels
+puzzels-->history
+state chesgame{
+    [*]-->player
+    [*]-->bot
+    bot-->[*]
+    player-->[*]
+}
+settings-->[*]
+homescreen-->[*]
+chesgame-->[*]
+puzzels-->[*]
+history-->[*]
+@enduml

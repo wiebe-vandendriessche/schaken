@@ -2,31 +2,35 @@
 skinparam classAttributeIconSize 0
 class Board {
     +board:Apiece[][]
-    +attackedsquareswith:int[][]
-    +attackedsquaresblack:int[][]
-    +amountOfMoves:int
+    -amountOfMoves:int
+    +Board(alreadySetup:bool)
     -setupPieces():void
     +move(piece:Apiece,cord:Coordinate):bool
     +possibleMoves(piece:Apiece):Coordinate[]
     +colorToMove():bool
+    +Clone():Board
+    +IsEnd(color:bool):string
 }
 abstract class Apiece {
     +value:int
-    #pos:Coordinate
+    +pos:Coordinate
     +color:bool
     +image:string 
     +Apiece(pos:Coordinate,value:int,color:bool,img:string)
     +possibleMoves(board:Board) {abstract}
     +move(cord:Coordinate) {abstract}
+    +Clone():Apiece {abstract}
+
 }
+
 class Board_info{
     +heatmap:int[][]
 }
 
 class King{
     +King(pos:Coordinate,kleur:bool)
-    +hasMoved:bool
-    +is_checked():bool
+    -hasMoved:bool
+    
 
 }
 class Queen{
@@ -39,38 +43,61 @@ class Bishop{
     +Bishop(pos:Coordinate,kleur:bool)
 }
 class Rook{
+    -hasMoved:bool
     +Rook(pos:Coordinate,kleur:bool)
 }
 class Pawn{
-    +end:int
-    +hasMoved:bool
+    -end:int
+-hasMoved:bool
     +Pawn(pos:Coordinate,kleur:bool)
 }
+class Bot{
+    -color:bool
+    -depth:int
+    + Bot(color:bool,depth:int)
+    -Eval(board:Board):double
+    -minMaxalgo(board:Board, depth:int,color:bool):double
+    +NextMove():Coordinate[]
+}
+
 class Coordinate{
     +x:double
     +y:double
     +Coordinate(x:double,y:double)
+    +zetOm():string
 }
-class Bot{
-    -kleur
-    -diepte
-    -Eval(board:Board)
-    -minMaxalgo(board:Board, depth:int,color:bool)
-    +NextMoves():Coordinate[]
+
+class LegalChecker{
+    +attackMapWhite:int[][]
+    +attackMapBlack:int[][]
+    +whiteKing:King
+    +blackKing:King
+    -possiblemoves:Coordinate[]
+    +LegalChecker()
+    - updateAttackMap(color:bool):void
+    + IsChecked(color:bool): bool
+    + possibleMoves(piece):Coordinate[]
+    + IsCheckMate(color:bool):bool
+    + IsStaleMate(color:bool):bool
 }
-Apiece <|--King
+note right : Seperation of concerns: \nchecking legal moves in \nLegalChecker instead of in Board
+
+
+Apiece <|-left-King
 Apiece <|--Queen
 Apiece <|--Bishop
 Apiece <|--Knight
 Apiece <|-- Rook
-Apiece <|--Pawn
+Apiece <|-right-Pawn
 Board o-- Apiece
 Board <|-left- Board_info
-Apiece -left->Coordinate:has 
+Apiece -->Coordinate:has 
 Board ..> Coordinate:uses
 Bot .right.>Board_info:uses
 Bot ..> Coordinate:uses
-
+Board<-right->LegalChecker:has
+LegalChecker..>Apiece:uses
+Bot..>Apiece:uses
 
 @enduml
 

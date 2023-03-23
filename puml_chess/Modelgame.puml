@@ -42,7 +42,7 @@ class Rook{
     +Rook(pos:Coordinate,kleur:bool)
 }
 class Pawn{
-    
+    +end:int
     +hasMoved:bool
     +Pawn(pos:Coordinate,kleur:bool)
 }

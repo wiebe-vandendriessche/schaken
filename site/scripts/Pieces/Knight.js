@@ -7,9 +7,6 @@ export class Knight extends APiece{
         super(pos,kleur?30:-30,kleur,kleur?"w_knight":"b_knight");
     }
 
-
-
-
     possibleMoves(bord){//zit nog een foutje in
         let veld = bord.getPieces();
         let possiblemoves=[];

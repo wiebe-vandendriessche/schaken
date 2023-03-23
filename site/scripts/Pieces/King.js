@@ -49,7 +49,8 @@ class King extends APiece{
         this.moved=true;
     }
     clone() {
-
-        return new King(new Coordinate(this.pos.x,this.pos.y),this.kleur);
+        let king=new King(new Coordinate(this.pos.x,this.pos.y),this.kleur);
+        king.moved=this.moved;
+        return king;
     }
 }

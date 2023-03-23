@@ -64,12 +64,12 @@ class Board {
 
     moveWithCheck(piece,cord){
         let virtualbord= this.clone();
-        let virtualpiece=piece.clone();
-        if(this.moveTest(virtualpiece,cord,virtualbord)){
+        let virtualpiece=virtualbord.board[piece.pos.y][piece.pos.x];
+        if(virtualbord.move(virtualpiece,cord)){
             if (virtualbord.isChecked(piece.kleur)){
                 return false;
             }else {
-                this.moveTest(piece,cord,this);
+                this.move(piece,cord);
                 this.amountOfMoves++;
                 return true;
             }
@@ -79,9 +79,9 @@ class Board {
 
     }
 
-    move(piece, cord) {
+
+    move(piece,cord){
         let possible_moves = piece.possibleMoves(this);
-        //console.log(possible_moves);
         let good = false;
         let counter = 0;
         while(!good && counter < possible_moves.length){
@@ -96,27 +96,6 @@ class Board {
         piece.move(cord);
         if(piece instanceof Pawn && piece.pos.y===piece.endY){
             this.board[piece.pos.y][piece.pos.x]=new Queen(piece.pos,piece.kleur);
-        }
-        this.amountOfMoves+=1;
-        return true;
-    }
-    moveTest(piece,cord,virtboard){
-        let possible_moves = piece.possibleMoves(virtboard);
-        //console.log(possible_moves);
-        let good = false;
-        let counter = 0;
-        while(!good && counter < possible_moves.length){
-            if(JSON.stringify(possible_moves[counter++]) === JSON.stringify(cord))
-                good = true;
-        }
-        if(!good)
-            return false;
-        virtboard.board[piece.pos.y][piece.pos.x] = 0;
-        virtboard.board[cord.y][cord.x] = piece;
-
-        piece.move(cord);
-        if(piece instanceof Pawn && piece.pos.y===piece.endY){
-            virtboard.board[piece.pos.y][piece.pos.x]=new Queen(piece.pos,piece.kleur);
         }
         return true;
     }
@@ -162,6 +141,7 @@ class Board {
 
         let attackmap=this.updateAttackMap(!color);
         let king= color? this.whiteking: this.blackking;
+        console.log(king);
         if (attackmap[king.pos.y][king.pos.x]!==0){
             console.log("KING CHECKED");
             return true;
@@ -177,13 +157,13 @@ class Board {
             for (let x = 0; x < 8; x++) {
                 let piece=this.board[y][x];
                 if (piece!==0){
-                    newboard.board[y][x]=this.board[y][x].clone();
-                    let piece=newboard.board[y][x];
+                    let virtpiece=this.board[y][x].clone();
+                    newboard.board[y][x]=virtpiece;
                     if (piece instanceof King){
                         if (piece.kleur){
-                            newboard.whiteking=piece;
+                            newboard.whiteking=virtpiece;
                         }else{
-                            newboard.blackking=piece;
+                            newboard.blackking=virtpiece;
                         }
                     }
                 }else{

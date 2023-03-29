@@ -6,6 +6,7 @@ import {Pawn} from "./Pieces/Pawn.js";
 import {Queen} from "./Pieces/Queen.js";
 import {Rook} from "./Pieces/Rook.js";
 import {Coordinate} from "./Coordinate.js";
+import {MoveCacher} from "./MoveCacher.js";
 
 
 export {Board};
@@ -17,6 +18,7 @@ class Board {
         this.blackking;
         if (setup){this.setupPieces();}
         this.amountOfMoves=0;
+        this.playedMoves= new MoveCacher();
         this.attackMapWhite=[[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]];
         this.attackMapBlack=[[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]];
 
@@ -71,14 +73,17 @@ class Board {
             }else {
                 this.move(piece,cord);
                 this.amountOfMoves++;
+                this.playedMoves.Moveadd(cord,this.amountOfMoves);
                 return true;
             }
         }else {
             return false;
         }
-
     }
 
+    getAlleMovesPlayedInGame(){
+        return this.playedMoves.GetMoves();
+    }
 
     move(piece,cord){
         let possible_moves = piece.possibleMoves(this);
@@ -112,7 +117,7 @@ class Board {
             this.attackMapBlack=[[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]];
         }
         let attackmap= color? this.attackMapWhite:this.attackMapBlack;
-
+        //dit kan wss in de if hierboven gebeuren
         for (let y = 0; y <8 ; y++) {
             for (let x = 0; x <8; x++) {
                 let piece=this.board[y][x];

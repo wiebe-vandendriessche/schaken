@@ -291,16 +291,9 @@ body{
     }
 }
 
-.mode{
-    border-radius: 6px;
-    background-color: var(--primary-color-light);
-    position: relative;
-    transition: all 0.3s ease;
-}
-
 .mode .sun-moon{
     height: 50px;
-    width: 60px;
+    width: 78px;
 }
 
 .mode .sun-moon i{

@@ -1,7 +1,7 @@
 import {Board} from "./Board.js";
 import {Coordinate} from "./Coordinate.js";
 
-let len=720
+let len=680
 let square_size = len / 8
 
 let canvas = document.getElementById("canvas");
@@ -79,6 +79,7 @@ function draw_board() {
          board.moveWithCheck(clicked_piece,cord);
          draw_board()
          draw_pieces(board.getPieces())
+         updatePlayedMoves()
          clicked=false;
          clicked_piece=0;
          let status= board.isEnd(!color);
@@ -94,6 +95,12 @@ function draw_board() {
              clicked=true
          }
      }
+ }
+
+ function updatePlayedMoves(){
+     let text=document.getElementById("playedMoves");
+     console.log(board.getAlleMovesPlayedInGame());
+     text.textContent=board.getAlleMovesPlayedInGame();
  }
 
  // temporary

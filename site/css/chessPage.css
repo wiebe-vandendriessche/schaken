@@ -1,0 +1,16 @@
+#playedMoves{
+    white-space: pre;
+    font-size:  2.5em;
+
+}
+.scroll {
+    max-height: 680px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+#card_height{
+    height: 680px;
+}
+

@@ -6,7 +6,11 @@ import {Pawn} from "./Pieces/Pawn.js";
 import {Queen} from "./Pieces/Queen.js";
 import {Rook} from "./Pieces/Rook.js";
 import {Coordinate} from "./Coordinate.js";
+
 import {LegalChecker} from "./LegalChecker.js";
+
+import {MoveCacher} from "./MoveCacher.js";
+
 
 
 export {Board};
@@ -20,6 +24,9 @@ class Board {
         }
         this.legalchecker= new LegalChecker(this);
         this.amountOfMoves=0;
+
+        this.playedMoves= new MoveCacher();
+
 
     }
 
@@ -64,17 +71,20 @@ class Board {
     }
 
     moveWithCheck(piece,cord){
+
         let realmoves=this.legalchecker.possibleMoves(piece,true);
         if(this.move(piece,cord,realmoves)){
             this.amountOfMoves++;
+            this.playedMoves.Moveadd(cord,this.amountOfMoves);
             return true;
-
         }else {
             return false;
         }
-
     }
 
+    getAlleMovesPlayedInGame(){
+        return this.playedMoves.GetMoves();
+    }
 
     move(piece,cord, possible_moves){
         let good = false;
@@ -99,7 +109,6 @@ class Board {
     colorToMove(){
         return this.amountOfMoves%2===0;
     }
-
 
 
 

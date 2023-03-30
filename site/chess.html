@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="css/chessPage.css">
     <link rel="stylesheet" href="css/navbar.css">
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <script type="module" src="scripts/Show.js"></script>
@@ -11,135 +12,135 @@
           integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
 </head>
 <body class="dark">
-<container>
-    <div class="column">
-        <div class="sidebar close">
-            <div class="logo-details">
-                <i class='bx bxs-chess'></i>
-                <span class="logo_name">Schaken</span>
-            </div>
-            <ul class="nav-links">
+
+<div class="column">
+    <div class="sidebar close">
+        <div class="logo-details">
+            <i class='bx bxs-chess'></i>
+            <span class="logo_name">Schaken</span>
+        </div>
+        <ul class="nav-links">
 
 
-                <li>
-                    <a href="#">
-                        <i class='bx bx-home'></i>
-                        <span class="link_name">Home</span>
-                    </a>
-                    <ul class="sub-menu blank">
-                        <li>
-                            <a class="link_name" href="#">Home
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-
-                <li>
-                    <div class="icon-link">
-                        <a href="#">
-                            <i class='bx bx-joystick'></i>
-                            <span class="link_name">Spelen</span>
+            <li>
+                <a href="#">
+                    <i class='bx bx-home'></i>
+                    <span class="link_name">Home</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li>
+                        <a class="link_name" href="#">Home
                         </a>
-                        <i class='bx bxs-chevron-down arrow'></i>
-                    </div>
-                    <ul class="sub-menu">
-                        <li><a class="link_name" href="#">Spelen</a></li>
-                        <li><a href="#">PvP</a></li>
-                        <li><a href="#">PvBot</a></li>
-                        <li><a href="#">Puzzels</a></li>
-                    </ul>
-                </li>
+                    </li>
+                </ul>
+            </li>
 
 
-                <li>
-                    <div class="icon-link">
-                        <a href="#">
-                            <i class='bx bx-info-circle'></i>
-                            <span class="link_name">Info</span>
-                        </a>
-                        <i class='bx bxs-chevron-down arrow'></i>
-                    </div>
-                    <ul class="sub-menu">
-                        <li><a class="link_name" href="#">Info</a></li>
-                        <li><a href="#">Geschiedenis</a></li>
-                        <li><a href="#">Bekende spelers</a></li>
-                        <li><a href="#">Over ons</a></li>
-                    </ul>
-                </li>
-
-
-                <li>
+            <li>
+                <div class="icon-link">
                     <a href="#">
-                        <i class='bx bx-cog'></i>
-                        <span class="link_name">Instellingen</span>
+                        <i class='bx bx-joystick'></i>
+                        <span class="link_name">Spelen</span>
                     </a>
-                    <ul class="sub-menu blank">
-                        <li><a class="link_name" href="#">Instellingen</a></li>
-                    </ul>
-                </li>
+                    <i class='bx bxs-chevron-down arrow'></i>
+                </div>
+                <ul class="sub-menu">
+                    <li><a class="link_name" href="#">Spelen</a></li>
+                    <li><a href="#">PvP</a></li>
+                    <li><a href="#">PvBot</a></li>
+                    <li><a href="#">Puzzels</a></li>
+                </ul>
+            </li>
 
 
+            <li>
+                <div class="icon-link">
+                    <a href="#">
+                        <i class='bx bx-info-circle'></i>
+                        <span class="link_name">Info</span>
+                    </a>
+                    <i class='bx bxs-chevron-down arrow'></i>
+                </div>
+                <ul class="sub-menu">
+                    <li><a class="link_name" href="#">Info</a></li>
+                    <li><a href="#">Geschiedenis</a></li>
+                    <li><a href="#">Bekende spelers</a></li>
+                    <li><a href="#">Over ons</a></li>
+                </ul>
+            </li>
 
 
-                <li class="mode">
+            <li>
+                <a href="#">
+                    <i class='bx bx-cog'></i>
+                    <span class="link_name">Instellingen</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="#">Instellingen</a></li>
+                </ul>
+            </li>
+
+
+            <li class="mode">
+                <a href="#">
                     <div class="sun-moon">
                         <i class='bx bx-moon icon moon'></i>
                         <i class='bx bx-sun icon sun'></i>
                     </div>
-                    <span class="mode-text text">Dark mode</span>
-
+                    <span class="link_name"><div class="mode-text text">Dark mode</div></span>
                     <div class="toggle-switch">
                         <span class="switch"></span>
                     </div>
-                </li>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="#"><div class="mode-text text">Dark mode</div></a></li>
+                </ul>
+            </li>
 
 
 
-
-                <li>
-                    <div class="profile-details">
-                        <div class="profile-content">
-                            <img src="picture/profile.jpg" alt="profileImg">
-                        </div>
-                        <div class="name-job">
-                            <div class="profile_name">Gast045154</div>
-                            <div class="job">Profiel</div>
-                        </div>
-                        <i class='bx bx-log-out'></i>
+            <li>
+                <div class="profile-details">
+                    <div class="profile-content">
+                        <img src="picture/profile.jpg" alt="profileImg">
                     </div>
-                </li>
-
-
-            </ul>
-        </div>
-
-
-
-        <section class="home-section">
-            <div class="home-content" class="row">
-                <i class='bx bx-menu'></i>
-                <span class="text">Menu</span>
-            </div>
-            <br>
-            <br>
-            <div class="row">
-                <div class="row">
-                    <h1 class="title-color">Speel: PvP</h1>
-                    <br>
-                    <br>
-                    <br>
+                    <div class="name-job">
+                        <div class="profile_name">Gast045154</div>
+                        <div class="job">Profiel</div>
+                    </div>
+                    <i class='bx bx-log-out'></i>
                 </div>
-                <div class="col-8">
-                    <canvas id="canvas"></canvas>
-                </div>
-                <div class="col-4">
-                    <div class="card">hier komen zetten</div>
-                </div>
-            </div>
-        </section>
+            </li>
+
+
+        </ul>
     </div>
-</container>
+
+
+    <section class="home-section">
+        <div class="home-content" class="row">
+            <i class='bx bx-menu'></i>
+            <span class="text">Menu</span>
+        </div>
+        <div class="row">
+            <div class="row">
+                <h1 class="title-color">Speel: PvP</h1>
+            </div>
+            <div class="col-8">
+                <canvas id="canvas"></canvas>
+            </div>
+            <div class="col-4">
+                <div class="card" >
+                    <div id="card_height">
+                        <div  class="scroll" id="playedMoves">moves</div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
 
 </body>
 </html>

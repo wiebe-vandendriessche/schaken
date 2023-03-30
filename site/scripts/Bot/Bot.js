@@ -7,8 +7,7 @@ import {Queen} from "../Pieces/Queen.js";
 import {Rook} from "../Pieces/Rook.js";
 import {Coordinate} from "../Coordinate.js";
 
-
-class Bot{
+export class Bot{
     constructor(color, depth) {
         this.color = color;
         this.depth = depth;
@@ -25,18 +24,18 @@ class Bot{
                 for(let x = 0; x < 7; x++){
                     let piece = speelveld[y][x];
                     if(piece !== 0 && piece.kleur === color){
-                        let posMoves = board.LegalChecker.possibleMoves(piece, false);
+                        let posMoves = board.legalchecker.possibleMoves(piece, false);
                         for(let cord of posMoves){
                             let cloneBoard = board.clone();
                             let fakePiece = cloneBoard[piece.y][piece.x];
-                            cloneBoard.move(fakePiece, cord);
-                            let val = this.minimax(cloneBoard.board, depth-1, alpha, beta, !color);
+                            cloneBoard.move(fakePiece, cord, fakePiece.possibleMoves(cloneBoard));
+                            let val = this.minimax(cloneBoard, depth-1, alpha, beta, !color);
                             if(maxEval === undefined || val > maxEval)
                                 maxEval = val;
                             if(alpha === undefined ||alpha < val)
                                 alpha = val
                             if(beta <= alpha)
-                                break;
+                                return maxEval;
                         }
                     }
                 }
@@ -49,18 +48,18 @@ class Bot{
                 for(let x = 0; x < 7; x++){
                     let piece = speelveld[y][x];
                     if(piece !== 0 && piece.kleur === color){
-                        let posMoves = board.LegalChecker.possibleMoves(piece, false);
+                        let posMoves = board.legalchecker.possibleMoves(piece, false);
                         for(let cord of posMoves){
                             let cloneBoard = board.clone();
                             let fakePiece = cloneBoard[piece.y][piece.x];
-                            cloneBoard.move(fakePiece, cord);
-                            let val = this.minimax(cloneBoard.board, depth-1, alpha, beta, !color);
+                            cloneBoard.move(fakePiece, cord, fakePiece.possibleMoves(cloneBoard));
+                            let val = this.minimax(cloneBoard, depth-1, alpha, beta, !color);
                             if(minEval === undefined || val < minEval)
                                 minEval = val;
                             if(beta === undefined ||beta > val)
                                 beta = val;
                             if(beta <= alpha)
-                                break;
+                                return minEval;
                         }
                     }
                 }
@@ -93,7 +92,7 @@ class Bot{
                 if(piece !== 0 && piece.kleur === this.color){
                     let array2 = [0, 0];
                     let subEval;
-                    let posMoves = board.LegalChecker.possibleMoves(piece, false);
+                    let posMoves = board.legalchecker.possibleMoves(piece, false);
                     for(let cord of posMoves){
                         let cloneBoard = board.clone();
                         let fakePiece = cloneBoard[piece.y][piece.x];

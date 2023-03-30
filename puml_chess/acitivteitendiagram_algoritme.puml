@@ -34,7 +34,7 @@ end note
 
 start
 note right
-whileloop if it's whites turn
+  start whileloop if it's whites turn
 end note
   while(remaining possible moves for black) is (true)
     :Call minimax again with a deep copy 
@@ -53,10 +53,13 @@ end note
     endif
   endwhile (false)
 stop
+note left
+  continue with main program
+end note
 
 start 
 note right
-whileloop if it's blacks turn
+  whileloop if it's blacks turn
 end note
 while(remaining possible moves for white) is (true)
     :Call minimax again with a deep copy 
@@ -75,4 +78,7 @@ while(remaining possible moves for white) is (true)
     endif
   endwhile (false)
 stop
+note left 
+  continue with main program
+end note
 @enduml

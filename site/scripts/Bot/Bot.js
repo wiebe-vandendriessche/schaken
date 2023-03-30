@@ -25,7 +25,7 @@ class Bot{
                 for(let x = 0; x < 7; x++){
                     let piece = speelveld[y][x];
                     if(piece !== 0 && piece.kleur === color){
-                        let posMoves = board.LegalChecker.possibleMoves(piece, false);
+                        let posMoves = board.legalchecker.possibleMoves(piece, false);
                         for(let cord of posMoves){
                             let cloneBoard = board.clone();
                             let fakePiece = cloneBoard[piece.y][piece.x];
@@ -49,7 +49,7 @@ class Bot{
                 for(let x = 0; x < 7; x++){
                     let piece = speelveld[y][x];
                     if(piece !== 0 && piece.kleur === color){
-                        let posMoves = board.LegalChecker.possibleMoves(piece, false);
+                        let posMoves = board.legalchecker.possibleMoves(piece, false);
                         for(let cord of posMoves){
                             let cloneBoard = board.clone();
                             let fakePiece = cloneBoard[piece.y][piece.x];
@@ -93,7 +93,7 @@ class Bot{
                 if(piece !== 0 && piece.kleur === this.color){
                     let array2 = [0, 0];
                     let subEval;
-                    let posMoves = board.LegalChecker.possibleMoves(piece, false);
+                    let posMoves = board.legalchecker.possibleMoves(piece, false);
                     for(let cord of posMoves){
                         let cloneBoard = board.clone();
                         let fakePiece = cloneBoard[piece.y][piece.x];

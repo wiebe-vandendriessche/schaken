@@ -4,8 +4,8 @@ import {pushMoves} from "./Rook.js";
 export {Queen}
 class Queen extends APiece{
 
-    constructor(pos,kleur) {
-        super(pos,kleur?90:-90,kleur,kleur?"w_queen":"b_queen");
+    constructor(pos,kleur,imageLoad) {
+        super(pos,kleur?90:-90,kleur,kleur?"w_queen":"b_queen",imageLoad);
     }
     show() {
         super.show();
@@ -26,6 +26,6 @@ class Queen extends APiece{
     }
     clone() {
 
-        return new Queen(new Coordinate(this.pos.x,this.pos.y),this.kleur);
+        return new Queen(new Coordinate(this.pos.x,this.pos.y),this.kleur,false);
     }
 }

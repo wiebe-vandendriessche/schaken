@@ -6,8 +6,8 @@ import {Knight} from "./Knight.js";
 export {King};
 class King extends APiece{
 
-    constructor(pos,kleur) {
-        super(pos,kleur?30:-30,kleur,kleur?"w_king":"b_king");
+    constructor(pos,kleur,imageLoad) {
+        super(pos,kleur?30:-30,kleur,kleur?"w_king":"b_king",imageLoad);
         this.moved=false;
     }
 
@@ -49,7 +49,7 @@ class King extends APiece{
         this.moved=true;
     }
     clone() {
-        let king=new King(new Coordinate(this.pos.x,this.pos.y),this.kleur);
+        let king=new King(new Coordinate(this.pos.x,this.pos.y),this.kleur,false);
         king.moved=this.moved;
         return king;
     }

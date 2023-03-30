@@ -3,8 +3,8 @@ import {Coordinate} from "../Coordinate.js";
 export {pushMoves};
 export class Rook extends APiece{
 
-    constructor(pos,kleur) {
-        super(pos,kleur?50:-50,kleur,kleur?"w_rook":"b_rook");
+    constructor(pos,kleur,imageLoad) {
+        super(pos,kleur?50:-50,kleur,kleur?"w_rook":"b_rook",imageLoad);
     }
     show() {
         super.show();
@@ -23,7 +23,7 @@ export class Rook extends APiece{
     }
     clone() {
 
-        return new Rook(new Coordinate(this.pos.x,this.pos.y),this.kleur);
+        return new Rook(new Coordinate(this.pos.x,this.pos.y),this.kleur,false);
     }
 }
 

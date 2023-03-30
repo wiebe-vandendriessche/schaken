@@ -5,8 +5,8 @@ import {pushMoves} from "./Rook.js";
 
 export class Bisshop extends APiece{
 
-    constructor(pos,kleur) {
-        super(pos,kleur?30:-30,kleur,kleur?"w_bishop":"b_bishop");
+    constructor(pos,kleur,imageLoad) {
+        super(pos,kleur?30:-30,kleur,kleur?"w_bishop":"b_bishop",imageLoad);
     }
     show() {
         super.show();
@@ -25,6 +25,6 @@ export class Bisshop extends APiece{
     }
     clone() {
 
-        return new Bisshop(new Coordinate(this.pos.x,this.pos.y),this.kleur);
+        return new Bisshop(new Coordinate(this.pos.x,this.pos.y),this.kleur,false);
     }
 }

@@ -3,8 +3,8 @@ import {Coordinate} from "../Coordinate.js";
 export  {Pawn};
 class Pawn extends APiece {
 
-    constructor(pos, kleur) {
-        super(pos, kleur ? 10 : -10, kleur, kleur ? "w_pawn" : "b_pawn");
+    constructor(pos, kleur,imageLoad) {
+        super(pos, kleur ? 10 : -10, kleur, kleur ? "w_pawn" : "b_pawn",imageLoad);
         this.moved = false;
         this.endY=kleur?0:7;
     }
@@ -67,7 +67,7 @@ class Pawn extends APiece {
     }
 
     clone() {
-        let pawn=new Pawn(new Coordinate(this.pos.x,this.pos.y),this.kleur);
+        let pawn=new Pawn(new Coordinate(this.pos.x,this.pos.y),this.kleur,false);
         pawn.moved=this.moved;
         return pawn;
     }

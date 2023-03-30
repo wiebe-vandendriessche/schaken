@@ -49,12 +49,15 @@ function draw_board() {
          for (let j = 0; j < 8; j++) {
              if(list_piece[i][j]!==0){//chekken of het vak niet leeg is want dan tekene van een piece
                  let piece= list_piece[i][j];
-                 let img= new Image();
-                 img.src=piece.image;
+                 let img= piece.image;
                  img.onload= () => {
-                     ctx.drawImage(img,square_size*j+ofsetPiece,square_size*i+ofsetPiece,square_size-2*ofsetPiece,square_size-2*ofsetPiece)
-                 };
-             }
+                     ctx.drawImage(img, square_size * j + ofsetPiece, square_size * i + ofsetPiece, square_size - 2 * ofsetPiece, square_size - 2 * ofsetPiece)
+                 }
+                 ctx.drawImage(img,square_size*j+ofsetPiece,square_size*i+ofsetPiece,square_size-2*ofsetPiece,square_size-2*ofsetPiece);
+                }
+
+
+
          }
      }
  }

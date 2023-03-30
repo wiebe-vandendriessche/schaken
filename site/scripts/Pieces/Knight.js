@@ -3,8 +3,8 @@ import {Coordinate} from "../Coordinate.js";
 
 export class Knight extends APiece{
 
-    constructor(pos,kleur) {
-        super(pos,kleur?30:-30,kleur,kleur?"w_knight":"b_knight");
+    constructor(pos,kleur,imageLoad) {
+        super(pos,kleur?30:-30,kleur,kleur?"w_knight":"b_knight",imageLoad);
     }
 
     possibleMoves(bord){//zit nog een foutje in
@@ -38,6 +38,6 @@ export class Knight extends APiece{
     }
     clone() {
 
-        return new Knight(new Coordinate(this.pos.x,this.pos.y),this.kleur);
+        return new Knight(new Coordinate(this.pos.x,this.pos.y),this.kleur,false);
     }
 }

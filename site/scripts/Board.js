@@ -33,27 +33,27 @@ class Board {
 
     setupPieces() {
         for (let i = 0; i < 8; i++) {
-            this.board[1][i] = new Pawn(new Coordinate(i, 1), false);
-            this.board[6][i] = new Pawn(new Coordinate(i, 6), true);
+            this.board[1][i] = new Pawn(new Coordinate(i, 1), false,true);
+            this.board[6][i] = new Pawn(new Coordinate(i, 6), true,true);
         }
 
-        this.board[7][4] = new King(new Coordinate(4, 7), true);
-        this.board[7][3] = new Queen(new Coordinate(3,7), true);
-        this.board[7][2] = new Bisshop(new Coordinate(2, 7), true);
-        this.board[7][5] = new Bisshop(new Coordinate(5, 7), true);
-        this.board[7][1] = new Knight(new Coordinate(1, 7), true);
-        this.board[7][0] = new Rook(new Coordinate(0,7), true);
-        this.board[7][6] = new Knight(new Coordinate(6, 7), true);
-        this.board[7][7] = new Rook(new Coordinate(7, 7), true);
+        this.board[7][4] = new King(new Coordinate(4, 7), true,true);
+        this.board[7][3] = new Queen(new Coordinate(3,7), true,true);
+        this.board[7][2] = new Bisshop(new Coordinate(2, 7), true,true);
+        this.board[7][5] = new Bisshop(new Coordinate(5, 7), true,true);
+        this.board[7][1] = new Knight(new Coordinate(1, 7), true,true);
+        this.board[7][0] = new Rook(new Coordinate(0,7), true,true);
+        this.board[7][6] = new Knight(new Coordinate(6, 7), true,true);
+        this.board[7][7] = new Rook(new Coordinate(7, 7), true,true);
 
-        this.board[0][4] = new King(new Coordinate(4, 0), false);
-        this.board[0][3] = new Queen(new Coordinate(3, 0), false);
-        this.board[0][2] = new Bisshop(new Coordinate(2, 0), false);
-        this.board[0][5] = new Bisshop(new Coordinate(5, 0), false);
-        this.board[0][1] = new Knight(new Coordinate(1, 0), false);
-        this.board[0][0] = new Rook(new Coordinate(0, 0), false);
-        this.board[0][6] = new Knight(new Coordinate(6, 0), false);
-        this.board[0][7] = new Rook(new Coordinate(7, 0), false);
+        this.board[0][4] = new King(new Coordinate(4, 0), false,true);
+        this.board[0][3] = new Queen(new Coordinate(3, 0), false,true);
+        this.board[0][2] = new Bisshop(new Coordinate(2, 0), false,true);
+        this.board[0][5] = new Bisshop(new Coordinate(5, 0), false,true);
+        this.board[0][1] = new Knight(new Coordinate(1, 0), false,true);
+        this.board[0][0] = new Rook(new Coordinate(0, 0), false,true);
+        this.board[0][6] = new Knight(new Coordinate(6, 0), false,true);
+        this.board[0][7] = new Rook(new Coordinate(7, 0), false,true);
 
         for(let i = 2; i < 6; i++){
             for(let j = 0; j < 8; j++){

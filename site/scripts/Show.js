@@ -18,10 +18,6 @@ let clicked_piece=0;
 draw_board();
 draw_pieces(board.getPieces());
 
-function dummy(){
-
-
-}
 
 function draw_square(i,j,colora,colorb){
     ctx.beginPath();
@@ -67,8 +63,8 @@ function draw_board() {
  }
 
 
- canvas.addEventListener("click",play_move);
- function play_move(){
+ canvas.addEventListener("click",(event)=>{play_move_player(event)});
+ function play_move_player(event){
      let rect=canvas.getBoundingClientRect();
      let x=Math.floor((event.clientX-rect.x)/square_size);
      let y=Math.floor((event.clientY-rect.y)/square_size);
@@ -87,14 +83,18 @@ function draw_board() {
          if(piece_clicked_now!==0 && piece_clicked_now.kleur===color){
              draw_posible(board.possible_moves(cord));
              clicked_piece=piece_clicked_now
-             clicked=true
+             clicked=true;
          }
      }
  }
 
+ function ReturnToPreviousBoard(){
+     board=board.PrieviesPosition()
+}
+
+
  function updatePlayedMoves(){
      let text=document.getElementById("playedMoves");
-     console.log(board.getAlleMovesPlayedInGame());
      text.textContent=board.getAlleMovesPlayedInGame();
  }
 

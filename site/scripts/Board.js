@@ -73,7 +73,7 @@ class Board {
             }else {
                 this.move(piece,cord);
                 this.amountOfMoves++;
-                this.playedMoves.Moveadd(cord,this.amountOfMoves);
+                this.playedMoves.Moveadd(cord,this.amountOfMoves,this);
                 return true;
             }
         }else {
@@ -178,6 +178,10 @@ class Board {
         }
         return newboard;
 
+    }
+
+    PrieviesPosition(){
+        return this.playedMoves.ReturnToPreviousMoves()
     }
 
     canMove() {

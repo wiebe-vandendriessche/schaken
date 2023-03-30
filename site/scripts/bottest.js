@@ -1,6 +1,6 @@
 import {Board} from "./Board.js";
 import {Coordinate} from "./Coordinate.js";
-import {Bot} from "./scripts/Bot/Bot";
+import {Bot} from "./Bot/Bot.js";
 
 let len=680
 let square_size = len / 8
@@ -18,10 +18,29 @@ let clicked_piece=0;
 //dummy();
 draw_board();
 draw_pieces(board.getPieces());
-let bot = new Bot(false, 5);
+let blackbot = new Bot(false, 4);
+let whitebot = new Bot(true, 3);
+dummy();
 
 function dummy(){
-    
+    for (let i = 0; i < 8; i++) {
+        let array1 = whitebot.nextMove(board);
+        console.log(array1);
+        if(array1[0] === 0)
+            alert(board.isEnd(true));
+        board.move(array1[0],array1[1],array1[0].possibleMoves(board));
+        draw_board();
+        draw_pieces(board.getPieces());
+        let array = blackbot.nextMove(board);
+        console.log(array);
+        if(array[0] === 0)
+            alert(board.isEnd(false));
+        board.move(array[0],array[1],array[0].possibleMoves(board));
+        draw_board();
+        draw_pieces(board.getPieces());
+        updatePlayedMoves();
+    }
+
 }
 
 function draw_square(i,j,colora,colorb){

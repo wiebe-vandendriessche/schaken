@@ -7,7 +7,7 @@ export {King};
 class King extends APiece{
 
     constructor(pos,kleur,imageLoad) {
-        super(pos,kleur?30:-30,kleur,kleur?"w_king":"b_king",imageLoad);
+        super(pos,kleur?1000:-1000,kleur,kleur?"w_king":"b_king",imageLoad);
         this.moved=false;
     }
 

@@ -6,6 +6,7 @@ import {Pawn} from "../Pieces/Pawn.js";
 import {Queen} from "../Pieces/Queen.js";
 import {Rook} from "../Pieces/Rook.js";
 import {Coordinate} from "../Coordinate.js";
+import {Evaluation} from "./Evaluation.js";
 
 export class Bot{
     constructor(color, depth) {
@@ -15,25 +16,34 @@ export class Bot{
 
     minimax(board, depth, alpha, beta, color){
         let speelveld = board.board;
-        if(depth === 0){
+        let aantalMoves = 0;
+        for(let y = 0; y < 8; y++){
+            for(let x = 0; x < 8; x++){
+                let piece = speelveld[y][x];
+                if(piece !== 0){
+                    aantalMoves += board.legalchecker.possibleMoves(piece, false).length;
+                }
+            }
+        }
+        if(depth === 0 || aantalMoves === 0){
             return this.evaluation(board);
         }
         if(color){
             let maxEval = undefined;
-            for(let y = 0; y < 7; y++){
-                for(let x = 0; x < 7; x++){
+            for(let y = 0; y < 8; y++){
+                for(let x = 0; x < 8; x++){
                     let piece = speelveld[y][x];
                     if(piece !== 0 && piece.kleur === color){
                         let posMoves = board.legalchecker.possibleMoves(piece, false);
                         for(let cord of posMoves){
                             let cloneBoard = board.clone();
                             let fakePiece = cloneBoard.board[piece.pos.y][piece.pos.x];
-                            cloneBoard.move(fakePiece, cord, fakePiece.possibleMoves(cloneBoard));
+                            cloneBoard.move(fakePiece, cord, posMoves);
                             let val = this.minimax(cloneBoard, depth-1, alpha, beta, !color);
                             if(maxEval === undefined || val > maxEval)
                                 maxEval = val;
-                            if(alpha === undefined ||alpha < val)
-                                alpha = val
+                            if(alpha < val)
+                                alpha = val;
                             if(beta <= alpha)
                                 return maxEval;
                         }
@@ -44,19 +54,19 @@ export class Bot{
         }
         else{
             let minEval = undefined;
-            for(let y = 0; y < 7; y++){
-                for(let x = 0; x < 7; x++){
+            for(let y = 0; y < 8; y++){
+                for(let x = 0; x < 8; x++){
                     let piece = speelveld[y][x];
                     if(piece !== 0 && piece.kleur === color){
                         let posMoves = board.legalchecker.possibleMoves(piece, false);
                         for(let cord of posMoves){
                             let cloneBoard = board.clone();
                             let fakePiece = cloneBoard.board[y][x];
-                            cloneBoard.move(fakePiece, cord, fakePiece.possibleMoves(cloneBoard));
+                            cloneBoard.move(fakePiece, cord, posMoves);
                             let val = this.minimax(cloneBoard, depth-1, alpha, beta, !color);
                             if(minEval === undefined || val < minEval)
                                 minEval = val;
-                            if(beta === undefined ||beta > val)
+                            if(beta > val)
                                 beta = val;
                             if(beta <= alpha)
                                 return minEval;
@@ -70,9 +80,9 @@ export class Bot{
 
     evaluation(board){
         let speelveld = board.board;
-        let values = 0
-        for(let y = 0; y < 7; y++){
-            for(let x = 0; x < 7; x++) {
+        let values = 0;
+        for(let y = 0; y < 8; y++){
+            for(let x = 0; x < 8; x++) {
                 let piece = speelveld[y][x];
                 if(piece !== 0){
                     values += piece.value;
@@ -86,18 +96,18 @@ export class Bot{
         let speelveld = board.board;
         let array;
         let mainEval;
-        for(let y = 0; y < 7; y++){
-            for(let x = 0; x < 7; x++){
+        for(let y = 0; y < 8; y++){
+            for(let x = 0; x < 8; x++){
                 let piece = speelveld[y][x];
                 if(piece !== 0 && piece.kleur === this.color){
                     let array2 = [0, 0];
-                    let subEval;
+                    let subEval = undefined;
                     let posMoves = board.legalchecker.possibleMoves(piece, false);
                     for(let cord of posMoves){
                         let cloneBoard = board.clone();
                         let fakePiece = cloneBoard.board[y][x];
-                        cloneBoard.move(fakePiece, cord, fakePiece.possibleMoves(cloneBoard));
-                        let val = this.minimax(cloneBoard, this.depth, undefined, undefined, this.color);
+                        cloneBoard.move(fakePiece, cord, posMoves);
+                        let val = this.minimax(cloneBoard, this.depth, -10000, 10000, this.color);
                         if(this.color && (subEval === undefined || subEval < val)){
                             subEval = val;
                             array2 = [piece, cord];
@@ -118,6 +128,7 @@ export class Bot{
                 }
             }
         }
+        console.log(mainEval, this.color);
         return array;
     }
 }

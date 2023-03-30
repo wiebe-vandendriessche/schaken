@@ -20,7 +20,6 @@ draw_pieces(board.getPieces());
 
 function dummy(){
 
-
 }
 
 function draw_square(i,j,colora,colorb){
@@ -105,8 +104,3 @@ function draw_board() {
      console.log(board.getAlleMovesPlayedInGame());
      text.textContent=board.getAlleMovesPlayedInGame();
  }
-
- // temporary
-
-
-

@@ -36,14 +36,13 @@ export class LegalChecker{
                 }
             }
         }
-
         return attackmap;
     }
+
     isChecked(color) {
 
         let attackmap=this.updateAttackMap(!color);
         let king= color? this.whiteking: this.blackking;
-
         if (attackmap[king.pos.y][king.pos.x]!==0){
 
             return true;
@@ -52,6 +51,7 @@ export class LegalChecker{
             return false;
         }
     }
+
     possibleMoves(piece,isCached){
         if(isCached){
             return this.possiblemoves;
@@ -71,8 +71,8 @@ export class LegalChecker{
 
             return realmoves;
         }
-
     }
+
     clone(Boardvirtual){
         let lchecker= new LegalChecker(Boardvirtual);
         for (let y = 0; y < 8; y++) {
@@ -91,6 +91,7 @@ export class LegalChecker{
         }
         return lchecker;
     }
+    
     isEnd(color){
         let allrealmoves=0;
         for (let y = 0; y < 8; y++) {
@@ -101,7 +102,6 @@ export class LegalChecker{
                 }
             }
         }
-        console.log(allrealmoves);
         if (allrealmoves!==0){
             return 0;
         }else if (this.isChecked(color)){

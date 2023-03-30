@@ -1,0 +1,33 @@
+@startuml king check in board
+
+start
+note
+chek check
+end note
+:get position of king;
+:regenerate atackmap;
+switch (kingmap)
+case(>2)
+    :return true+king_has_to_move;
+case(1)
+    :return true;
+case(0)
+    :return false;
+endswitch
+stop
+
+
+start
+note
+    regenerate atackmap
+end note
+:get color;
+:get all alive Pieces;
+repeat
+    :piece posiblemoves;
+    :increas position of possible moves;
+repeat while () is (yes)
+
+
+stop
+@enduml

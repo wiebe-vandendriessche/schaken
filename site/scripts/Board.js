@@ -8,10 +8,7 @@ import {Rook} from "./Pieces/Rook.js";
 import {Coordinate} from "./Coordinate.js";
 
 import {LegalChecker} from "./LegalChecker.js";
-
 import {MoveCacher} from "./MoveCacher.js";
-
-
 
 export {Board};
 
@@ -29,7 +26,6 @@ class Board {
 
 
     }
-
 
     setupPieces() {
         for (let i = 0; i < 8; i++) {
@@ -61,6 +57,7 @@ class Board {
             }
         }
     }
+
     possibleMoves(cord) {
         let piece = this.board[cord.y][cord.x];
         return this.legalchecker.possibleMoves(piece,false);
@@ -71,7 +68,6 @@ class Board {
     }
 
     moveWithCheck(piece,cord){
-
         let realmoves=this.legalchecker.possibleMoves(piece,true);
         if(this.move(piece,cord,realmoves)){
             this.amountOfMoves++;
@@ -105,13 +101,9 @@ class Board {
         return true;
     }
 
-
     colorToMove(){
         return this.amountOfMoves%2===0;
     }
-
-
-
 
     clone(){
         let newboard= new Board(false);
@@ -148,8 +140,5 @@ class Board {
         }else {
             return "continue";
         }
-    }
-    canMove() {
-
     }
 }

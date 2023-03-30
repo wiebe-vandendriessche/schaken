@@ -6,6 +6,7 @@ import {Pawn} from "./Pieces/Pawn.js";
 import {Queen} from "./Pieces/Queen.js";
 import {Rook} from "./Pieces/Rook.js";
 import {Coordinate} from "./Coordinate.js";
+import {LegalChecker} from "./LegalChecker.js";
 
 
 export {Board};
@@ -13,12 +14,12 @@ export {Board};
 class Board {
     constructor(setup) {
         this.board = [[], [], [], [], [], [], [], []];
-        this.whiteking;
-        this.blackking;
-        if (setup){this.setupPieces();}
+
+        if (setup) {
+            this.setupPieces();
+        }
+        this.legalchecker= new LegalChecker(this);
         this.amountOfMoves=0;
-        this.attackMapWhite=[[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]];
-        this.attackMapBlack=[[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]];
 
     }
 
@@ -29,7 +30,7 @@ class Board {
             this.board[6][i] = new Pawn(new Coordinate(i, 6), true);
         }
 
-        this.whiteking=this.board[7][4] = new King(new Coordinate(4, 7), true);
+        this.board[7][4] = new King(new Coordinate(4, 7), true);
         this.board[7][3] = new Queen(new Coordinate(3,7), true);
         this.board[7][2] = new Bisshop(new Coordinate(2, 7), true);
         this.board[7][5] = new Bisshop(new Coordinate(5, 7), true);
@@ -38,7 +39,7 @@ class Board {
         this.board[7][6] = new Knight(new Coordinate(6, 7), true);
         this.board[7][7] = new Rook(new Coordinate(7, 7), true);
 
-        this.blackking=this.board[0][4] = new King(new Coordinate(4, 0), false);
+        this.board[0][4] = new King(new Coordinate(4, 0), false);
         this.board[0][3] = new Queen(new Coordinate(3, 0), false);
         this.board[0][2] = new Bisshop(new Coordinate(2, 0), false);
         this.board[0][5] = new Bisshop(new Coordinate(5, 0), false);
@@ -53,9 +54,9 @@ class Board {
             }
         }
     }
-    possible_moves(cord) {
+    possibleMoves(cord) {
         let piece = this.board[cord.y][cord.x];
-        return piece.possibleMoves(this);
+        return this.legalchecker.possibleMoves(piece,false);
     }
 
     getPieces() {
@@ -63,16 +64,11 @@ class Board {
     }
 
     moveWithCheck(piece,cord){
-        let virtualbord= this.clone();
-        let virtualpiece=virtualbord.board[piece.pos.y][piece.pos.x];
-        if(virtualbord.move(virtualpiece,cord)){
-            if (virtualbord.isChecked(piece.kleur)){
-                return false;
-            }else {
-                this.move(piece,cord);
-                this.amountOfMoves++;
-                return true;
-            }
+        let realmoves=this.legalchecker.possibleMoves(piece,true);
+        if(this.move(piece,cord,realmoves)){
+            this.amountOfMoves++;
+            return true;
+
         }else {
             return false;
         }
@@ -80,8 +76,7 @@ class Board {
     }
 
 
-    move(piece,cord){
-        let possible_moves = piece.possibleMoves(this);
+    move(piece,cord, possible_moves){
         let good = false;
         let counter = 0;
         while(!good && counter < possible_moves.length){
@@ -105,51 +100,10 @@ class Board {
         return this.amountOfMoves%2===0;
     }
 
-    updateAttackMap(color){
-        if(color){
-            this.attackMapWhite=[[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]];
-        }else{
-            this.attackMapBlack=[[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]];
-        }
-        let attackmap= color? this.attackMapWhite:this.attackMapBlack;
 
-        for (let y = 0; y <8 ; y++) {
-            for (let x = 0; x <8; x++) {
-                let piece=this.board[y][x];
-                if (piece!==0 && piece.kleur===color){
-                    let posmoves;
-                    if(piece instanceof Pawn){
-                        posmoves=piece.attackMoves(this);
-                    }else{
-                        posmoves=piece.possibleMoves(this);
-                    }
 
-                    for (let move of posmoves){
-                        attackmap[move.y][move.x]++;
-                    }
-                }
-            }
-        }
 
-        return attackmap;
-    }
-    showMoves() {
 
-    }
-
-    isChecked(color) {
-
-        let attackmap=this.updateAttackMap(!color);
-        let king= color? this.whiteking: this.blackking;
-        console.log(king);
-        if (attackmap[king.pos.y][king.pos.x]!==0){
-            console.log("KING CHECKED");
-            return true;
-        }else{
-
-            return false;
-        }
-    }
     clone(){
         let newboard= new Board(false);
         newboard.amountOfMoves=this.amountOfMoves;
@@ -161,9 +115,9 @@ class Board {
                     newboard.board[y][x]=virtpiece;
                     if (piece instanceof King){
                         if (piece.kleur){
-                            newboard.whiteking=virtpiece;
+                            newboard.legalchecker.whiteking=virtpiece;
                         }else{
-                            newboard.blackking=virtpiece;
+                            newboard.legalchecker.blackking=virtpiece;
                         }
                     }
                 }else{
@@ -171,10 +125,21 @@ class Board {
                 }
             }
         }
+        newboard.legalchecker.clone(newboard);
         return newboard;
 
     }
-
+    isEnd(color){
+        let nummer=this.legalchecker.isEnd(color);
+        console.log(color,nummer)
+        if (1===nummer){
+            return "checkmate";
+        }else if (2===nummer){
+            return "stalemate";
+        }else {
+            return "continue";
+        }
+    }
     canMove() {
 
     }

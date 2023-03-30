@@ -5,11 +5,12 @@ class Board {
     -amountOfMoves:int
     +Board(alreadySetup:bool)
     -setupPieces():void
-    +move(piece:Apiece,cord:Coordinate):bool
-    +possibleMoves(piece:Apiece):Coordinate[]
+    +moveWithChecked(piece:Apiece,cord:Coordinate)
+    +move(piece:Apiece,cord:Coordinate,posMoves:Coordinates[]):bool
+    +possibleMoves(cord:Coordinate):Coordinate[]
     +colorToMove():bool
-    +Clone():Board
-    +IsEnd(color:bool):string
+    +clone():Board
+    +isEnd(color:bool):string
 }
 abstract class Apiece {
     +value:int
@@ -19,7 +20,7 @@ abstract class Apiece {
     +Apiece(pos:Coordinate,value:int,color:bool,img:string)
     +possibleMoves(board:Board) {abstract}
     +move(cord:Coordinate) {abstract}
-    +Clone():Apiece {abstract}
+    +clone():Apiece {abstract}
 
 }
 
@@ -72,13 +73,14 @@ class LegalChecker{
     +attackMapBlack:int[][]
     +whiteKing:King
     +blackKing:King
-    -possiblemoves:Coordinate[]
-    +LegalChecker()
+    -possibleMoves:Coordinate[]
+    +LegalChecker(board:Board)
     - updateAttackMap(color:bool):void
-    + IsChecked(color:bool): bool
-    + possibleMoves(piece):Coordinate[]
-    + IsCheckMate(color:bool):bool
-    + IsStaleMate(color:bool):bool
+    + isChecked(color:bool): bool
+    + possibleMoves(piece,isCached):Coordinate[]
+    + isEnd(color):int
+    
+    + clone(Boardvirtual):LegalChecker
 }
 note right : Seperation of concerns: \nchecking legal moves in \nLegalChecker instead of in Board
 

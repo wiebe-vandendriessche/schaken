@@ -81,10 +81,15 @@ function draw_board() {
          draw_pieces(board.getPieces())
          clicked=false;
          clicked_piece=0;
+         let status= board.isEnd(!color);
+         console.log(status);
+         if (status!=="continue"){
+             setTimeout(()=>{alert(status)},1000);
+         }
      }else{
 
          if(piece_clicked_now!==0 && piece_clicked_now.kleur===color){
-             draw_posible(board.possible_moves(cord));
+             draw_posible(board.possibleMoves(cord));
              clicked_piece=piece_clicked_now
              clicked=true
          }

@@ -19,7 +19,7 @@ export class Bot{
         // this.counter++;
         // console.log(this.counter);
         if(depth === 0){
-            return Evaluation.materialCount(board);
+            return Evaluation.Evaluate(board, color);
         }
         if(color){
             let maxEval = undefined;
@@ -45,7 +45,7 @@ export class Bot{
             }
             // console.log("maxEval: " + maxEval);
             if(maxEval === undefined)
-                return Evaluation.materialCount(board);
+                return Evaluation.Evaluate(board, color);
             return maxEval;
         }
         else{
@@ -72,7 +72,7 @@ export class Bot{
             }
             // console.log("minEval: " + minEval);
             if(minEval === undefined)
-                return Evaluation.materialCount(board);
+                return Evaluation.Evaluate(board, color);
             return minEval;
         }
     }

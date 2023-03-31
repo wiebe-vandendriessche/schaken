@@ -4,11 +4,24 @@
 export class Evaluation{
 
 
-    static Evaluate(board){
+    static Evaluate(board, color){
         let totalValue = 0;
         totalValue += this.materialCount(board);
-
+        totalValue += this.checkmate(board, color);
         return totalValue;
+    }
+
+    static checkmate(board, color){
+        if(color && board.legalchecker.isChecked(color) && board.isEnd(color) === "checkmate") {
+            console.log("HONK");
+            return -2000;
+        }
+        if(!color && board.legalchecker.isChecked(!color) && board.isEnd(!color).localeCompare("checkmate") === 0) {
+            console.log("HOKN");
+            return 2000;
+        }
+        else
+            return 0;
     }
 
     static materialCount(board){

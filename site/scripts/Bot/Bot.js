@@ -12,21 +12,14 @@ export class Bot{
     constructor(color, depth) {
         this.color = color;
         this.depth = depth;
+        // this.counter = 0;
     }
-
     minimax(board, depth, alpha, beta, color){
         let speelveld = board.board;
-        let aantalMoves = 0;
-        for(let y = 0; y < 8; y++){
-            for(let x = 0; x < 8; x++){
-                let piece = speelveld[y][x];
-                if(piece !== 0){
-                    aantalMoves += board.legalchecker.possibleMoves(piece, false).length;
-                }
-            }
-        }
-        if(depth === 0 || aantalMoves === 0){
-            return this.evaluation(board);
+        // this.counter++;
+        // console.log(this.counter);
+        if(depth === 0){
+            return Evaluation.materialCount(board);
         }
         if(color){
             let maxEval = undefined;
@@ -50,6 +43,9 @@ export class Bot{
                     }
                 }
             }
+            // console.log("maxEval: " + maxEval);
+            if(maxEval === undefined)
+                return Evaluation.materialCount(board);
             return maxEval;
         }
         else{
@@ -58,7 +54,7 @@ export class Bot{
                 for(let x = 0; x < 8; x++){
                     let piece = speelveld[y][x];
                     if(piece !== 0 && piece.kleur === color){
-                        let posMoves = board.legalchecker.possibleMoves(piece, false);
+                        let posMoves = board.legalchecker.possibleMoves(piece);
                         for(let cord of posMoves){
                             let cloneBoard = board.clone();
                             let fakePiece = cloneBoard.board[y][x];
@@ -74,22 +70,11 @@ export class Bot{
                     }
                 }
             }
+            // console.log("minEval: " + minEval);
+            if(minEval === undefined)
+                return Evaluation.materialCount(board);
             return minEval;
         }
-    }
-
-    evaluation(board){
-        let speelveld = board.board;
-        let values = 0;
-        for(let y = 0; y < 8; y++){
-            for(let x = 0; x < 8; x++) {
-                let piece = speelveld[y][x];
-                if(piece !== 0){
-                    values += piece.value;
-                }
-            }
-        }
-        return values;
     }
 
     nextMove(board){
@@ -107,7 +92,7 @@ export class Bot{
                         let cloneBoard = board.clone();
                         let fakePiece = cloneBoard.board[y][x];
                         cloneBoard.move(fakePiece, cord, posMoves);
-                        let val = this.minimax(cloneBoard, this.depth, -10000, 10000, this.color);
+                        let val = this.minimax(cloneBoard, this.depth, -10000, 10000, !this.color);
                         if(this.color && (subEval === undefined || subEval < val)){
                             subEval = val;
                             array2 = [piece, cord];

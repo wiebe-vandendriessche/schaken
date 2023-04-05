@@ -12,16 +12,16 @@ import {MoveCacher} from "./MoveCacher.js";
 export {Board};
 
 class Board {
+    static PlayedMoves = new MoveCacher();
+
     constructor(setup) {
         this.board = [[], [], [], [], [], [], [], []];
         this.whiteking;
         this.blackking;
         if (setup){this.setupPieces();}
         this.amountOfMoves=0;
-        this.playedMoves= new MoveCacher();
         this.attackMapWhite=[[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]];
         this.attackMapBlack=[[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]];
-
     }
 
 
@@ -68,21 +68,19 @@ class Board {
         let virtualbord= this.clone();
         let virtualpiece=virtualbord.board[piece.pos.y][piece.pos.x];
         if(virtualbord.move(virtualpiece,cord)){
+            Board.PlayedMoves.undoVirtualMoves(this);//omdat Board.played moves static is moet eerst alle mogelijke zetten die gedaan zijn op een virtueel bord ongedaan gemaakt worden
             if (virtualbord.isChecked(piece.kleur)){
                 return false;
             }else {
                 this.move(piece,cord);
+                console.log(Board.PlayedMoves);
                 this.amountOfMoves++;
-                this.playedMoves.Moveadd(cord,this.amountOfMoves,this);
+                Board.PlayedMoves.Moveadd(cord,this.amountOfMoves,this);
                 return true;
             }
         }else {
             return false;
         }
-    }
-
-    getAlleMovesPlayedInGame(){
-        return this.playedMoves.GetMoves();
     }
 
     move(piece,cord){
@@ -146,9 +144,9 @@ class Board {
 
         let attackmap=this.updateAttackMap(!color);
         let king= color? this.whiteking: this.blackking;
-        console.log(king);
+        //console.log(king);
         if (attackmap[king.pos.y][king.pos.x]!==0){
-            console.log("KING CHECKED");
+            //console.log("KING CHECKED");
             return true;
         }else{
 
@@ -181,7 +179,12 @@ class Board {
     }
 
     PrieviesPosition(){
-        return this.playedMoves.ReturnToPreviousMoves()
+
+        return Board.PlayedMoves.ReturnToPreviousMoves()
+    }
+
+    getAlleMovesPlayedInGame(){
+        return Board.PlayedMoves.GetMoves();
     }
 
     canMove() {

@@ -24,7 +24,7 @@ class Pawn extends APiece {
         let factor = this.kleur ? -1 : 1
         //console.log(veld[y]);
         //console.log(y + 2 * factor);
-        console.log(this.moved);
+        //console.log(this.moved);
         if (!this.moved && veld[y + 1 * factor][x] === 0 && veld[y + 2 * factor][x] === 0) {
             possiblemoves.push(new Coordinate(x, y + 1 * factor));
             possiblemoves.push(new Coordinate(x, y + 2 * factor));

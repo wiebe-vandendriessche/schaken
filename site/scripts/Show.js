@@ -13,12 +13,18 @@ let board= new Board(true);
 let clicked=false;
 let clicked_piece=0;
 
-//console.log(board.getPieces());
-//dummy();
 draw_board();
 draw_pieces(board.getPieces());
 
+function dummy(){
+    if(Board.PlayedMoves.moves!==""){
+        ReturnToPreviousBoard();
+        updatePlayedMoves();
+        draw_board();
+        draw_pieces(board.getPieces());
+    }
 
+}
 function draw_square(i,j,colora,colorb){
     ctx.beginPath();
     if ((i + j) % 2 === 0) {
@@ -62,22 +68,26 @@ function draw_board() {
     }
  }
 
-
+window.addEventListener("keypress",dummy)
  canvas.addEventListener("click",(event)=>{play_move_player(event)});
  function play_move_player(event){
+
      let rect=canvas.getBoundingClientRect();
      let x=Math.floor((event.clientX-rect.x)/square_size);
      let y=Math.floor((event.clientY-rect.y)/square_size);
      let piece_clicked_now=board.getPieces()[y][x];
      let cord=new Coordinate(x,y);
      let color=board.colorToMove();
+     console.log(Board.PlayedMoves);
      if(clicked){
+         console.log(Board.PlayedMoves);
          board.moveWithCheck(clicked_piece,cord);
          draw_board()
          draw_pieces(board.getPieces())
          updatePlayedMoves()
          clicked=false;
          clicked_piece=0;
+
      }else{
 
          if(piece_clicked_now!==0 && piece_clicked_now.kleur===color){
@@ -86,6 +96,7 @@ function draw_board() {
              clicked=true;
          }
      }
+
  }
 
  function ReturnToPreviousBoard(){

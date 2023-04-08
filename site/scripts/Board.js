@@ -67,6 +67,7 @@ class Board {
 
     moveWithCheck(piece,cord){
         let realmoves=this.legalchecker.possibleMoves(piece,true);
+        Board.PlayedMoves.undoVirtualMoves(this)
         if(this.move(piece,cord,realmoves)){
             this.amountOfMoves++;
             Board.PlayedMoves.Moveadd(cord,this.amountOfMoves,this);
@@ -115,7 +116,7 @@ class Board {
             for (let x = 0; x < 8; x++) {
                 let piece=this.board[y][x];
                 if (piece!==0){
-                    let virtpiece=this.board[y][x].clone(imageOnLoad);
+                    let virtpiece=this.board[y][x].clone(true);
                     newboard.board[y][x]=virtpiece;
                     if (piece instanceof King){
                         if (piece.kleur){

@@ -48,8 +48,8 @@ class King extends APiece{
         this.pos = cord;
         this.moved=true;
     }
-    clone() {
-        let king=new King(new Coordinate(this.pos.x,this.pos.y),this.kleur,false);
+    clone(imageOnLoad) {
+        let king=new King(new Coordinate(this.pos.x,this.pos.y),this.kleur,imageOnLoad);
         king.moved=this.moved;
         return king;
     }

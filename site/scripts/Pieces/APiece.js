@@ -24,7 +24,7 @@ class APiece {
         }
     }
 
-    clone() {
+    clone(imageOnLoad) {
         throw new Error("Method 'show()' must be implemented.");
     }
 

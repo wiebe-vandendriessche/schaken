@@ -13,6 +13,8 @@ import {MoveCacher} from "./MoveCacher.js";
 export {Board};
 
 class Board {
+    static PlayedMoves = new MoveCacher();
+
     constructor(setup) {
         this.board = [[], [], [], [], [], [], [], []];
 
@@ -21,10 +23,6 @@ class Board {
         }
         this.legalchecker= new LegalChecker(this);
         this.amountOfMoves=0;
-
-        this.playedMoves= new MoveCacher();
-
-
     }
 
     setupPieces() {
@@ -71,15 +69,16 @@ class Board {
         let realmoves=this.legalchecker.possibleMoves(piece,true);
         if(this.move(piece,cord,realmoves)){
             this.amountOfMoves++;
-            this.playedMoves.Moveadd(cord,this.amountOfMoves);
+            Board.PlayedMoves.Moveadd(cord,this.amountOfMoves,this);
             return true;
         }else {
             return false;
         }
     }
 
+
     getAlleMovesPlayedInGame(){
-        return this.playedMoves.GetMoves();
+        return Board.PlayedMoves.GetMoves();
     }
 
     move(piece,cord, possible_moves){
@@ -106,14 +105,17 @@ class Board {
         return this.amountOfMoves%2===0;
     }
 
-    clone(){
+
+
+
+    clone(imageOnLoad){
         let newboard= new Board(false);
         newboard.amountOfMoves=this.amountOfMoves;
         for (let y = 0; y < 8; y++) {
             for (let x = 0; x < 8; x++) {
                 let piece=this.board[y][x];
                 if (piece!==0){
-                    let virtpiece=this.board[y][x].clone();
+                    let virtpiece=this.board[y][x].clone(imageOnLoad);
                     newboard.board[y][x]=virtpiece;
                     if (piece instanceof King){
                         if (piece.kleur){
@@ -131,15 +133,22 @@ class Board {
         return newboard;
 
     }
-    isEnd(color){
-        let nummer=this.legalchecker.isEnd(color);
-
-        if (1===nummer){
+    isEnd(color) {
+        let nummer = this.legalchecker.isEnd(color);
+        if (1 === nummer) {
             return "checkmate";
-        }else if (2===nummer){
+        } else if (2 === nummer) {
             return "stalemate";
-        }else {
+        } else {
             return "continue";
         }
     }
+
+    PrevouisPosition(){
+
+        return Board.PlayedMoves.ReturnToPreviousMoves()
+    }
+
+
+
 }

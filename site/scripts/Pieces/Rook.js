@@ -21,9 +21,9 @@ export class Rook extends APiece{
     move(cord) {
         this.pos = cord;
     }
-    clone() {
+    clone(imageOnLoad) {
 
-        return new Rook(new Coordinate(this.pos.x,this.pos.y),this.kleur,false);
+        return new Rook(new Coordinate(this.pos.x,this.pos.y),this.kleur,imageOnLoad);
     }
 }
 

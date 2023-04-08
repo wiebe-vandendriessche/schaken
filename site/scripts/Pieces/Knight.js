@@ -36,8 +36,8 @@ export class Knight extends APiece{
     move(cord) {
         this.pos = cord;
     }
-    clone() {
+    clone(imageOnLoad) {
 
-        return new Knight(new Coordinate(this.pos.x,this.pos.y),this.kleur,false);
+        return new Knight(new Coordinate(this.pos.x,this.pos.y),this.kleur,imageOnLoad);
     }
 }

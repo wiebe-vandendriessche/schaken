@@ -59,7 +59,7 @@ export class LegalChecker{
             let pseudolegalmoves=piece.possibleMoves(this.Board);
             let realmoves=[];
             for (let coord of pseudolegalmoves){
-                let cloneBoard=this.Board.clone();
+                let cloneBoard=this.Board.clone(false);
                 let virtpiece= cloneBoard.board[piece.pos.y][piece.pos.x];
                 cloneBoard.move(virtpiece,coord,pseudolegalmoves);
                 if (!cloneBoard.legalchecker.isChecked(piece.kleur)){
@@ -93,7 +93,7 @@ export class LegalChecker{
     }
     
     isEnd(color){
-        let allrealmoves=0;
+
         for (let y = 0; y < 8; y++) {
             for (let x = 0; x < 8; x++) {
                 let piece = this.Board.board[y][x];

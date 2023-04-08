@@ -24,7 +24,7 @@ class Pawn extends APiece {
         let factor = this.kleur ? -1 : 1
         //console.log(veld[y]);
         //console.log(y + 2 * factor);
-//        console.log(this.moved);
+
         if (!this.moved && veld[y + 1 * factor][x] === 0 && veld[y + 2 * factor][x] === 0) {
             possiblemoves.push(new Coordinate(x, y + 1 * factor));
             possiblemoves.push(new Coordinate(x, y + 2 * factor));
@@ -66,8 +66,8 @@ class Pawn extends APiece {
         return possiblemoves;
     }
 
-    clone() {
-        let pawn=new Pawn(new Coordinate(this.pos.x,this.pos.y),this.kleur,false);
+    clone(imageOnLoad) {
+        let pawn=new Pawn(new Coordinate(this.pos.x,this.pos.y),this.kleur,imageOnLoad);
         pawn.moved=this.moved;
         return pawn;
     }

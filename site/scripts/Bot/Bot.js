@@ -29,7 +29,7 @@ export class Bot{
                     if(piece !== 0 && piece.kleur === color){
                         let posMoves = piece.possibleMoves(board);
                         for(let cord of posMoves){
-                            let cloneBoard = board.clone();
+                            let cloneBoard = board.clone(false);
                             let fakePiece = cloneBoard.board[piece.pos.y][piece.pos.x];
                             cloneBoard.move(fakePiece, cord, posMoves);
                             if (!cloneBoard.legalchecker.isChecked(piece.kleur)) {
@@ -58,7 +58,7 @@ export class Bot{
                     if(piece !== 0 && piece.kleur === color){
                         let posMoves = piece.possibleMoves(board);
                         for(let cord of posMoves){
-                            let cloneBoard = board.clone();
+                            let cloneBoard = board.clone(false);
                             let fakePiece = cloneBoard.board[y][x];
                             cloneBoard.move(fakePiece, cord, posMoves);
                             if (!cloneBoard.legalchecker.isChecked(piece.kleur)) {
@@ -93,7 +93,7 @@ export class Bot{
                     let subEval = undefined;
                     let posMoves = board.legalchecker.possibleMoves(piece);
                     for(let cord of posMoves) {
-                        let cloneBoard = board.clone();
+                        let cloneBoard = board.clone(false);
                         let fakePiece = cloneBoard.board[y][x];
                         cloneBoard.move(fakePiece, cord, posMoves);
                         if (!cloneBoard.legalchecker.isChecked(piece.kleur)) {

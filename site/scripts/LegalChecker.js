@@ -98,13 +98,13 @@ export class LegalChecker{
             for (let x = 0; x < 8; x++) {
                 let piece = this.Board.board[y][x];
                 if (piece!==0 && piece.kleur===color) {
-                    allrealmoves+=this.possibleMoves(piece, false).length;
+                    if(this.possibleMoves(piece, false).length!==0){
+                        return 0;
+                    }
                 }
             }
         }
-        if (allrealmoves!==0){
-            return 0;
-        }else if (this.isChecked(color)){
+        if (this.isChecked(color)){
             return 1;
         }else {
             return  2;

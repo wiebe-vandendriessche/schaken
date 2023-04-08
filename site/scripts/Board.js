@@ -102,6 +102,7 @@ class Board {
     }
 
     colorToMove(){
+
         return this.amountOfMoves%2===0;
     }
 
@@ -132,7 +133,7 @@ class Board {
     }
     isEnd(color){
         let nummer=this.legalchecker.isEnd(color);
-        console.log(color,nummer)
+
         if (1===nummer){
             return "checkmate";
         }else if (2===nummer){

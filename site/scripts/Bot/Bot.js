@@ -19,7 +19,7 @@ export class Bot{
         // this.counter++;
         // console.log(this.counter);
         if(depth === 0){
-            return Evaluation.materialCount(board);
+            return Evaluation.Evaluate(board, color);
         }
         if(color){
             let maxEval = undefined;
@@ -27,25 +27,27 @@ export class Bot{
                 for(let x = 0; x < 8; x++){
                     let piece = speelveld[y][x];
                     if(piece !== 0 && piece.kleur === color){
-                        let posMoves = board.legalchecker.possibleMoves(piece, false);
+                        let posMoves = piece.possibleMoves(board);
                         for(let cord of posMoves){
                             let cloneBoard = board.clone();
                             let fakePiece = cloneBoard.board[piece.pos.y][piece.pos.x];
                             cloneBoard.move(fakePiece, cord, posMoves);
-                            let val = this.minimax(cloneBoard, depth-1, alpha, beta, !color);
-                            if(maxEval === undefined || val > maxEval)
-                                maxEval = val;
-                            if(alpha < val)
-                                alpha = val;
-                            if(beta <= alpha)
-                                return maxEval;
+                            if (!cloneBoard.legalchecker.isChecked(piece.kleur)) {
+                                let val = this.minimax(cloneBoard, depth - 1, alpha, beta, !color);
+                                if (maxEval === undefined || val > maxEval)
+                                    maxEval = val;
+                                if (alpha < val)
+                                    alpha = val;
+                                if (beta <= alpha)
+                                    return maxEval;
+                            }
                         }
                     }
                 }
             }
             // console.log("maxEval: " + maxEval);
             if(maxEval === undefined)
-                return Evaluation.materialCount(board);
+                return Evaluation.Evaluate(board, color);
             return maxEval;
         }
         else{
@@ -54,25 +56,27 @@ export class Bot{
                 for(let x = 0; x < 8; x++){
                     let piece = speelveld[y][x];
                     if(piece !== 0 && piece.kleur === color){
-                        let posMoves = board.legalchecker.possibleMoves(piece);
+                        let posMoves = piece.possibleMoves(board);
                         for(let cord of posMoves){
                             let cloneBoard = board.clone();
                             let fakePiece = cloneBoard.board[y][x];
                             cloneBoard.move(fakePiece, cord, posMoves);
-                            let val = this.minimax(cloneBoard, depth-1, alpha, beta, !color);
-                            if(minEval === undefined || val < minEval)
-                                minEval = val;
-                            if(beta > val)
-                                beta = val;
-                            if(beta <= alpha)
-                                return minEval;
+                            if (!cloneBoard.legalchecker.isChecked(piece.kleur)) {
+                                let val = this.minimax(cloneBoard, depth - 1, alpha, beta, !color);
+                                if (minEval === undefined || val < minEval)
+                                    minEval = val;
+                                if (beta > val)
+                                    beta = val;
+                                if (beta <= alpha)
+                                    return minEval;
+                            }
                         }
                     }
                 }
             }
             // console.log("minEval: " + minEval);
             if(minEval === undefined)
-                return Evaluation.materialCount(board);
+                return Evaluation.Evaluate(board, color);
             return minEval;
         }
     }
@@ -87,28 +91,28 @@ export class Bot{
                 if(piece !== 0 && piece.kleur === this.color){
                     let array2 = [0, 0];
                     let subEval = undefined;
-                    let posMoves = board.legalchecker.possibleMoves(piece, false);
-                    for(let cord of posMoves){
+                    let posMoves = board.legalchecker.possibleMoves(piece);
+                    for(let cord of posMoves) {
                         let cloneBoard = board.clone();
                         let fakePiece = cloneBoard.board[y][x];
                         cloneBoard.move(fakePiece, cord, posMoves);
-                        let val = this.minimax(cloneBoard, this.depth, -10000, 10000, !this.color);
-                        if(this.color && (subEval === undefined || subEval < val)){
-                            subEval = val;
-                            array2 = [piece, cord];
+                        if (!cloneBoard.legalchecker.isChecked(piece.kleur)) {
+                            let val = this.minimax(cloneBoard, this.depth, -20000, 20000, !this.color);
+                            if (this.color && (subEval === undefined || subEval < val)) {
+                                subEval = val;
+                                array2 = [piece, cord];
+                            } else if (!this.color && (subEval === undefined || subEval > val)) {
+                                subEval = val;
+                                array2 = [piece, cord];
+                            }
                         }
-                        else if(!this.color && (subEval === undefined || subEval > val)){
-                            subEval = val;
-                            array2 = [piece, cord];
+                        if (this.color && (mainEval === undefined || subEval > mainEval)) {
+                            mainEval = subEval;
+                            array = array2;
+                        } else if (!this.color && (mainEval === undefined || subEval < mainEval)) {
+                            mainEval = subEval;
+                            array = array2;
                         }
-                    }
-                    if(this.color && (mainEval === undefined || subEval > mainEval)){
-                        mainEval = subEval;
-                        array = array2;
-                    }
-                    else if(!this.color && (mainEval === undefined || subEval < mainEval)){
-                        mainEval = subEval;
-                        array = array2;
                     }
                 }
             }

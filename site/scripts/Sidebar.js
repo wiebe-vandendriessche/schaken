@@ -20,15 +20,15 @@ sidebarBtn.addEventListener("click", ()=>{
 //darkmode
 const body = document.querySelector('body'),
     modeSwitch = body.querySelector(".toggle-switch"),
-    modeText = body.querySelector(".mode-text");
+    modeText = body.querySelector(".link_name2");
 
 modeSwitch.addEventListener("click" , () =>{
     body.classList.toggle("dark");
 
     if(body.classList.contains("dark")){
-        modeText.innerText = "Light mode";
+        modeText.innerText = "Light";
     }else{
-        modeText.innerText = "Dark mode";
+        modeText.innerText = "Dark";
 
     }
 });

@@ -124,13 +124,35 @@
             <div class="row">
                 <h1 class="title-color">Speel: PvP</h1>
             </div>
-            <div class="col-8">
+            <div class="col-8" id="canvas_element">
                 <canvas id="canvas"></canvas>
             </div>
             <div class="col-4">
-                <div class="card">
+                <div class="card" id="moves_cards">
+                    <div class="top_moves">
+                        <i class='bx bx-user player' id="player1"></i>
+                        <div id="pl">player1</div>
+                        <div id="spacer"></div>
+                        <div id="pl_bot">player2</div>
+                        <i class='bx bx-user player' id="player2" ></i>
+                    </div>
+                    <div id="move_title">moves</div>
                     <div id="card_height">
-                        <div class="scroll" id="playedMoves">moves</div>
+                        <div class="scroll" id="playedMoves"></div>
+                    </div>
+                    <div id="buttons_movecard">
+                        <button id="undo_move" class='chesgame_buttons'>
+                            <span class="button_chesgame_icon bx bx-undo"></span>
+                            <span class="button_chesgame_text">undo</span>
+                        </button>
+                        <button id="risign" class='chesgame_buttons'>
+                            <span class="button_chesgame_icon bx bx-flag"></span>
+                            <span class="button_chesgame_text">risign</span>
+                        </button>
+                        <button id="restart" class='chesgame_buttons'>
+                            <span class="button_chesgame_icon bx bx-revision"></span>
+                            <span class="button_chesgame_text">restart</span>
+                        </button>
                     </div>
 
                 </div>

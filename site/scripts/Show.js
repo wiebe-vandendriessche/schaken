@@ -17,15 +17,18 @@ let clicked_piece=0;
 drawBoard();
 drawPieces(board.getPieces());
 
-function dummy(){
+function drawGameboard(){
+    drawBoard();
+    drawPieces(board.getPieces());
+}
+function undoMove(){
     //console.log(Board.PlayedMoves.GetMoves())
 
     if(Board.PlayedMoves.moves!==""){
 
         ReturnToPreviousBoard();
         updatePlayedMoves();
-        drawBoard();
-        drawPieces(board.getPieces());
+        drawGameboard();
     }
 
 }
@@ -72,8 +75,16 @@ function drawPossible(cords){
         drawSquare(cords[i].x,cords[i].y,"rgba(147,239,132,0.5)","rgba(87,173,73,0.5)");
     }
 }
+let undobutton=document.getElementById("undo_move")
+undobutton.addEventListener("click",undoMove)
 
-window.addEventListener("keypress",dummy)
+let restartbutton=document.getElementById("restart");
+restartbutton.addEventListener("click",restart);
+
+function restart(){
+    board=new Board(true);
+    drawGameboard();
+}
 canvas.addEventListener("click",(event)=>{play_move_player(event)});
 function play_move_player(event){
 

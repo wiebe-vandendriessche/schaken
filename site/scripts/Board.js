@@ -6,7 +6,6 @@ import {Pawn} from "./Pieces/Pawn.js";
 import {Queen} from "./Pieces/Queen.js";
 import {Rook} from "./Pieces/Rook.js";
 import {Coordinate} from "./Coordinate.js";
-
 import {LegalChecker} from "./LegalChecker.js";
 import {MoveCacher} from "./MoveCacher.js";
 

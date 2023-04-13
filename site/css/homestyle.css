@@ -244,12 +244,17 @@ body{
 }
 .home-section{
     position: relative;
-    background: var(--body-color);
+    /*background: var(--body-color);*/
     height: 100vh;
     left: 260px;
     width: calc(100% - 260px);
     transition: all 0.5s ease;
     padding: 12px;
+}
+
+.wallpaper{
+    background-image: url("../picture/homewallpaper.jpg");
+    background-size: cover;
 }
 .sidebar.close ~ .home-section{
     left: 78px;
@@ -263,7 +268,7 @@ body{
 .home-section .home-content .bx-menu,
 .home-section .home-content .text
 {
-    color: var(--text-color);
+    color: #ffffff;
     font-size: 35px;
 }
 
@@ -360,3 +365,23 @@ body.dark .mode .sun-moon i.moon{
 body.dark .switch::before{
     left: 20px;
 }
+
+.home{
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-90%);
+    left: -2%;
+    text-align: center;
+    color: #ffffff;
+}
+
+.home .home-title{
+    font-size: 80px;
+}
+
+.home .uppercase{
+    text-transform: uppercase;
+    font-weight: bold;
+}
+

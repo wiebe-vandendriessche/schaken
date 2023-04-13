@@ -2,7 +2,7 @@
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Schaken/PvP</title>
     <link rel="stylesheet" href="css/chessPage.css">
     <link rel="stylesheet" href="css/navbar.css">
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
@@ -23,13 +23,13 @@
 
 
             <li>
-                <a href="#">
+                <a href="home.html">
                     <i class='bx bx-home'></i>
                     <span class="link_name">Home</span>
                 </a>
                 <ul class="sub-menu blank">
                     <li>
-                        <a class="link_name" href="#">Home
+                        <a class="link_name" href="home.html">Home
                         </a>
                     </li>
                 </ul>
@@ -46,8 +46,8 @@
                 </div>
                 <ul class="sub-menu">
                     <li><a class="link_name" href="#">Spelen</a></li>
-                    <li><a href="#">PvP</a></li>
-                    <li><a href="#">PvBot</a></li>
+                    <li><a href="chess.html">PvP</a></li>
+                    <li><a href="chessbot.html">PvBot</a></li>
                     <li><a href="#">Puzzels</a></li>
                 </ul>
             </li>
@@ -65,7 +65,7 @@
                     <li><a class="link_name" href="#">Info</a></li>
                     <li><a href="#">Geschiedenis</a></li>
                     <li><a href="#">Bekende spelers</a></li>
-                    <li><a href="#">Over ons</a></li>
+                    <li><a href="AboutUs.html">Ons Team</a></li>
                 </ul>
             </li>
 
@@ -81,22 +81,20 @@
             </li>
 
 
-            <li class="mode">
-                <a href="#">
-                    <div class="sun-moon">
-                        <i class='bx bx-moon icon moon'></i>
-                        <i class='bx bx-sun icon sun'></i>
-                    </div>
-                    <span class="link_name"><div class="mode-text text">Dark mode</div></span>
-                    <div class="toggle-switch">
-                        <span class="switch"></span>
-                    </div>
-                </a>
-                <ul class="sub-menu blank">
-                    <li><a class="link_name" href="#"><div class="mode-text text">Dark mode</div></a></li>
-                </ul>
+            <li>
+                <div class="mode">
+                    <a href="#">
+                        <div class="sun-moon">
+                            <i class='bx bx-moon icon moon'></i>
+                            <i class='bx bx-sun icon sun'></i>
+                        </div>
+                        <span class="link_name2">Light</span>
+                        <div class="toggle-switch">
+                            <span class="switch"></span>
+                        </div>
+                    </a>
+                </div>
             </li>
-
 
 
             <li>
@@ -126,13 +124,35 @@
             <div class="row">
                 <h1 class="title-color">Speel: PvP</h1>
             </div>
-            <div class="col-8">
+            <div class="col-8" id="canvas_element">
                 <canvas id="canvas"></canvas>
             </div>
             <div class="col-4">
-                <div class="card" >
+                <div class="card" id="moves_cards">
+                    <div class="top_moves">
+                        <i class='bx bx-user player' id="player1"></i>
+                        <div id="pl">player1</div>
+                        <div id="spacer"></div>
+                        <div id="pl_bot">player2</div>
+                        <i class='bx bx-user player' id="player2" ></i>
+                    </div>
+                    <div id="move_title">moves</div>
                     <div id="card_height">
-                        <div  class="scroll" id="playedMoves">moves</div>
+                        <div class="scroll" id="playedMoves"></div>
+                    </div>
+                    <div id="buttons_movecard">
+                        <button id="undo_move" class='chesgame_buttons'>
+                            <span class="button_chesgame_icon bx bx-undo"></span>
+                            <span class="button_chesgame_text">undo</span>
+                        </button>
+                        <button id="risign" class='chesgame_buttons'>
+                            <span class="button_chesgame_icon bx bx-flag"></span>
+                            <span class="button_chesgame_text">risign</span>
+                        </button>
+                        <button id="restart" class='chesgame_buttons'>
+                            <span class="button_chesgame_icon bx bx-revision"></span>
+                            <span class="button_chesgame_text">restart</span>
+                        </button>
                     </div>
 
                 </div>

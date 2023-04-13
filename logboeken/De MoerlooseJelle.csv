@@ -5,10 +5,14 @@ Datum,Start,Einde,Plaats,Omschrijving
 08/03/23,09:30,12:30,Contacturen,Brainstormen
 15/03/2023,09:30,12:30,Contacturen, Schets UML en PIECES klassen
 15/03/2023,13:30,16:00,Contacturen, Pieces klassen verderdoen en possibleMoves()
-16/03/2023,13:30,17:00,Samen in cafetaria werken met wiebe en stijn aan het model
-20/03/2023,19:30,21:00,klassendiagram over nadenken en uittekenen in puml
-21/03/2023,21:50-23:50, chessbot uitdenken met stijn en al functies bepalen
-22/03/2023,9:30-12:30,contacturen view uitschetsen van site en nadenken over evaluation methoden
-22/03/2023,14:00-16:00, werken aan schemas en code met brecht via call
-22/03/2023,16:00-18:00, nieuwe move functie en clone geschreven
-23/03/2023, 13:00-16:00, met stijn en brecht een bug gefixt  en verdere plannen besproken
+16/03/2023,13:30,17:00,Resto,Samen in cafetaria werken met wiebe en stijn aan het model
+20/03/2023,19:30,21:00,thuis,klassendiagram over nadenken en uittekenen in puml
+21/03/2023,21:50,23:50,thuis, chessbot uitdenken met stijn en al functies bepalen
+22/03/2023,9:30,12:30,contacturen, view uitschetsen van site en nadenken over evaluation methoden
+22/03/2023,14:00,16:00,thuis, werken aan schemas en code met brecht via call
+22/03/2023,16:00,18:00,thuis,nieuwe move functie en clone geschreven
+23/03/2023, 13:00,16:00,resto, met stijn en brecht een bug gefixt  en verdere plannen besproken
+29/03/2023,09:30,12:30,Contacturen, screen refreshing gefixt en legalchecker maken
+29/03/2023, 14:00,16:00,thuis, legalchecker afmaken
+31/03/2023, 11:00,14:15,thuis, bot implementeren met stijn in de show klasse en foutjes fixen
+08/04/2023,16:00,18:00,thuis, merge doen met gedeelte van brecht Movechacher en alle bugs eruit halen :(

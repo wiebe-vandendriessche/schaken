@@ -1,16 +1,99 @@
+#canvas_element{
+    display: flex;
+}
+canvas{
+    align-items: center;
+}
+
+body,html{
+    padding:0;
+    margin:0;
+    height: 100%;
+}
+#spacer{
+    width: 100%;
+}
+
+.top_moves{
+    display: flex;
+    width: 100%;
+}
+.player{
+    align-items: center;
+    font-size: 50px;
+    margin: 5px;
+}
+#player1,#player2{
+    display: flex;
+    align-items: center;
+}
+#pl,#pl_bot{
+    display: flex;
+    margin-top: 20px;
+}
+#pl_bot,#player2{
+    display: flex;
+    flex-direction: row;
+    text-align: right;
+}
+#move_title{
+    white-space: pre;
+    font-size:  2.5em;
+}
 #playedMoves{
     white-space: pre;
     font-size:  2.5em;
+}
+#card_height{
+    height: 100%;
+    margin: 2%;
 
 }
+
 .scroll {
-    max-height: 680px;
+
+    max-height: 460px;
+
     overflow-y: auto;
     display: flex;
     flex-direction: column-reverse;
 }
+#moves_cards {
+    height: 100%;
 
-#card_height{
-    height: 680px;
 }
+#buttons_movecard{
+    margin-bottom:10px;
+}
+
+.chesgame_buttons{
+    display: inline-flex;
+    width: 29%;
+    height: 100%;
+    padding: 0%;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    background:rgb(56,107,234,1);
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    overflow: hidden;
+}
+.chesgame_buttons:hover{
+    background-color: rgb(76,127,254,1);;
+
+}
+
+.button_chesgame_icon, .button_chesgame_text {
+    display: inline-flex;
+    align-items: center;
+    padding:0 6px;
+    height: 100%;
+    color: white;
+}
+.button_chesgame_icon{
+    display: inline-flex;
+    padding-top: 10px;
+}
+
 

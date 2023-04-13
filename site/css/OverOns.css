@@ -1,0 +1,122 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+:root {
+    --body-color: #fff;
+    --sidebar-color: #b2b2b2;
+    --primary-color-light: #cbcaca;
+    --toggle-color: #101010;
+    --text-color: #101010;
+}
+
+body.dark{
+    --body-color: #212121;
+    --sidebar-color: #101010;
+    --primary-color-light: #383838;
+    --toggle-color: #fff;
+    --text-color: #fff;
+}
+
+
+/* CSS OverOns */
+
+.section-title h2{
+    font-size: xxx-large;
+}
+
+.section-title{
+    text-align: center;
+    margin: 3% 0% 0% 0%;
+    color: var(--text-color);
+}
+
+.section-title p{
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.single-team{
+    padding-bottom: 70px;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    box-shadow: 5px 5px 15px #101010;
+    height: 100%;
+}
+
+.team-img{
+    position: relative;
+    z-index: 5;
+    overflow: hidden;
+}
+
+.team-img img{
+    width: 100%;
+    transition: 0.3s;
+}
+
+.single-team:hover .team-img img {
+    transform: scale(1.25) translateZ(0);
+}
+
+.single-team:not(:hover) .team-img img{
+    transform: scale(1,1);
+    filter:saturate(5%) contrast(50%) brightness(80%) ;
+}
+
+
+
+.team-content{
+    height: 80px;
+    width: 100%;
+    position: absolute;
+    text-align: center;
+    overflow: hidden;
+    bottom: 0;
+    transition: all 0.4s;
+    background: var(--sidebar-color);
+    z-index: 5;
+}
+
+.single-team:hover .team-content{
+    height: 170px;
+}
+
+.team-info{
+    padding: 5px 20px 5px 20px;
+    transition: all 0.5s;
+}
+
+.single-team:hover .team-content{
+    background: var(--primary-color-light);
+}
+
+.single-team .team-content .team-info h3{
+    text-transform: uppercase;
+    color: var(--text-color);
+    font-size: 16px;
+    margin: 5px;
+}
+
+.single-team:hover .team-info h3{
+    color: var(--text-color);
+    font-weight: bold;
+}
+
+.team-info p{
+    margin-top: 15px;
+    color: var(--text-color);
+}
+
+.single-team-text p{
+    margin-top: 5px;
+}
+.team-text{
+    color: var(--text-color);
+    padding: 0 10px 5px;
+}

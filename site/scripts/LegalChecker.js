@@ -51,7 +51,7 @@ export class LegalChecker{
                 }
             }
         }
-        console.log(string);
+        // console.log(string);
         return string;
 
     }

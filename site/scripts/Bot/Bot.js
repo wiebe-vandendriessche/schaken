@@ -16,8 +16,7 @@ export class Bot{
     }
     minimax(board, depth, alpha, beta, color){
         let speelveld = board.board;
-        // this.counter++;
-        // console.log(this.counter);
+
         if(depth === 0){
             return Evaluation.Evaluate(board, color);
         }
@@ -80,7 +79,6 @@ export class Bot{
             return minEval;
         }
     }
-
      async nextMove(board){
         return new Promise((resolve) => {
             let speelveld = board.board;

@@ -96,7 +96,7 @@ export class Bot{
                         let fakePiece = cloneBoard.board[y][x];
                         cloneBoard.move(fakePiece, cord, posMoves);
                         if (!cloneBoard.legalchecker.isChecked(piece.kleur)) {
-                            let val = this.minimax(cloneBoard, this.depth, -20000, 20000, !this.color);
+                            let val = this.minimax(cloneBoard, this.depth-1, -20000, 20000, !this.color);
                             if (this.color && (subEval === undefined || subEval < val)) {
                                 subEval = val;
                                 array2 = [piece, cord];

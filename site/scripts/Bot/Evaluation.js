@@ -10,26 +10,27 @@ export class Evaluation{
 
         let whiteMaterialCount = this.materialCount(board, true);
         let blackMaterialCount = this.materialCount(board, false);
+
         let whiteEndGameWeight = this.endGameWeight((whiteMaterialCount-(this.whitePawns*10)));
         let blackEndGameWeight = this.endGameWeight(-1*(blackMaterialCount-(this.blackPawns*10)));
         whiteScore += this.endGameEval(whiteScore, -1*blackMaterialCount,whiteEndGameWeight, false);
-        // console.log(whiteEndGameWeight);
         blackScore -= this.endGameEval(-1*blackScore, whiteMaterialCount,blackEndGameWeight, true);
+
         whiteScore += whiteMaterialCount;
         blackScore += blackMaterialCount;
-        let score = this.checkmate(board)+ whiteScore + blackScore;
-        // console.log(score);
-        return score;
+        // console.log(whiteScore)
+        // console.log(blackScore)
+        return this.checkmate(board) + whiteScore + blackScore;
     }
 
     static checkmate(board){
         let val = 0;
         if(board.legalchecker.isChecked(true) && board.isEnd(true) === "checkmate") {
-            console.log("HONK");
+            // console.log("HONK");
             val += -10000;
         }
         if(board.legalchecker.isChecked(false) && board.isEnd(false) === "checkmate") {
-            console.log("HOKN");
+            // console.log("HOKN");
             val += 10000;
         }
         return val;
@@ -55,24 +56,20 @@ export class Evaluation{
 
     static endGameEval(myScore, opponentScore, endGameWeight, color){
         let endGameEval = 0;
-        // console.log(myScore)
-        // console.log(opponentScore)
-        // console.log(endGameWeight)
-        // console.log(color)
-        if(endGameWeight > 0 && myScore < opponentScore){
+        if(endGameWeight && myScore < opponentScore){
             let distanceToEdge = Math.min(color?this.whiteKing.x:this.blackKing.x + color?this.whiteKing.y:this.blackKing.y
                 ,7-(color?this.blackKing.x:this.whiteKing.x) + 7-(color?this.blackKing.y:this.whiteKing.y));
             console.log(distanceToEdge);
             endGameEval += (distanceToEdge)*10;
             endGameEval += (14-(Math.abs(this.whiteKing.x-this.blackKing.x)+Math.abs(this.whiteKing.y-this.blackKing.y)))*4
-            // console.log("EndgameEval:",endGameEval);
+            console.log("EndgameEval:",endGameEval);
         }
+
         return Math.round(endGameEval);
     }
 
     static endGameWeight(material){
         const multiplier = 1/180;
-        // console.log(material)
-        return 1 - Math.min(1, multiplier*material);
+        return 1 > multiplier*material;
     }
 }

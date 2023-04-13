@@ -5,6 +5,8 @@ export class Rook extends APiece{
 
     constructor(pos,kleur,imageLoad) {
         super(pos,kleur?500:-500,kleur,kleur?"w_rook":"b_rook",imageLoad);
+        this.moved=false;
+
     }
     show() {
         super.show();
@@ -20,6 +22,7 @@ export class Rook extends APiece{
 
     move(cord) {
         this.pos = cord;
+        this.moved=true;
     }
     clone(imageOnLoad) {
 

@@ -13,10 +13,10 @@ class King extends APiece{
 
     // moet dit er wel staan als we deze kunnen invullen in de boven klasse
     move(bord) {
+        this.moved=false;
         super.move(bord);
     }
-
-    possibleMoves(bord){
+    attackMoves(bord){
         let veld = bord.getPieces();
         let possiblemoves=[];
         //mogelijke zetten
@@ -37,7 +37,19 @@ class King extends APiece{
                 }
             }
         }
-
+        return possiblemoves;
+    }
+    possibleMoves(bord){
+        let possiblemoves=this.attackMoves(bord);
+        if (!this.moved){
+            let string=bord.legalchecker.castlingPossible(this.kleur);
+            if (string.includes("right")){
+                possiblemoves.push(new Coordinate(6,this.pos.y))
+            }
+            if (string.includes("left")){
+                possiblemoves.push(new Coordinate(2,this.pos.y))
+            }
+        }
         return possiblemoves;
     }
 

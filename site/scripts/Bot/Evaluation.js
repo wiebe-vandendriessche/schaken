@@ -1,26 +1,39 @@
 import {Pawn} from "../Pieces/Pawn.js";
 import {King} from "../Pieces/King.js";
+import {Knight} from "../Pieces/Knight.js";
+import {Bisshop} from "../Pieces/Bisshop.js";
+import {Queen} from "../Pieces/Queen.js";
+import {Rook} from "../Pieces/Rook.js";
 
 export class Evaluation{
     static Evaluate(board){
+        this.squareTables();
+
         this.whitePawns = 0;
         this.blackPawns = 0;
         let whiteScore = 0;
         let blackScore = 0;
 
-        let whiteMaterialCount = this.materialCount(board, true);
-        let blackMaterialCount = this.materialCount(board, false);
+        this.whiteMaterialCount = 0;
+        this.blackMaterialCount = 0;
+        let tableScore = this.materialCount(board);
 
-        let whiteEndGameWeight = this.endGameWeight((whiteMaterialCount-(this.whitePawns*10)));
-        let blackEndGameWeight = this.endGameWeight(-1*(blackMaterialCount-(this.blackPawns*10)));
-        whiteScore += this.endGameEval(whiteScore, -1*blackMaterialCount,whiteEndGameWeight, false);
-        blackScore -= this.endGameEval(-1*blackScore, whiteMaterialCount,blackEndGameWeight, true);
+        let whiteEndGameWeight = this.endGameWeight((this.whiteMaterialCount-(this.whitePawns*10)));
+        let blackEndGameWeight = this.endGameWeight(-1*(this.blackMaterialCount-(this.blackPawns*10)));
+        if(whiteEndGameWeight)
+            whiteScore += this.endGameEval(whiteScore, -1*this.blackMaterialCount, false);
+        else
+            whiteScore += this.whiteKingTable[this.whiteKing.x][this.whiteKing.y];
+        if(blackEndGameWeight)
+            blackScore -= this.endGameEval(-1*blackScore, this.whiteMaterialCount, true);
+        else
+            blackScore += this.blackKingTable[this.blackKing.x][this.blackKing.y];
 
-        whiteScore += whiteMaterialCount;
-        blackScore += blackMaterialCount;
+        whiteScore += this.whiteMaterialCount;
+        blackScore += this. blackMaterialCount;
         // console.log(whiteScore)
         // console.log(blackScore)
-        return this.checkmate(board) + whiteScore + blackScore;
+        return this.checkmate(board) + whiteScore + blackScore + tableScore;
     }
 
     static checkmate(board){
@@ -36,41 +49,121 @@ export class Evaluation{
         return val;
     }
 
-    static materialCount(board, color){
-
+    static materialCount(board){
         let speelveld = board.board;
-        let values = 0;
+        let score = 0;
         for(let y = 0; y < 8; y++){
             for(let x = 0; x < 8; x++) {
                 let piece = speelveld[y][x];
-                if(piece !== 0 && piece.kleur === color){
-                    values += piece.value;
-                    if(piece instanceof Pawn)
-                        color?(this.whitePawns++):(this.blackPawns++);
-                    if(piece instanceof King)
-                        color?(this.whiteKing = piece.pos):(this.blackKing=piece.pos);
+                if(piece !== 0){
+                    let color = piece.kleur;
+                    if(color)
+                        this.whiteMaterialCount += piece.value;
+                    else
+                        this.blackMaterialCount += piece.value;
+                    if(piece instanceof Pawn) {
+                        color ? (this.whitePawns++) : (this.blackPawns++);
+                        color ? score += this.whitePawnTable[x][y] : score += this.blackPawnTable[x][y];
+                    }
+                    else if(piece instanceof Knight){
+                        color ? score += this.whiteKnightTable[x][y] : score += this.blackKnightTable[x][y];
+                    }
+                    else if(piece instanceof Rook){
+                        color ? score += this.whiteRookTable[x][y] : score += this.blackRookTable[x][y];
+                    }
+                    else if(piece instanceof Bisshop){
+                        color ? score += this.whiteBishopTable[x][y] : score += this.blackBishopTable[x][y];
+                    }
+                    else if(piece instanceof Queen){
+                        color ? score += this.whiteQueenTable[x][y] : score += this.blackQueenTable[x][y];
+                    }
+                    else if(piece instanceof King) {
+                        color ? (this.whiteKing = piece.pos) : (this.blackKing = piece.pos);
+                    }
                 }
             }
         }
-        return values;
+        return score;
     }
 
-    static endGameEval(myScore, opponentScore, endGameWeight, color){
+    static endGameEval(myScore, opponentScore, color){
         let endGameEval = 0;
-        if(endGameWeight && myScore < opponentScore){
+        if(myScore < opponentScore){
             let distanceToEdge = Math.min(color?this.whiteKing.x:this.blackKing.x + color?this.whiteKing.y:this.blackKing.y
                 ,7-(color?this.blackKing.x:this.whiteKing.x) + 7-(color?this.blackKing.y:this.whiteKing.y));
             console.log(distanceToEdge);
-            endGameEval += (distanceToEdge)*10;
-            endGameEval += (14-(Math.abs(this.whiteKing.x-this.blackKing.x)+Math.abs(this.whiteKing.y-this.blackKing.y)))*4
+            endGameEval += (distanceToEdge)*100;
+            endGameEval += (14-(Math.abs(this.whiteKing.x-this.blackKing.x)+Math.abs(this.whiteKing.y-this.blackKing.y)))*40
             console.log("EndgameEval:",endGameEval);
         }
-
         return Math.round(endGameEval);
     }
 
     static endGameWeight(material){
         const multiplier = 1/180;
         return 1 > multiplier*material;
+    }
+
+    static squareTables(){
+        this.whitePawnTable = [
+            [0,  0,  0,  0,  0,  0,  0,  0],
+            [50, 50, 50, 50, 50, 50, 50, 50],
+            [10, 10, 20, 30, 30, 20, 10, 10],
+            [5,  5, 10, 25, 25, 10,  5,  5],
+            [0,  0,  0, 20, 20,  0,  0,  0],
+            [5, -5,-10,  0,  0,-10, -5,  5],
+            [5, 10, 10,-20,-20, 10, 10,  5],
+            [0,  0,  0,  0,  0,  0,  0,  0]];
+        this.blackPawnTable = this.whitePawnTable.reverse();
+        this.whiteKnightTable = [
+            [-50,-40,-30,-30,-30,-30,-40,-50],
+            [-40,-20,  0,  0,  0,  0,-20,-40],
+            [-30,  0, 10, 15, 15, 10,  0,-30],
+            [-30,  5, 15, 20, 20, 15,  5,-30],
+            [-30,  0, 15, 20, 20, 15,  0,-30],
+            [-30,  5, 10, 15, 15, 10,  5,-30],
+            [-40,-20,  0,  5,  5,  0,-20,-40],
+            [-50,-40,-30,-30,-30,-30,-40,-50]];
+        this.blackKnightTable = this.whiteKnightTable.reverse();
+        this.whiteBishopTable = [
+            [-20,-10,-10,-10,-10,-10,-10,-20],
+            [-10,  0,  0,  0,  0,  0,  0,-10],
+            [-10,  0,  5, 10, 10,  5,  0,-10],
+            [-10,  5,  5, 10, 10,  5,  5,-10],
+            [-10,  0, 10, 10, 10, 10,  0,-10],
+            [-10, 10, 10, 10, 10, 10, 10,-10],
+            [-10,  5,  0,  0,  0,  0,  5,-10],
+            [-20,-10,-10,-10,-10,-10,-10,-20]];
+        this.blackBishopTable = this.whiteBishopTable.reverse();
+        this.whiteRookTable = [
+            [0,  0,  0,  0,  0,  0,  0,  0],
+            [5, 10, 10, 10, 10, 10, 10,  5],
+            [-5,  0,  0,  0,  0,  0,  0, -5],
+            [-5,  0,  0,  0,  0,  0,  0, -5],
+            [-5,  0,  0,  0,  0,  0,  0, -5],
+            [-5,  0,  0,  0,  0,  0,  0, -5],
+            [-5,  0,  0,  0,  0,  0,  0, -5],
+            [0,  0,  0,  5,  5,  0,  0,  0]];
+        this.blackRookTable = this.whiteRookTable.reverse();
+        this.whiteQueenTable = [
+            [-20,-10,-10, -5, -5,-10,-10,-20],
+            [-10,  0,  0,  0,  0,  0,  0,-10],
+            [-10,  0,  5,  5,  5,  5,  0,-10],
+            [-5,  0,  5,  5,  5,  5,  0, -5],
+            [0,  0,  5,  5,  5,  5,  0, -5],
+            [-10,  5,  5,  5,  5,  5,  0,-10],
+            [-10,  0,  5,  0,  0,  0,  0,-10],
+            [-20,-10,-10, -5, -5,-10,-10,-20]];
+        this.blackQueenTable = this.whiteQueenTable.reverse();
+        this.whiteKingTable = [
+            [-30,-40,-40,-50,-50,-40,-40,-30],
+            [-30,-40,-40,-50,-50,-40,-40,-30],
+            [-30,-40,-40,-50,-50,-40,-40,-30],
+            [-30,-40,-40,-50,-50,-40,-40,-30],
+            [-20,-30,-30,-40,-40,-30,-30,-20],
+            [-10,-20,-20,-20,-20,-20,-20,-10],
+            [20, 20,  0,  0,  0,  0, 20, 20],
+            [20, 30, 10,  0,  0, 10, 30, 20]];
+        this.blackKingTable = this.whiteKingTable.reverse();
     }
 }

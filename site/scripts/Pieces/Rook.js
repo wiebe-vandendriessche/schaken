@@ -4,7 +4,7 @@ export {pushMoves};
 export class Rook extends APiece{
 
     constructor(pos,kleur,imageLoad) {
-        super(pos,kleur?50:-50,kleur,kleur?"w_rook":"b_rook",imageLoad);
+        super(pos,kleur?500:-500,kleur,kleur?"w_rook":"b_rook",imageLoad);
     }
     show() {
         super.show();

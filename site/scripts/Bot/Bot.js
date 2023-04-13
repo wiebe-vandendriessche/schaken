@@ -7,7 +7,6 @@ import {Queen} from "../Pieces/Queen.js";
 import {Rook} from "../Pieces/Rook.js";
 import {Coordinate} from "../Coordinate.js";
 import {Evaluation} from "./Evaluation.js";
-
 export class Bot{
     constructor(color, depth) {
         this.color = color;
@@ -16,7 +15,8 @@ export class Bot{
     }
     minimax(board, depth, alpha, beta, color){
         let speelveld = board.board;
-
+        // this.counter++;
+        // console.log(this.counter);
         if(depth === 0){
             return Evaluation.Evaluate(board, color);
         }
@@ -79,7 +79,8 @@ export class Bot{
             return minEval;
         }
     }
-     async nextMove(board){
+
+    async nextMove(board){
         return new Promise((resolve) => {
             let speelveld = board.board;
             let array;

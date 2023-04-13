@@ -106,7 +106,7 @@ class Board {
             for (let x = 0; x < 8; x++) {
                 let piece=this.board[y][x];
                 if (piece!==0){
-                    let virtpiece=this.board[y][x].clone(true);
+                    let virtpiece=this.board[y][x].clone(imageOnLoad);
                     newboard.board[y][x]=virtpiece;
                     if (piece instanceof King){
                         if (piece.kleur){

@@ -6,7 +6,7 @@ import {pushMoves} from "./Rook.js";
 export class Bisshop extends APiece{
 
     constructor(pos,kleur,imageLoad) {
-        super(pos,kleur?30:-30,kleur,kleur?"w_bishop":"b_bishop",imageLoad);
+        super(pos,kleur?300:-300,kleur,kleur?"w_bishop":"b_bishop",imageLoad);
     }
     show() {
         super.show();

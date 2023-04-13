@@ -85,6 +85,16 @@ class Board {
     move(piece,cord){
         this.board[piece.pos.y][piece.pos.x] = 0;
         this.board[cord.y][cord.x] = piece;
+        if (piece instanceof King && Math.abs(piece.pos.x-cord.x)>1){//if castle
+            if (cord.x===6){
+                let rook=this.board[piece.pos.y][7];
+                this.move(rook,new Coordinate(5,piece.pos.y));
+            }
+            if (cord.x===2){
+                let rook=this.board[piece.pos.y][0];
+                this.move(rook,new Coordinate(3,piece.pos.y));
+            }
+        }
         piece.move(cord);
         if(piece instanceof Pawn && piece.pos.y===piece.endY){
             this.board[piece.pos.y][piece.pos.x]=new Queen(piece.pos,piece.kleur,true);

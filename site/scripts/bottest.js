@@ -1,7 +1,7 @@
 import {Board} from "./Board.js";
 import {Coordinate} from "./Coordinate.js";
 import {Bot} from "./Bot/Bot.js";
-
+let player=1;
 let len=680
 let square_size = len / 8
 
@@ -17,31 +17,8 @@ let clicked_piece=0;
 //console.log(board.getPieces());
 //dummy();
 draw_board();
-draw_pieces(board.getPieces());
-let blackbot = new Bot(false, 4);
-let whitebot = new Bot(true, 3);
-dummy();
-
-function dummy(){
-    for (let i = 0; i < 8; i++) {
-        let array1 = whitebot.nextMove(board);
-        console.log(array1);
-        if(array1[0] === 0)
-            alert(board.isEnd(true));
-        board.move(array1[0],array1[1],array1[0].possibleMoves(board));
-        draw_board();
-        draw_pieces(board.getPieces());
-        let array = blackbot.nextMove(board);
-        console.log(array);
-        if(array[0] === 0)
-            alert(board.isEnd(false));
-        board.move(array[0],array[1],array[0].possibleMoves(board));
-        draw_board();
-        draw_pieces(board.getPieces());
-        updatePlayedMoves();
-    }
-
-}
+draw_pieces(board.getPieces(),true);
+let blackbot= new Bot(false,4);
 
 function draw_square(i,j,colora,colorb){
     ctx.beginPath();
@@ -64,14 +41,16 @@ function draw_board() {
     }
 }
 
-function draw_pieces(list_piece){
+function draw_pieces(list_piece,onLoad){
     for (let i = 0; i < 8; i++) {
         for (let j = 0; j < 8; j++) {
             if(list_piece[i][j]!==0){//chekken of het vak niet leeg is want dan tekene van een piece
                 let piece= list_piece[i][j];
                 let img= piece.image;
-                img.onload= () => {
-                    ctx.drawImage(img, square_size * j + ofsetPiece, square_size * i + ofsetPiece, square_size - 2 * ofsetPiece, square_size - 2 * ofsetPiece)
+                if (onLoad) {
+                    img.onload = () => {
+                        ctx.drawImage(img, square_size * j + ofsetPiece, square_size * i + ofsetPiece, square_size - 2 * ofsetPiece, square_size - 2 * ofsetPiece)
+                    }
                 }
                 ctx.drawImage(img,square_size*j+ofsetPiece,square_size*i+ofsetPiece,square_size-2*ofsetPiece,square_size-2*ofsetPiece);
             }
@@ -91,25 +70,43 @@ function draw_posible(cords){
 
 
 canvas.addEventListener("click",play_move);
-function play_move(){
+async function play_move(){
     let rect=canvas.getBoundingClientRect();
     let x=Math.floor((event.clientX-rect.x)/square_size);
     let y=Math.floor((event.clientY-rect.y)/square_size);
     let piece_clicked_now=board.getPieces()[y][x];
     let cord=new Coordinate(x,y);
     let color=board.colorToMove();
+    draw_board();
+    draw_pieces(board.getPieces(), false);
     if(clicked){
-        board.moveWithCheck(clicked_piece,cord);
-        draw_board()
-        draw_pieces(board.getPieces())
-        updatePlayedMoves()
-        clicked=false;
-        clicked_piece=0;
-        let status= board.isEnd(!color);
-        console.log(status);
-        if (status!=="continue"){
-            setTimeout(()=>{alert(status)},1000);
+
+        if(board.moveWithCheck(clicked_piece,cord)) {
+            let status = board.isEnd(!color);
+            if (status !== "continue") {
+                setTimeout(() => {
+                    alert(status)
+                }, 500);
+            }
+            draw_board();
+            draw_pieces(board.getPieces(), false);
+            blackbot.nextMove(board).then(array=>board.move(array[0], array[1])).then(()=>{
+                let status=board.isEnd(color);
+                if (status !== "continue") {
+                    setTimeout(() => {
+                        alert(status)
+                    }, 500);
+                }
+                board.amountOfMoves++;
+                draw_board();
+                draw_pieces(board.getPieces(), false);
+                updatePlayedMoves();
+            });
+
         }
+
+        clicked = false;
+        clicked_piece = 0;
     }else{
 
         if(piece_clicked_now!==0 && piece_clicked_now.kleur===color){
@@ -120,8 +117,9 @@ function play_move(){
     }
 }
 
+
 function updatePlayedMoves(){
     let text=document.getElementById("playedMoves");
-    console.log(board.getAlleMovesPlayedInGame());
+    // console.log(board.getAlleMovesPlayedInGame());
     text.textContent=board.getAlleMovesPlayedInGame();
 }

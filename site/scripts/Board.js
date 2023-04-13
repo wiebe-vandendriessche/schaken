@@ -67,7 +67,9 @@ class Board {
 
     moveWithCheck(piece,cord){
         let realmoves=this.legalchecker.possibleMoves(piece,true);
-        if(this.move(piece,cord,realmoves)){
+
+        if(realmoves.some((move)=>JSON.stringify(move)===JSON.stringify(cord))){
+            this.move(piece,cord);
             this.amountOfMoves++;
             Board.PlayedMoves.Moveadd(cord,this.amountOfMoves,this);
             return true;
@@ -81,23 +83,13 @@ class Board {
         return Board.PlayedMoves.GetMoves();
     }
 
-    move(piece,cord, possible_moves){
-        let good = false;
-        let counter = 0;
-        while(!good && counter < possible_moves.length){
-            if(JSON.stringify(possible_moves[counter++]) === JSON.stringify(cord))
-                good = true;
-        }
-        if(!good)
-            return false;
+    move(piece,cord){
         this.board[piece.pos.y][piece.pos.x] = 0;
         this.board[cord.y][cord.x] = piece;
-
         piece.move(cord);
         if(piece instanceof Pawn && piece.pos.y===piece.endY){
-            this.board[piece.pos.y][piece.pos.x]=new Queen(piece.pos,piece.kleur);
+            this.board[piece.pos.y][piece.pos.x]=new Queen(piece.pos,piece.kleur,true);
         }
-        return true;
     }
 
     colorToMove(){

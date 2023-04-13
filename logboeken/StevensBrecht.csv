@@ -11,3 +11,7 @@ Datum,Start,Einde,Plaats,Omschrijving
 29/03/23,9:30:12:30,contacturen,opzoeken vermijden flikeren canvas
 30/03/23,13:00,15:00,thuis,werken aan begin van undo move
 31/03/23,12:00,13:00,bib,verder werken aan undo move(uno afwerken voor een keer tweede undo zet werkt nog niet echt)
+05/04/23,14:00,17:00,thuis,verder aan undo move werken oplossen bug
+08/04/23,15:30,19:30,thuis,samen met jelle mergen undo move met bot nu bij
+11/04/23,10:00,12:00,thuis, buttons voor undo restart en risign toevoegen afwerken kader voor de history van de zetten
+11/04/23,15:00,16:00,thuis, opkuisen van de show klasse en naar een gamestate klasse verplaatsen

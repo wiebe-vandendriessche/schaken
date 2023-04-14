@@ -5,7 +5,7 @@ export {Queen}
 class Queen extends APiece{
 
     constructor(pos,kleur,imageLoad) {
-        super(pos,kleur?90:-90,kleur,kleur?"w_queen":"b_queen",imageLoad);
+        super(pos,kleur?900:-900,kleur,kleur?"w_queen":"b_queen",imageLoad);
     }
     show() {
         super.show();

@@ -4,7 +4,7 @@ export  {Pawn};
 class Pawn extends APiece {
 
     constructor(pos, kleur,imageLoad) {
-        super(pos, kleur ? 10 : -10, kleur, kleur ? "w_pawn" : "b_pawn",imageLoad);
+        super(pos, kleur ? 100 : -100, kleur, kleur ? "w_pawn" : "b_pawn",imageLoad);
         this.moved = false;
         this.endY=kleur?0:7;
     }

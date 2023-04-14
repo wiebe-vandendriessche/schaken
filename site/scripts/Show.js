@@ -1,4 +1,5 @@
 
+
 import {GameState} from "./GameState.js";
 
 
@@ -20,5 +21,6 @@ restartbutton.addEventListener("click",()=>{gameState.restart(popup)});
 canvas.addEventListener("click",(event)=>{gameState.play_move_player(event)});
 
 closePopupButton.addEventListener("click",()=>{gameState.closePopup(popup,boddiff)})
+
 
 

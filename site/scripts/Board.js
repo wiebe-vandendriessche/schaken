@@ -66,8 +66,9 @@ class Board {
 
     moveWithCheck(piece,cord){
         let realmoves=this.legalchecker.possibleMoves(piece,true);
-        Board.PlayedMoves.undoVirtualMoves(this)
-        if(this.move(piece,cord,realmoves)){
+        if(realmoves.some((move)=>JSON.stringify(move)===JSON.stringify(cord))){
+            this.move(piece,cord);
+            Board.PlayedMoves.undoVirtualMoves(this);
             this.amountOfMoves++;
             Board.PlayedMoves.Moveadd(cord,this.amountOfMoves,this);
             return true;
@@ -81,23 +82,23 @@ class Board {
         return Board.PlayedMoves.GetMoves();
     }
 
-    move(piece,cord, possible_moves){
-        let good = false;
-        let counter = 0;
-        while(!good && counter < possible_moves.length){
-            if(JSON.stringify(possible_moves[counter++]) === JSON.stringify(cord))
-                good = true;
-        }
-        if(!good)
-            return false;
+    move(piece,cord){
         this.board[piece.pos.y][piece.pos.x] = 0;
         this.board[cord.y][cord.x] = piece;
-
+        if (piece instanceof King && Math.abs(piece.pos.x-cord.x)>1){//if castle
+            if (cord.x===6){
+                let rook=this.board[piece.pos.y][7];
+                this.move(rook,new Coordinate(5,piece.pos.y));
+            }
+            if (cord.x===2){
+                let rook=this.board[piece.pos.y][0];
+                this.move(rook,new Coordinate(3,piece.pos.y));
+            }
+        }
         piece.move(cord);
         if(piece instanceof Pawn && piece.pos.y===piece.endY){
-            this.board[piece.pos.y][piece.pos.x]=new Queen(piece.pos,piece.kleur);
+            this.board[piece.pos.y][piece.pos.x]=new Queen(piece.pos,piece.kleur,true);
         }
-        return true;
     }
 
     colorToMove(){
@@ -115,7 +116,7 @@ class Board {
             for (let x = 0; x < 8; x++) {
                 let piece=this.board[y][x];
                 if (piece!==0){
-                    let virtpiece=this.board[y][x].clone(true);
+                    let virtpiece=this.board[y][x].clone(imageOnLoad);
                     newboard.board[y][x]=virtpiece;
                     if (piece instanceof King){
                         if (piece.kleur){

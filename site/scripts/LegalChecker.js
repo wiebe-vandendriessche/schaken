@@ -1,6 +1,7 @@
 import {Board} from "./Board.js";
 import {Pawn} from "./Pieces/Pawn.js";
 import {King} from "./Pieces/King.js";
+import {Rook} from "./Pieces/Rook.js";
 
 export class LegalChecker{
     constructor(Board){
@@ -11,7 +12,54 @@ export class LegalChecker{
         this.attackMapWhite=[[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]];
         this.attackMapBlack=[[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]];
     }
+
+    castlingPossible(color){ // king checked zelf al of hij zelf niet gemoved heeft
+
+
+        let speelveld=this.Board.getPieces();
+
+        let attackmap=this.updateAttackMap(!color);
+        let y_axis=color?7:0;// om te weten op welke y as de lege plekken moeten worden gechecked
+        if (attackmap[y_axis][4]>0) {//checked
+            return "";
+        }
+        let rookleft= color?speelveld[7][0] :speelveld[0][0];
+        let rookright=color?speelveld[7][7]: speelveld[0][7];
+
+        let string="";
+        if ((rookleft!==0 && rookleft instanceof Rook )|| (rookright!==0 && rookright instanceof Rook)){
+            if (rookleft!==0 && rookleft instanceof Rook && rookleft.moved===false){
+                let all_empty=true;//al plaatsen leeg
+                for (let i = 1; i < 4; i++) {
+                    if(speelveld[y_axis][i]!==0 || attackmap[y_axis][i]>0 ){
+                        all_empty=false;
+                    }
+                }
+                if (all_empty){
+                   string+="left";
+                }
+            }
+            if (rookright!==undefined && rookright instanceof Rook && rookright.moved===false){
+                let all_empty=true;//al plaatsen leeg
+                for (let i = 5; i < 7; i++) {
+                    if(speelveld[y_axis][i]!==0 || attackmap[y_axis][i]>0 ){
+                        all_empty=false;
+                    }
+                }
+                if (all_empty){
+                    string+="right";
+                }
+            }
+        }
+        // console.log(string);
+        return string;
+
+    }
+
+
+
     updateAttackMap(color){
+        let speelveld=this.Board.getPieces();
         if(color){
             this.attackMapWhite=[[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]];
         }else{
@@ -21,10 +69,10 @@ export class LegalChecker{
 
         for (let y = 0; y <8 ; y++) {
             for (let x = 0; x <8; x++) {
-                let piece=this.Board.board[y][x];
+                let piece=speelveld[y][x];
                 if (piece!==0 && piece.kleur===color){
                     let posmoves;
-                    if(piece instanceof Pawn){
+                    if((piece instanceof Pawn)||(piece instanceof King)){
                         posmoves=piece.attackMoves(this.Board);
                     }else{
                         posmoves=piece.possibleMoves(this.Board);
@@ -60,7 +108,7 @@ export class LegalChecker{
             let realmoves=[];
             for (let coord of pseudolegalmoves){
                 let cloneBoard=this.Board.clone(false);
-                let virtpiece= cloneBoard.board[piece.pos.y][piece.pos.x];
+                let virtpiece= cloneBoard.getPieces()[piece.pos.y][piece.pos.x];
                 cloneBoard.move(virtpiece,coord,pseudolegalmoves);
                 if (!cloneBoard.legalchecker.isChecked(piece.kleur)){
                     realmoves.push(coord);
@@ -75,9 +123,10 @@ export class LegalChecker{
 
     clone(Boardvirtual){
         let lchecker= new LegalChecker(Boardvirtual);
+        let speelveld=Boardvirtual.getPieces();
         for (let y = 0; y < 8; y++) {
             for (let x = 0; x < 8; x++) {
-                let piece= Boardvirtual.board[y][x];
+                let piece= speelveld[y][x];
                 if (piece!==0 && ( piece instanceof King)){
                     if (piece.kleur===true){
                         lchecker.whiteking=piece;
@@ -93,10 +142,10 @@ export class LegalChecker{
     }
     
     isEnd(color){
-
+        let speelveld=this.Board.getPieces();
         for (let y = 0; y < 8; y++) {
             for (let x = 0; x < 8; x++) {
-                let piece = this.Board.board[y][x];
+                let piece = speelveld[y][x];
                 if (piece!==0 && piece.kleur===color) {
                     if(this.possibleMoves(piece, false).length!==0){
                         return 0;

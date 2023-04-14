@@ -4,7 +4,7 @@ import {Coordinate} from "../Coordinate.js";
 export class Knight extends APiece{
 
     constructor(pos,kleur,imageLoad) {
-        super(pos,kleur?30:-30,kleur,kleur?"w_knight":"b_knight",imageLoad);
+        super(pos,kleur?300:-300,kleur,kleur?"w_knight":"b_knight",imageLoad);
     }
 
     possibleMoves(bord){//zit nog een foutje in

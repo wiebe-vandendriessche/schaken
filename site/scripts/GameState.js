@@ -30,7 +30,6 @@ export class GameState{
         //console.log(Board.PlayedMoves.GetMoves())
 
         if(Board.PlayedMoves.moves!==""){
-
             this.ReturnToPreviousBoard();
             this.updatePlayedMoves(this.board.getAlleMovesPlayedInGame());
             this.drawGameboard();

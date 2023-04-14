@@ -66,9 +66,9 @@ class Board {
 
     moveWithCheck(piece,cord){
         let realmoves=this.legalchecker.possibleMoves(piece,true);
+        Board.PlayedMoves.undoVirtualMoves(this);
         if(realmoves.some((move)=>JSON.stringify(move)===JSON.stringify(cord))){
             this.move(piece,cord);
-            Board.PlayedMoves.undoVirtualMoves(this);
             this.amountOfMoves++;
             Board.PlayedMoves.Moveadd(cord,this.amountOfMoves,this);
             return true;

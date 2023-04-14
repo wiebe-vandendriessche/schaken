@@ -4,6 +4,10 @@ import {Coordinate} from "./Coordinate.js";
 export class GameState{
     static ofsetPiece=5;
     constructor(canvas,lenght,colorA,colorB,colorC,colorD) {
+
+        this.botAdversairy=false;
+        this.bodDifficulty=0;
+
         this.canvas=canvas;
         this.lenght=lenght;
         this.square_size=this.lenght/8;
@@ -78,11 +82,13 @@ export class GameState{
     }
 
 
-    restart(){
+    restart(popup){
         this.board=new Board(true);
+        Board.PlayedMoves.reset();
         this.clicked=false;
         this.drawGameboard();
         this.updatePlayedMoves("");
+        this.openPopup(popup)
     }
 
     play_move_player(event){
@@ -118,5 +124,16 @@ export class GameState{
     updatePlayedMoves(moves){
         let text=document.getElementById("playedMoves");
         text.textContent=moves;
+    }
+
+    openPopup(popup){
+        popup.classList.add("open-popup");
+    }
+
+    closePopup(popup,botDiff){
+        let difficulty=parseInt(botDiff.value);
+        this.botAdversairy=difficulty!==0;
+        this.bodDifficulty=difficulty;
+        popup.classList.remove("open-popup");
     }
 }

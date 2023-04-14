@@ -56,4 +56,8 @@ class MoveCacher{
     GetMoves (){
         return this.moves;
     }
+    reset(){
+        this.moves="";
+        this.alleBoards=[];
+    }
 }

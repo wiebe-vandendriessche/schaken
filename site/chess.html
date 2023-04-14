@@ -46,8 +46,7 @@
                 </div>
                 <ul class="sub-menu">
                     <li><a class="link_name" href="#">Spelen</a></li>
-                    <li><a href="chess.html">PvP</a></li>
-                    <li><a href="chessbot.html">PvBot</a></li>
+                    <li><a href="chess.html" id="speel">speel</a></li>
                     <li><a href="#">Puzzels</a></li>
                 </ul>
             </li>
@@ -111,8 +110,10 @@
             </li>
 
 
+
         </ul>
     </div>
+
 
 
     <section class="home-section">
@@ -157,6 +158,22 @@
 
                 </div>
             </div>
+        </div>
+        <div class="popup" id="popup">
+            <img src="picture/bot.jpg">
+            <p>Speel</p>
+            <i>Kies Tegenstander</i>
+            <select id="adversary">
+                <option class="choicAdversary" value="0">speler</option>
+                <option class="choicAdversary" value="1">bot lv1</option>
+                <option class="choicAdversary" value="2">bot lv2</option>
+                <option class="choicAdversary" value="3">bot lv3</option>
+                <option class="choicAdversary" value="4">bot lv4</option>
+                <option class="choicAdversary" value="5">bot lv5</option>
+                <option class="choicAdversary" value="6">bot lv6</option>
+            </select>
+
+            <button type="button" id="close_popup">start</button>
         </div>
     </section>
 </div>

@@ -1,36 +1,8 @@
 
-* {
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+.Geschiedenis-content {
+    color: var(--text-color);
+    padding-left: 50%;
+    padding-top: 50px;
 }
 
-body {
-    background-color: #8BBEE8
-}
-
-main {
-
-    border-style: solid;
-    margin: 1% 0% 10%;
-    padding: 5% 8% 5% 8%;
-    background-color: white;
-}
-
-header {
-
-    border-style: solid;
-    padding: 5% 8% 5% 8%;
-    margin-top: 5%;
-    margin-bottom: 1%;
-    background-color: white;
-}
-
-section article {
-    font-size: small;
-    line-height: 175%;
-    border-style: solid;
-    border-color: silver;
-    border-width: thin;
-    margin: 40px;
-    padding: 40px;
-}
 

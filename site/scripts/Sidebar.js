@@ -1,34 +1,36 @@
 
-
-//inklappen submenu
-let arrow = document.querySelectorAll(".arrow");
-for (var i = 0; i < arrow.length; i++) {
-    arrow[i].addEventListener("click", (e)=>{
-        let arrowParent = e.target.parentElement.parentElement;//selecting main parent of arrow
-        arrowParent.classList.toggle("showMenu");
-    });
+function SubmenuToggle1(){
+    const wasSubClosed1 = localStorage.getItem("subclosed1" ) === "true";
+    localStorage.setItem("subclosed1", !wasSubClosed1);
+    let sub1 = document.getElementById("idSub1");
+    sub1.classList.toggle("showMenu",!wasSubClosed1);
 }
 
-//inklappen sidebar
-let sidebar = document.querySelector(".sidebar");
-let sidebarBtn = document.querySelector(".bx-menu");
-console.log(sidebarBtn);
-sidebarBtn.addEventListener("click", ()=>{
-    sidebar.classList.toggle("close");
-});
+function SubmenuToggle2(){
+    const wasSubClosed2 = localStorage.getItem("subclosed2" ) === "true";
+    localStorage.setItem("subclosed2", !wasSubClosed2);
+    let sub2 = document.getElementById("idSub2");
+    sub2.classList.toggle("showMenu",!wasSubClosed2);
+}
 
-//darkmode
-const body = document.querySelector('body'),
-    modeSwitch = body.querySelector(".toggle-switch"),
-    modeText = body.querySelector(".link_name2");
+function Darkmode(){
+    const wasDarkmode = localStorage.getItem("darkmode") === "true";
+    localStorage.setItem("darkmode", !wasDarkmode);
+    const body = document.body;
+    body.classList.toggle("dark", !wasDarkmode);
 
-modeSwitch.addEventListener("click" , () =>{
-    body.classList.toggle("dark");
-
-    if(body.classList.contains("dark")){
-        modeText.innerText = "Light";
-    }else{
+    //text
+    let modeText = document.body.querySelector(".link_name2");
+    if (wasDarkmode === true) {
         modeText.innerText = "Dark";
-
+    } else {
+        modeText.innerText = "Light";
     }
-});
+}
+
+function SidebarToggle(){
+    const wasClosed = localStorage.getItem("closed") === "true";
+    localStorage.setItem("closed", !wasClosed);
+    const sidebar = document.querySelector(".sidebar");
+    sidebar.classList.toggle("close", !wasClosed);
+}

@@ -6,23 +6,6 @@
     font-family: 'Poppins', sans-serif;
 }
 
-:root {
-    --body-color: #fff;
-    --sidebar-color: #b2b2b2;
-    --primary-color-light: #cbcaca;
-    --toggle-color: #101010;
-    --text-color: #101010;
-}
-
-body.dark{
-    --body-color: #212121;
-    --sidebar-color: #101010;
-    --primary-color-light: #383838;
-    --toggle-color: #fff;
-    --text-color: #fff;
-}
-
-
 /* CSS OverOns */
 
 .section-title h2{

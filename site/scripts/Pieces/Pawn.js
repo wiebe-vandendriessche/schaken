@@ -11,7 +11,7 @@ class Pawn extends APiece {
 
 
     move(cord) {
-        this.pos=cord;
+        super.move(cord);
         this.moved=true;
     }
 

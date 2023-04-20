@@ -13,7 +13,7 @@ class King extends APiece{
 
     // moet dit er wel staan als we deze kunnen invullen in de boven klasse
     move(bord) {
-        this.moved=false;
+        this.moved=true;
         super.move(bord);
     }
     attackMoves(bord){

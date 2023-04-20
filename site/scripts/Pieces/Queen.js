@@ -7,9 +7,7 @@ class Queen extends APiece{
     constructor(pos,kleur,imageLoad) {
         super(pos,kleur?900:-900,kleur,kleur?"w_queen":"b_queen",imageLoad);
     }
-    show() {
-        super.show();
-    }
+
 
     possibleMoves(bord) {
         let veld=bord.getPieces(); // 2D-array van 64 blokjes met alle pieces erop en nullen waar niks staat
@@ -21,9 +19,7 @@ class Queen extends APiece{
         return possiblemoves;
     }
 
-    move(cord) {
-        super.move(cord);
-    }
+
     clone(imageOnLoad) {
 
         return new Queen(new Coordinate(this.pos.x,this.pos.y),this.kleur,imageOnLoad);

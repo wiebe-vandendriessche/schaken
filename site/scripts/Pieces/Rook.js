@@ -8,9 +8,7 @@ export class Rook extends APiece{
         this.moved=false;
 
     }
-    show() {
-        super.show();
-    }
+
 
     possibleMoves(bord) {
         let veld=bord.getPieces(); // 2D-array van 64 blokjes met alle pieces erop en nullen waar niks staat
@@ -21,7 +19,7 @@ export class Rook extends APiece{
     }
 
     move(cord) {
-        this.pos = cord;
+        super.move(cord)
         this.moved=true;
     }
     clone(imageOnLoad) {

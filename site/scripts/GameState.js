@@ -1,8 +1,12 @@
 import {Board} from "./Board.js";
 import {Coordinate} from "./Coordinate.js";
+import {Bot} from "./Bot/Bot.js";
+import {MoveCacher} from "./MoveCacher.js";
 
 export class GameState{
     static ofsetPiece=5;
+    static PlayedMoves=new MoveCacher();
+    bot;
     constructor(canvas,lenght,colorA,colorB,colorC,colorD) {
 
         this.botAdversairy=false;
@@ -15,11 +19,13 @@ export class GameState{
         this.board= new Board(true);
         this.clicked=false;
         this.clicked_piece=0;
-        Board.PlayedMoves.alleBoards.push(new Board(true));
+        GameState.PlayedMoves.alleBoards.push(new Board(true));
         this.colorA=colorA;
         this.colorB=colorB;
         this.colorC=colorC;
         this.colorD=colorD
+        this.playMove=(event)=>{};
+
     }
 
     drawGameboard(){
@@ -29,9 +35,9 @@ export class GameState{
     undoMove(){
         //console.log(Board.PlayedMoves.GetMoves())
 
-        if(Board.PlayedMoves.moves!==""){
+        if(GameState.PlayedMoves.moves!==""){
             this.ReturnToPreviousBoard();
-            this.updatePlayedMoves(this.board.getAlleMovesPlayedInGame());
+            this.updatePlayedMoves(GameState.PlayedMoves.GetMoves());
             this.drawGameboard();
         }
 
@@ -83,15 +89,70 @@ export class GameState{
 
     restart(popup){
         this.board=new Board(true);
-        Board.PlayedMoves.reset();
+        GameState.PlayedMoves.reset();
         this.clicked=false;
         this.drawGameboard();
         this.updatePlayedMoves("");
+        this.playMove=(event)=>{};
         this.openPopup(popup)
     }
 
-    play_move_player(event){
 
+    play(event){
+        this.playMove(event)
+    }
+
+    async play_move_bot(event){
+        let rect=this.canvas.getBoundingClientRect();
+        let x=Math.floor((event.clientX-rect.x)/this.square_size);
+        let y=Math.floor((event.clientY-rect.y)/this.square_size);
+        let piece_clicked_now=this.board.getPieces()[y][x];
+        let cord=new Coordinate(x,y);
+        let color=this.board.colorToMove();
+        this.drawGameboard()
+        if(this.clicked){
+            if(this.board.moveWithCheck(this.clicked_piece,cord)) {
+                GameState.PlayedMoves.Moveadd(cord,this.board.amountOfMoves,this.board);
+                let status = this.board.isEnd(!color);
+                if (status !== "continue") {
+                    setTimeout(() => {
+                        alert(status)
+                    }, 500);
+                }
+                let newCord;
+                this.drawGameboard();
+                this.bot.nextMove(this.board).then(array=>{
+                    this.board.move(array[0], array[1])
+                    newCord=array[1];
+                    }).then(()=>{
+                    let status=this.board.isEnd(color);
+                    if (status !== "continue") {
+                        setTimeout(() => {
+                            alert(status)
+                        }, 500);
+                    }
+                    this.board.amountOfMoves++;
+                    this.drawGameboard();
+
+                }).then(()=>{
+                    GameState.PlayedMoves.Moveadd(newCord,this.board.amountOfMoves,this.board);
+                    this.updatePlayedMoves(GameState.PlayedMoves.GetMoves());
+                });
+
+            }
+
+            this.clicked = false;
+            this.clicked_piece = 0;
+        }else{
+
+            if(piece_clicked_now!==0 && piece_clicked_now.kleur===color){
+                this.drawPossible(this.board.possibleMoves(cord));
+                this.clicked_piece=piece_clicked_now
+                this.clicked=true
+            }
+        }
+    }
+    play_move_player(event){
         let rect=this.canvas.getBoundingClientRect();
         let x=Math.floor((event.clientX-rect.x)/this.square_size);
         let y=Math.floor((event.clientY-rect.y)/this.square_size);
@@ -100,8 +161,9 @@ export class GameState{
         let color=this.board.colorToMove();
         if(this.clicked){
             this.board.moveWithCheck(this.clicked_piece,cord);
+            GameState.PlayedMoves.Moveadd(cord,this.board.amountOfMoves,this.board);
             this.drawGameboard()
-            this.updatePlayedMoves(this.board.getAlleMovesPlayedInGame())
+            this.updatePlayedMoves(GameState.PlayedMoves.GetMoves())
             this.clicked=false;
             this.clicked_piece=0;
 
@@ -116,7 +178,7 @@ export class GameState{
     }
 
     ReturnToPreviousBoard(){
-        this.board=this.board.PrevouisPosition()
+        this.board=GameState.PlayedMoves.ReturnToPreviousMoves();
     }
 
 
@@ -131,8 +193,16 @@ export class GameState{
 
     closePopup(popup,botDiff){
         let difficulty=parseInt(botDiff.value);
-        this.botAdversairy=difficulty!==0;
+        this.botAdversairy= difficulty!==0;
         this.bodDifficulty=difficulty;
+
+        if(!this.botAdversairy){
+            this.playMove=(event)=>{this.play_move_player(event)};
+        }else{
+            this.playMove=(event)=>{this.play_move_bot(event)};
+            this.bot=new Bot(false,this.bodDifficulty);
+
+        }
         popup.classList.remove("open-popup");
     }
 }

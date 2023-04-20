@@ -18,7 +18,7 @@ window.onload=()=>{gameState.openPopup(popup)}
 gameState.drawGameboard();
 undobutton.addEventListener("click",()=>{gameState.undoMove()});
 restartbutton.addEventListener("click",()=>{gameState.restart(popup)});
-canvas.addEventListener("click",(event)=>{gameState.play_move_player(event)});
+canvas.addEventListener("click",(event)=>{gameState.play(event)});
 
 closePopupButton.addEventListener("click",()=>{gameState.closePopup(popup,boddiff)})
 

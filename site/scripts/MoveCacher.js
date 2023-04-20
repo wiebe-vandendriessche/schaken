@@ -48,11 +48,6 @@ class MoveCacher{
         this.alleBoards=alleboards;
     }
 
-    undoVirtualMoves(board){
-        this.alleBoards.pop();
-        this.alleBoards.push(board.clone(true));
-    }
-
     GetMoves (){
         return this.moves;
     }

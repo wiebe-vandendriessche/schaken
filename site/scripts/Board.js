@@ -12,11 +12,10 @@ import {MoveCacher} from "./MoveCacher.js";
 export {Board};
 
 class Board {
-    static PlayedMoves = new MoveCacher();
+    amountOfMoves;
 
     constructor(setup) {
         this.board = [[], [], [], [], [], [], [], []];
-
         if (setup) {
             this.setupPieces();
         }
@@ -66,21 +65,15 @@ class Board {
 
     moveWithCheck(piece,cord){
         let realmoves=this.legalchecker.possibleMoves(piece,true);
-        Board.PlayedMoves.undoVirtualMoves(this);
         if(realmoves.some((move)=>JSON.stringify(move)===JSON.stringify(cord))){
             this.move(piece,cord);
             this.amountOfMoves++;
-            Board.PlayedMoves.Moveadd(cord,this.amountOfMoves,this);
             return true;
         }else {
             return false;
         }
     }
 
-
-    getAlleMovesPlayedInGame(){
-        return Board.PlayedMoves.GetMoves();
-    }
 
     move(piece,cord){
         this.board[piece.pos.y][piece.pos.x] = 0;
@@ -145,10 +138,6 @@ class Board {
         }
     }
 
-    PrevouisPosition(){
-
-        return Board.PlayedMoves.ReturnToPreviousMoves()
-    }
 
 
 

@@ -7,7 +7,6 @@ import {Queen} from "./Pieces/Queen.js";
 import {Rook} from "./Pieces/Rook.js";
 import {Coordinate} from "./Coordinate.js";
 import {LegalChecker} from "./LegalChecker.js";
-import {MoveCacher} from "./MoveCacher.js";
 
 export {Board};
 
@@ -17,40 +16,58 @@ class Board {
     constructor(setup) {
         this.board = [[], [], [], [], [], [], [], []];
         if (setup) {
-            this.setupPieces();
+            this.setupPieces("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
         }
         this.legalchecker= new LegalChecker(this);
         this.amountOfMoves=0;
     }
 
-    setupPieces() {
-        for (let i = 0; i < 8; i++) {
-            this.board[1][i] = new Pawn(new Coordinate(i, 1), false,true);
-            this.board[6][i] = new Pawn(new Coordinate(i, 6), true,true);
-        }
+    setupPieces(FEN){//krijgt een string van de vorm rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1 zie https://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation voor meer uitleg over FEN
+        let Information=FEN.split(" ");
+        let boardFEN=Information[0]
+        let y = 0;
+        let x = 0;
 
-        this.board[7][4] = new King(new Coordinate(4, 7), true,true);
-        this.board[7][3] = new Queen(new Coordinate(3,7), true,true);
-        this.board[7][2] = new Bisshop(new Coordinate(2, 7), true,true);
-        this.board[7][5] = new Bisshop(new Coordinate(5, 7), true,true);
-        this.board[7][1] = new Knight(new Coordinate(1, 7), true,true);
-        this.board[7][0] = new Rook(new Coordinate(0,7), true,true);
-        this.board[7][6] = new Knight(new Coordinate(6, 7), true,true);
-        this.board[7][7] = new Rook(new Coordinate(7, 7), true,true);
-
-        this.board[0][4] = new King(new Coordinate(4, 0), false,true);
-        this.board[0][3] = new Queen(new Coordinate(3, 0), false,true);
-        this.board[0][2] = new Bisshop(new Coordinate(2, 0), false,true);
-        this.board[0][5] = new Bisshop(new Coordinate(5, 0), false,true);
-        this.board[0][1] = new Knight(new Coordinate(1, 0), false,true);
-        this.board[0][0] = new Rook(new Coordinate(0, 0), false,true);
-        this.board[0][6] = new Knight(new Coordinate(6, 0), false,true);
-        this.board[0][7] = new Rook(new Coordinate(7, 0), false,true);
-
-        for(let i = 2; i < 6; i++){
-            for(let j = 0; j < 8; j++){
-                this.board[i][j] = 0;
+        for(let i=0;i<boardFEN.length;i++){
+            let letterFen=boardFEN[i];
+            if (letterFen==="/"){
+                x=0;
+                y+=1;
+            }else if(isNaN(letterFen)){
+                this.board[y][x]=this.creatPiece(letterFen,x,y);
+                x+=1;
+            }else {
+                let cijferFen=parseInt(letterFen);
+                for(let i=0;i<cijferFen;i++){
+                    this.board[y][x+i]=0;
+                }
+                x+=cijferFen;
             }
+        }
+        let halveMove=0;
+        if(Information[1]==="b"){
+            halveMove+=1;
+        }
+        this.amountOfMoves=(parseInt(Information[5])-1)*2 + halveMove;
+    }
+
+    creatPiece(letter,x,y){
+        let color= letter===letter.toUpperCase()
+        letter=letter.toUpperCase()
+        if (letter==="R"){
+            return new Rook(new Coordinate(x,y),color,true);
+        }else if (letter==="N"){
+            return new Knight(new Coordinate(x,y),color,true);
+        }else if (letter==="P"){
+            return new Pawn(new Coordinate(x,y),color,true);
+        }else if (letter==="B"){
+            return new Bisshop(new Coordinate(x,y),color,true);
+        }else if (letter==="Q"){
+            return new Queen(new Coordinate(x,y),color,true);
+        }else if (letter==="K") {
+            return new King(new Coordinate(x,y),color,true);
+        }else{
+            return null//eigenlijk hier exeption opwerpen om aan te tonen dat de input fout is
         }
     }
 
@@ -98,10 +115,7 @@ class Board {
 
         return this.amountOfMoves%2===0;
     }
-
-
-
-
+    
     clone(imageOnLoad){
         let newboard= new Board(false);
         newboard.amountOfMoves=this.amountOfMoves;
@@ -137,8 +151,4 @@ class Board {
             return "continue";
         }
     }
-
-
-
-
 }

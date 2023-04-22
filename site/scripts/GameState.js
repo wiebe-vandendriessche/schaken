@@ -2,6 +2,7 @@ import {Board} from "./Board.js";
 import {Coordinate} from "./Coordinate.js";
 import {Bot} from "./Bot/Bot.js";
 import {MoveCacher} from "./MoveCacher.js";
+import {popup_end} from "./Show.js";//ik weet niet zeker of dit mag en of dit de mooiste oplossing is
 
 export class GameState{
     static ofsetPiece=5;
@@ -19,13 +20,18 @@ export class GameState{
         this.board= new Board(true);
         this.clicked=false;
         this.clicked_piece=0;
-        GameState.PlayedMoves.alleBoards.push(new Board(true));
+        GameState.PlayedMoves.setStart(new Board(true));
         this.colorA=colorA;
         this.colorB=colorB;
         this.colorC=colorC;
         this.colorD=colorD
         this.playMove=(event)=>{};
 
+    }
+    dummy(){
+        this.board.setupPieces("q3k1nr/1pp1nQpp/3p4/1P2p3/4P3/B1PP1b2/B5PP/5K2 b k - 0 17");
+        GameState.PlayedMoves.setStart(this.board);
+        this.drawGameboard();
     }
 
     drawGameboard(){
@@ -34,13 +40,22 @@ export class GameState{
     }
     undoMove(){
         //console.log(Board.PlayedMoves.GetMoves())
-
+        let undoAantal=1;
+        if(this.botAdversairy){
+            undoAantal=2;
+        }
+        //chekken voor de loop voor onnodige itteraties tegen te gaan
+        //chekken na de loop voor als je twee keer terug wil maar maar een keer terug kan;
         if(GameState.PlayedMoves.moves!==""){
-            this.ReturnToPreviousBoard();
-            this.updatePlayedMoves(GameState.PlayedMoves.GetMoves());
+            for(let i=0;i<undoAantal;i++){
+                if(GameState.PlayedMoves.moves!==""){
+                    this.ReturnToPreviousBoard();
+                    this.updatePlayedMoves(GameState.PlayedMoves.GetMoves());
+
+                }
+            }
             this.drawGameboard();
         }
-
     }
     drawSquare(i,j,colorA,colorB){
         this.ctx.beginPath();
@@ -93,6 +108,7 @@ export class GameState{
         this.clicked=false;
         this.drawGameboard();
         this.updatePlayedMoves("");
+        GameState.PlayedMoves.alleBoards.push(new Board(true));
         this.playMove=(event)=>{};
         this.openPopup(popup)
     }
@@ -100,6 +116,23 @@ export class GameState{
 
     play(event){
         this.playMove(event)
+    }
+
+    bot_move(){
+        let newCord;
+        let piece;
+        this.bot.nextMove(this.board).then(array=>{
+            this.board.move(array[0], array[1])
+            newCord=array[1];
+            piece=array[0]
+        }).then(()=>{
+            this.board.amountOfMoves++;
+            this.drawGameboard();
+
+        }).then(()=>{
+            GameState.PlayedMoves.Moveadd(newCord,this.board.amountOfMoves,this.board,piece);
+            this.updatePlayedMoves(GameState.PlayedMoves.GetMoves());
+        });
     }
 
     async play_move_bot(event){
@@ -112,35 +145,16 @@ export class GameState{
         this.drawGameboard()
         if(this.clicked){
             if(this.board.moveWithCheck(this.clicked_piece,cord)) {
-                GameState.PlayedMoves.Moveadd(cord,this.board.amountOfMoves,this.board);
+                GameState.PlayedMoves.Moveadd(cord,this.board.amountOfMoves,this.board,this.clicked_piece);
                 let status = this.board.isEnd(!color);
                 if (status !== "continue") {
                     setTimeout(() => {
                         alert(status)
                     }, 500);
                 }
-                let newCord;
-                this.drawGameboard();
-                this.bot.nextMove(this.board).then(array=>{
-                    this.board.move(array[0], array[1])
-                    newCord=array[1];
-                    }).then(()=>{
-                    let status=this.board.isEnd(color);
-                    if (status !== "continue") {
-                        setTimeout(() => {
-                            alert(status)
-                        }, 500);
-                    }
-                    this.board.amountOfMoves++;
-                    this.drawGameboard();
-
-                }).then(()=>{
-                    GameState.PlayedMoves.Moveadd(newCord,this.board.amountOfMoves,this.board);
-                    this.updatePlayedMoves(GameState.PlayedMoves.GetMoves());
-                });
-
+                this.bot_move();
+                this.openEndGame(color);
             }
-
             this.clicked = false;
             this.clicked_piece = 0;
         }else{
@@ -160,8 +174,10 @@ export class GameState{
         let cord=new Coordinate(x,y);
         let color=this.board.colorToMove();
         if(this.clicked){
-            this.board.moveWithCheck(this.clicked_piece,cord);
-            GameState.PlayedMoves.Moveadd(cord,this.board.amountOfMoves,this.board);
+            if(this.board.moveWithCheck(this.clicked_piece,cord)){
+                GameState.PlayedMoves.Moveadd(cord,this.board.amountOfMoves,this.board,this.clicked_piece);
+                this.openEndGame(color);
+            }
             this.drawGameboard()
             this.updatePlayedMoves(GameState.PlayedMoves.GetMoves())
             this.clicked=false;
@@ -190,19 +206,38 @@ export class GameState{
     openPopup(popup){
         popup.classList.add("open-popup");
     }
+    closePopupDifficulty(popupDifficulty,botDiff,color){
+        let col=parseInt(color.value)===0;
+        this.bodDifficulty= botDiff.value;
+        //console.log(col+"     "+this.bodDifficulty);
+        this.playMove=(event)=>{this.play_move_bot(event)};
+        this.bot=new Bot(col,this.bodDifficulty);
+        if(col){
+            this.bot_move();
+        }
+        this.close(popupDifficulty);
 
-    closePopup(popup,botDiff){
+    }
+    closePopup(popup,popupDifficulty,botDiff){
         let difficulty=parseInt(botDiff.value);
         this.botAdversairy= difficulty!==0;
-        this.bodDifficulty=difficulty;
-
         if(!this.botAdversairy){
             this.playMove=(event)=>{this.play_move_player(event)};
         }else{
-            this.playMove=(event)=>{this.play_move_bot(event)};
-            this.bot=new Bot(false,this.bodDifficulty);
-
+            this.openPopup(popupDifficulty)
         }
+        this.close(popup);
+    }
+    openEndGame(color){
+        let status = this.board.isEnd(!color);
+        console.log(status)
+        if (status !== "continue") {
+            setTimeout(() => {
+                popup_end.classList.add("open-popup")
+            }, 500);
+        }
+    }
+    close(popup){
         popup.classList.remove("open-popup");
     }
 }

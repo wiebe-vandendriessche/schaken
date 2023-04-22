@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <!--titel-->
-    <title>Schaken/PvP</title>
+    <title>Schaken/speel</title>
 
     <!--stylesheets-->
     <link rel="stylesheet" href="css/chessPage.css">
@@ -171,22 +171,49 @@
                 </div>
             </div>
         </div>
+
+        #popups needed for this site
         <div class="popup" id="popup">
-            <img src="picture/bot.jpg">
+            <img src="picture/bot.jpg" alt="bot">
             <p>Speel</p>
             <i>Kies Tegenstander</i>
-            <select id="adversary">
+            <select class="selectInPopup" id="adversary">
                 <option class="choicAdversary" value="0">speler</option>
-                <option class="choicAdversary" value="1">bot lv1</option>
-                <option class="choicAdversary" value="2">bot lv2</option>
-                <option class="choicAdversary" value="3">bot lv3</option>
-                <option class="choicAdversary" value="4">bot lv4</option>
-                <option class="choicAdversary" value="5">bot lv5</option>
-                <option class="choicAdversary" value="6">bot lv6</option>
+                <option class="choicAdversary" value="1">bot</option>
             </select>
 
             <button type="button" id="close_popup">start</button>
         </div>
+
+        <div class="popup" id="popup_difficulty">
+            <img src="picture/bot.jpg" alt="bot">
+            <p>Speel</p>
+            <i>Kies de moelijkheidsgraad</i>
+            <select class="selectInPopup" id="difficulty">
+                <option class="choicAdversary" value="1">bot level 1</option>
+                <option class="choicAdversary" value="2">bot level 2</option>
+                <option class="choicAdversary" value="3">bot level 3</option>
+                <option class="choicAdversary" value="4">bot level 4</option>
+                <option class="choicAdversary" value="5">bot level 5</option>
+                <option class="choicAdversary" value="6">bot level 6</option>
+            </select>
+            <div></div>
+            <i>Kies welk kleur u wilt spelen</i>
+            <select class="selectInPopup" id="color">
+                <option class="choicAdversary" value="0">zwart</option>
+                <option class="choicAdversary" value="1" selected>wit</option>
+            </select>
+
+            <button type="button" id="close_popup_difficulty">start</button>
+        </div>
+
+        <div class="popup" id="end">
+            <img src="picture/bot.jpg" alt="bot">
+            <p>you lost</p>
+            <button type="button" id="close_popup_end">speel opnieuw</button>
+            <button type="button" id="close_popup_puzzels">ga naar puzzels</button>
+        </div>
+
     </section>
 </div>
 

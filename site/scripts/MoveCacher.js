@@ -1,5 +1,5 @@
-import {Coordinate} from "./Coordinate.js";
-import {Board} from "./Board.js";
+import {Knight} from "./Pieces/Knight.js";
+
 export {MoveCacher};
 class MoveCacher{
 
@@ -9,16 +9,24 @@ class MoveCacher{
         this.alleBoards=[];
 
     }
-    Moveadd (NewCord,amountOfMoves,board){
+    Moveadd (NewCord,amountOfMoves,board,piece){
+        let firstLetter=piece.constructor.name[0];
+
+        if(firstLetter==="P"){
+            firstLetter=" ";
+        }else if(piece instanceof Knight){
+            firstLetter="N"
+        }
+
         this.alleBoards.push(board.clone(true));
         if(amountOfMoves % 2===1){
-            this.moves+=`${Math.ceil(amountOfMoves/2)}.\t${NewCord.convertToCHessCords(NewCord)}`;
-        }else{
-            this.moves+=`\t\t${NewCord.convertToCHessCords(NewCord)}\n`;
+            this.moves+=`${Math.ceil(amountOfMoves/2)}.\t${firstLetter}${NewCord.convertToCHessCords(NewCord)}`;
+        }else{//kleine letter gebruiken volgend de regels moet een zwart piece met een kleine letter
+            this.moves+=`\t\t${firstLetter.toLowerCase()}${NewCord.convertToCHessCords(NewCord)}\n`;
         }
     }
     MoveRemove(){
-        this.moves=this.moves.slice(0,this.moves.length-5);
+        this.moves=this.moves.slice(0,this.moves.length-6);
     }
 
     ReturnToPreviousMoves(){
@@ -26,8 +34,7 @@ class MoveCacher{
         if(len>=1){
             this.MoveRemove();
             this.alleBoards.pop();
-            let new_board=this.alleBoards[len-2];
-            return new_board;
+            return this.alleBoards[len - 2].clone(true);//moet een clone zijn om geen referentie naar een bord bij te houden
         }else{
             return this.alleBoards[len-1];
         }

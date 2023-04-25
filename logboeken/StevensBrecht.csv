@@ -1,24 +1,24 @@
 Datum, Start, Einde, Plaats, Omschrijving
-15/02/2023,	09:30,	12:30,	Contacturen,	Labo Git	
-22/02/2023,	09:30,	12:30,	Contacturen,	Lab Git + debuggen	
-01/03/2023,	09:30,	12:30,	Contacturen,	Kennismaking team + brainstorm project	
-08/03/2023,	09:30,	12:30,	Contacturen,	beginnen uitwerken klassediagram	
-15/03/2023,	09:30,	12:30,  contacturen,	uitzoeken Foto op canvas + start uml	
-15/03/2023,	14:00,	16:30,	thuis,	uml voortdoen	
-16/03/2023,	09:00,	10:30,	thuis,	werken board klasse	
-16/03/2023,	17:30,	18:30,	thuis,	werken aan fotos verzetten op canvas	
-22/03/2023,	09:30,	12:30,	contacturen,	afwerken zetten doen	
-23/03/2023,	13:00,	16:00,	thuis,	met stijn en jelle een bug gefixt en verdere plannen besproken	
-29/03/2023,	09:30,	12:30,	contacturen,	opzoeken vermijden flikeren canvas	
-30/03/2023,	13:00,	15:00,	thuis,	werken aan begin van undo move	
-31/03/2023,	12:00,	13:00,	bib,	verder werken aan undo move(uno afwerken voor een keer tweede undo zet werkt nog niet echt)	
-05/04/2023,	14:00,	17:00,	thuis,	verder aan undo move werken oplossen bug	
-08/04/2023,	15:30,	19:30,	thuis, samen met jelle mergen undo move met bot nu bij	
-11/04/2023,	10:00,	12:00,	thuis,	buttons voor undo restart en risign toevoegen afwerken kader voor de history van de zetten	
-11/04/2023,	15:00,	16:00,	thuis,	opkuisen van de show klasse en naar een gamestate klasse verplaatsen	
-19/04/2023,	09:30,	12:30,	contacturen,	helpen kijken voor bot assynchroon en foutje in bot en movecacher niet meer als parameter van board maken	
-21/04/2023,	09:30,	10:30,	thuis,	toevoegen keuze moeilijkheidsgraad en kleur bot	
-22/04/2023,	09:30,	13:00,	thuis,	nieuwe bug in movechar wegwerken toevoegen einde van het spel onderzoeken voor manier om board op bepaalde positie te initialiseren	
+15/02/2023, 09:30,	12:30,	Contacturen,	Labo Git	
+22/02/2023, 09:30,	12:30,	Contacturen,	Lab Git + debuggen	
+01/03/2023, 09:30,	12:30,	Contacturen,	Kennismaking team + brainstorm project	
+08/03/2023, 09:30,	12:30,	Contacturen,	beginnen uitwerken klassediagram	
+15/03/2023, 09:30,	12:30,  contacturen,	uitzoeken Foto op canvas + start uml	
+15/03/2023, 14:00,	16:30,	thuis,	uml voortdoen	
+16/03/2023, 09:00,	10:30,	thuis,	werken board klasse	
+16/03/2023, 17:30,	18:30,	thuis,	werken aan fotos verzetten op canvas	
+22/03/2023, 09:30,	12:30,	contacturen,	afwerken zetten doen	
+23/03/2023, 13:00,	16:00,	thuis,	met stijn en jelle een bug gefixt en verdere plannen besproken	
+29/03/2023, 09:30,	12:30,	contacturen,	opzoeken vermijden flikeren canvas	
+30/03/2023, 13:00,	15:00,	thuis,	werken aan begin van undo move	
+31/03/2023, 12:00,	13:00,	bib,	verder werken aan undo move(uno afwerken voor een keer tweede undo zet werkt nog niet echt)	
+05/04/2023, 14:00,	17:00,	thuis,	verder aan undo move werken oplossen bug	
+08/04/2023, 15:30,	19:30,	thuis, samen met jelle mergen undo move met bot nu bij	
+11/04/2023, 10:00,	12:00,	thuis,	buttons voor undo restart en risign toevoegen afwerken kader voor de history van de zetten	
+11/04/2023, 15:00,	16:00,	thuis,	opkuisen van de show klasse en naar een gamestate klasse verplaatsen	
+19/04/2023, 09:30,	12:30,	contacturen,	helpen kijken voor bot assynchroon en foutje in bot en movecacher niet meer als parameter van board maken	
+21/04/2023, 09:30,	10:30,	thuis,	toevoegen keuze moeilijkheidsgraad en kleur bot	
+22/04/2023, 09:30,	13:00,	thuis,	nieuwe bug in movechar wegwerken toevoegen einde van het spel onderzoeken voor manier om board op bepaalde positie te initialiseren	
 22/04/2023, 14:00,  16:30,  thuis, board op bepaalde manier insteelen toevoegen + botmove updaten + als de bot wit is zorgen dat het ook werkt
 24/04/2023, 21:00,  22:00,  thuis, zoeken naar database die niet via csv is + oplossing zoeken voor het duplicated in gamestate
 25/04/2023, 09:00,  11:30,  thuis, zoeken naar fout in movecaher die jelle had gevonden, opolossen van dit probleem + eind sherm verbeteren

@@ -20,3 +20,5 @@ Datum, Start, Einde, Plaats, Omschrijving
 21/04/2023,	09:30,	10:30,	thuis,	toevoegen keuze moeilijkheidsgraad en kleur bot	
 22/04/2023,	09:30,	13:00,	thuis,	nieuwe bug in movechar wegwerken toevoegen einde van het spel onderzoeken voor manier om board op bepaalde positie te initialiseren	
 22/04/2023, 14:00,  16:30,  thuis, board op bepaalde manier insteelen toevoegen + botmove updaten + als de bot wit is zorgen dat het ook werkt
+24/04/2023, 21:00,  22:00,  thuis, zoeken naar database die niet via csv is + oplossing zoeken voor het duplicated in gamestate
+25/04/2023, 09:00,  11:30,  thuis, zoeken naar fout in movecaher die jelle had gevonden, opolossen van dit probleem + eind sherm verbeteren

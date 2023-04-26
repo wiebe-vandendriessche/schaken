@@ -13,6 +13,7 @@ export class LegalChecker{
         this.attackMapBlack=[[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]];
     }
 
+
     castlingPossible(color){ // king checked zelf al of hij zelf niet gemoved heeft
 
 
@@ -23,8 +24,8 @@ export class LegalChecker{
         if (attackmap[y_axis][4]>0) {//checked
             return "";
         }
-        let rookleft= color?speelveld[7][0] :speelveld[0][0];
-        let rookright=color?speelveld[7][7]: speelveld[0][7];
+        let rookleft =speelveld[y_axis][0];
+        let rookright=speelveld[y_axis][7];
 
         let string="";
         if ((rookleft!==0 && rookleft instanceof Rook )|| (rookright!==0 && rookright instanceof Rook)){

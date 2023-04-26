@@ -25,7 +25,7 @@ class King extends APiece{
         for (let i = 0; i < op_amount; i++) {
             let x=this.pos.x+moves[i].x;
             let y= this.pos.y+moves[i].y;
-            if(x<=7 && x>=0 && y<=7 && y>=0){//chek buiten bord
+            if(x<=7 && x>=0 && y<=7 && y>=0){//check buiten bord
                 let piece=veld[y][x];
                 if(piece!==0){
                     if(this.kleur!==veld[y][x].kleur){

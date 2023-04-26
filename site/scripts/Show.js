@@ -6,7 +6,7 @@ import {GameState} from "./GameState.js";
 let canvas = document.getElementById("canvas");
 let undobutton=document.getElementById("undo_move");
 let restartbutton=document.getElementById("restart");
-
+let resignebutton=document.getElementById("resign");
 
 let popup=document.getElementById("popup");
 let closePopupButton=document.getElementById("close_popup");
@@ -27,8 +27,10 @@ restartbutton.addEventListener("click",()=>{gameState.restart(popup)});
 canvas.addEventListener("click",(event)=>{gameState.play(event)});
 
 closePopupButton.addEventListener("click",()=>{gameState.closePopup(popup,popup_difficulty,botPlayer)})
+
 closePopupDifficultyButton.addEventListener("click",()=>{gameState.closePopupDifficulty(popup_difficulty,botDiff,playerColor)});
 
 restartEndButton.addEventListener("click",()=>{gameState.close(popup_end);gameState.restart(popup);});
 
+resignebutton.addEventListener("click",()=>{gameState.openPopup(popup_end);gameState.setEndPopupText(gameState,"resign",popup_end)})
 window.addEventListener("keypress",()=>{gameState.dummy()});

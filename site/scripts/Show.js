@@ -7,7 +7,7 @@ let canvas = document.getElementById("canvas");
 let undobutton=document.getElementById("undo_move");
 let restartbutton=document.getElementById("restart");
 let menuButton = document.getElementById("menuButton");
-
+let resignebutton=document.getElementById("resign");
 
 
 let popup=document.getElementById("popup");
@@ -29,6 +29,7 @@ restartbutton.addEventListener("click",()=>{gameState.restart(popup)});
 canvas.addEventListener("click",(event)=>{gameState.play(event)});
 
 closePopupButton.addEventListener("click",()=>{gameState.closePopup(popup,popup_difficulty,botPlayer)})
+
 closePopupDifficultyButton.addEventListener("click",()=>{gameState.closePopupDifficulty(popup_difficulty,botDiff,playerColor)});
 
 restartEndButton.addEventListener("click",()=>{gameState.close(popup_end);gameState.restart(popup);});
@@ -37,3 +38,6 @@ window.addEventListener("keypress",()=>{gameState.dummy()});
 
 window.addEventListener("resize", ()=>{gameState.rescale()});
 menuButton.addEventListener("click", ()=>{gameState.rescale()});
+
+resignebutton.addEventListener("click",()=>{gameState.openPopup(popup_end);gameState.setEndPopupText(gameState,"resign",popup_end)})
+window.addEventListener("keypress",()=>{gameState.dummy()});

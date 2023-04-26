@@ -18,15 +18,21 @@ class MoveCacher{
             firstLetter="N"
         }
 
+
         this.alleBoards.push(board.clone(true));
         if(amountOfMoves % 2===1){
-            this.moves+=`${Math.ceil(amountOfMoves/2)}.\t${firstLetter}${NewCord.convertToCHessCords(NewCord)}`;
+            let number=Math.ceil(amountOfMoves/2)
+            let ending_spatie="";//ending spatie is nodig voor als er een getal kleiner dan tien als zetnummer is om toch altijd even lange strings te krijgen
+            if(number<10){
+                ending_spatie=" ";
+            }
+            this.moves+=`${number}.\t ${firstLetter}${NewCord.convertToCHessCords(NewCord)}${ending_spatie}`;
         }else{//kleine letter gebruiken volgend de regels moet een zwart piece met een kleine letter
-            this.moves+=`\t\t${firstLetter.toLowerCase()}${NewCord.convertToCHessCords(NewCord)}\n`;
+            this.moves+=`\t\t ${firstLetter.toLowerCase()}${NewCord.convertToCHessCords(NewCord)} \n`;
         }
     }
     MoveRemove(){
-        this.moves=this.moves.slice(0,this.moves.length-6);
+        this.moves=this.moves.slice(0,this.moves.length-8);
     }
 
     ReturnToPreviousMoves(){

@@ -39,7 +39,6 @@ export class GameState{
         this.drawPieces(this.board.getPieces());
     }
     undoMove(){
-        //console.log(Board.PlayedMoves.GetMoves())
         let undoAantal=1;
         if(this.botAdversairy){
             undoAantal=2;
@@ -50,12 +49,15 @@ export class GameState{
             for(let i=0;i<undoAantal;i++){
                 if(GameState.PlayedMoves.moves!==""){
                     this.ReturnToPreviousBoard();
+                    this.clicked_piece=0;
+                    this.clicked=false;
                     this.updatePlayedMoves(GameState.PlayedMoves.GetMoves());
 
                 }
             }
             this.drawGameboard();
         }
+        //console.log(GameState.PlayedMoves.GetMoves());
     }
     drawSquare(i,j,colorA,colorB){
         this.ctx.beginPath();
@@ -135,6 +137,7 @@ export class GameState{
         });
     }
 
+    //duplicated code voor efficientie van de botmove om een if test minder te moeten doen nog geen tijd gehad of het een groot verschil maakt als de chek er bij komt
     async play_move_bot(event){
         let rect=this.canvas.getBoundingClientRect();
         let x=Math.floor((event.clientX-rect.x)/this.square_size);
@@ -176,9 +179,11 @@ export class GameState{
         if(this.clicked){
             if(this.board.moveWithCheck(this.clicked_piece,cord)){
                 GameState.PlayedMoves.Moveadd(cord,this.board.amountOfMoves,this.board,this.clicked_piece);
+                this.drawGameboard();//moet hier ook eens staan voor het geval dat het d
                 this.openEndGame(color);
+            }else{
+                this.drawGameboard();
             }
-            this.drawGameboard()
             this.updatePlayedMoves(GameState.PlayedMoves.GetMoves())
             this.clicked=false;
             this.clicked_piece=0;
@@ -190,7 +195,7 @@ export class GameState{
                 this.clicked=true;
             }
         }
-
+        console.log(GameState.PlayedMoves)
     }
 
     ReturnToPreviousBoard(){
@@ -231,11 +236,27 @@ export class GameState{
     openEndGame(color){
         let status = this.board.isEnd(!color);
         console.log(status)
-        if (status !== "continue") {
+        if (status !== "continue") {//alles binnen deze functie moet niet effiecient zijn dit aangezien dat het maar en keer per spel wordt opgeroepen
             setTimeout(() => {
-                popup_end.classList.add("open-popup")
+                popup_end.classList.add("open-popup");
+                this.setEndPopupText(color,status,popup_end);
             }, 500);
         }
+    }
+
+    setEndPopupText(color,status,popup){
+        let text;
+        let text_color=color?"Withe":"Black";
+        if(status==="checkmate"){
+            let text_color=color?"Withe":"Black";
+            text=`${text_color} won by ${status}`;
+        }else if(status==="stalemate"){//else if gebruikt voor andere eindes zoals 50 zetten zonder capture en 3 zelfde posities
+            text=`draw by ${status}`
+        }else if(status==="resign"){
+            let text_color=!color?"Withe":"Black";
+            text=`${text_color} won by ${status}ation`
+        }
+        popup.children[1].textContent=text;
     }
     close(popup){
         popup.classList.remove("open-popup");

@@ -6,6 +6,8 @@ import {GameState} from "./GameState.js";
 let canvas = document.getElementById("canvas");
 let undobutton=document.getElementById("undo_move");
 let restartbutton=document.getElementById("restart");
+let menuButton = document.getElementById("menuButton");
+
 
 
 let popup=document.getElementById("popup");
@@ -32,3 +34,6 @@ closePopupDifficultyButton.addEventListener("click",()=>{gameState.closePopupDif
 restartEndButton.addEventListener("click",()=>{gameState.close(popup_end);gameState.restart(popup);});
 
 window.addEventListener("keypress",()=>{gameState.dummy()});
+
+window.addEventListener("resize", ()=>{gameState.rescale()});
+menuButton.addEventListener("click", ()=>{gameState.rescale()});

@@ -1,12 +1,53 @@
-import {APiece} from "../Pieces/APiece.js";
-import {Bisshop} from "../Pieces/Bisshop.js";
-import {King} from "../Pieces/King.js";
-import {Knight} from "../Pieces/Knight.js";
-import {Pawn} from "../Pieces/Pawn.js";
-import {Queen} from "../Pieces/Queen.js";
-import {Rook} from "../Pieces/Rook.js";
-import {Coordinate} from "../Coordinate.js";
+
 import {Evaluation} from "./Evaluation.js";
+import {Board} from "../Board.js";
+const board= new Board(true);
+let bot;
+console.log("Web worker script loaded successfully");
+
+self.addEventListener("message",(event)=>{
+
+   let data=JSON.parse(event.data);
+
+    let backdata;
+    console.log(data.type,data.type==="move")
+    if (data.type==="maakbot"){
+
+        bot= new Bot(data.color,+data.depth);
+        if(data.color){
+            backdata=move();
+
+            self.postMessage(JSON.stringify(backdata));
+        }
+
+    }else if(data.type==="move"){
+
+        board.move(board.board[data.cord1.y][data.cord1.x],data.cord2);
+
+        backdata=move();
+
+        self.postMessage(JSON.stringify(backdata));
+
+    }
+
+});
+
+function move(){
+    let [cord1,cord2] =bot.nextMove(board);
+
+    board.move(board.board[cord1.y][cord1.x],cord2);
+
+    let backdata= {
+        "cord1": cord1,
+        "cord2": cord2
+    }
+    return backdata;
+}
+
+
+
+
+
 export class Bot{
     constructor(color, depth) {
         this.color = color;
@@ -14,6 +55,28 @@ export class Bot{
         this.evaluation = new Evaluation();
         // this.counter = 0;
     }
+    /*
+    undoMove(piece,oldcord,movedstatus,takenpiece,Board){
+            let cordtaken=piece.pos;
+            Board.move(piece,oldcord);
+            Board.board[cordtaken.y][cordtaken.x]=takenpiece;// takenpiece trg op zijn plaats zetten
+            if (movedstatus!==undefined)
+                piece.moved=movedstatus;
+            if (piece instanceof King && Math.abs(cordtaken.x-oldcord.x)>1){//if castle
+                let rook;
+                if (oldcord.x===6){
+                    rook=Board.board[piece.pos.y][5];
+                    Board.move(rook,new Coordinate(7,piece.pos.y));
+                }else {
+                    rook=Board.board[piece.pos.y][3];
+                    Board.move(rook,new Coordinate(0,piece.pos.y));
+                }
+                rook.moved=false;
+
+            }
+    }
+    */
+
     minimax(board, depth, alpha, beta, color){
         let speelveld = board.board;
         // this.counter++;
@@ -38,9 +101,12 @@ export class Bot{
                                     maxEval = val;
                                 if (alpha < val)
                                     alpha = val;
-                                if (beta <= alpha)
+                                if (beta <= alpha) {
                                     return maxEval;
+                                }
                             }
+
+
                         }
                     }
                 }
@@ -57,19 +123,24 @@ export class Bot{
                     let piece = speelveld[y][x];
                     if(piece !== 0 && piece.kleur === color){
                         let posMoves = piece.possibleMoves(board);
+
                         for(let cord of posMoves){
                             let cloneBoard = board.clone(false);
-                            let fakePiece = cloneBoard.board[y][x];
+                            let fakePiece = cloneBoard.board[piece.pos.y][piece.pos.x];
                             cloneBoard.move(fakePiece, cord);
                             if (!cloneBoard.legalchecker.isChecked(piece.kleur)) {
                                 let val = this.minimax(cloneBoard, depth - 1, alpha, beta, !color);
+
                                 if (minEval === undefined || val < minEval)
                                     minEval = val;
                                 if (beta > val)
                                     beta = val;
-                                if (beta <= alpha)
+                                if (beta <= alpha) {
+
                                     return minEval;
+                                }
                             }
+
                         }
                     }
                 }
@@ -81,45 +152,44 @@ export class Bot{
         }
     }
 
-    async nextMove(board){
-        return new Promise((resolve) => {
+
+    nextMove(board){
+
             let speelveld = board.board;
+
             let array;
             let mainEval;
             for (let y = 0; y < 8; y++) {
                 for (let x = 0; x < 8; x++) {
                     let piece = speelveld[y][x];
+
                     if (piece !== 0 && piece.kleur === this.color) {
-                        let array2 = [0, 0];
-                        let subEval = undefined;
-                        let posMoves = board.legalchecker.possibleMoves(piece);
+
+                        let posMoves = piece.possibleMoves(board);
                         for (let cord of posMoves) {
+
                             let cloneBoard = board.clone(false);
-                            let fakePiece = cloneBoard.board[y][x];
+                            let fakePiece = cloneBoard.board[piece.pos.y][piece.pos.x];
                             cloneBoard.move(fakePiece, cord);
                             if (!cloneBoard.legalchecker.isChecked(piece.kleur)) {
-                                let val = this.minimax(cloneBoard, this.depth, -20000, 20000, !this.color);
-                                if (this.color && (subEval === undefined || subEval < val)) {
-                                    subEval = val;
-                                    array2 = [piece, cord];
-                                } else if (!this.color && (subEval === undefined || subEval > val)) {
-                                    subEval = val;
-                                    array2 = [piece, cord];
+
+                                let val = this.minimax(cloneBoard, this.depth-1, -20000, 20000, !this.color);
+                                if (this.color && (mainEval === undefined || mainEval < val)) {
+
+                                    mainEval = val;
+                                    array = [piece.pos, cord];
+                                } else if (!this.color && (mainEval === undefined || mainEval > val)) {
+
+                                    mainEval = val;
+                                    array = [piece.pos, cord];
                                 }
-                            }
-                            if (this.color && (mainEval === undefined || subEval > mainEval)) {
-                                mainEval = subEval;
-                                array = array2;
-                            } else if (!this.color && (mainEval === undefined || subEval < mainEval)) {
-                                mainEval = subEval;
-                                array = array2;
                             }
                         }
                     }
                 }
             }
-            console.log(mainEval, this.color);
-            resolve(array);
-        });
+            console.log(mainEval, this.color, array);
+            return array;
+
     }
 }

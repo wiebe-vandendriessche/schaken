@@ -67,7 +67,7 @@ class Board {
         }else if (letter==="K") {
             return new King(new Coordinate(x,y),color,true);
         }else{
-            return null//eigenlijk hier exeption opwerpen om aan te tonen dat de input fout is
+            return null//eigenlijk hier exeption opwerpen om aan te tonen dat de input fout is -> doe dit dan!!
         }
     }
 

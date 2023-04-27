@@ -1,6 +1,6 @@
 import {Board} from "./Board.js";
 import {Coordinate} from "./Coordinate.js";
-import {Bot} from "./Bot/Bot.js";
+
 import {MoveCacher} from "./MoveCacher.js";
 import {popup_end} from "./Show.js";//ik weet niet zeker of dit mag en of dit de mooiste oplossing is
 
@@ -18,6 +18,7 @@ export class GameState{
         this.square_size=this.lenght/8;
         this.ctx=canvas.getContext("2d");
         this.board= new Board(true);
+
         this.clicked=false;
         this.clicked_piece=0;
         GameState.PlayedMoves.setStart(new Board(true));
@@ -103,6 +104,10 @@ export class GameState{
 
 
     restart(popup){
+        if (this.bot!==undefined){
+            this.bot.terminate();
+            this.bot=undefined;
+        }
         this.board=new Board(true);
         GameState.PlayedMoves.reset();
         this.clicked=false;
@@ -118,8 +123,21 @@ export class GameState{
         this.playMove(event)
     }
 
-    bot_move(){
-        let newCord;
+    bot_move(event){
+
+        let data=JSON.parse(event.data);
+        let piece= this.board.board[data.cord1.y][data.cord1.x];
+        let newCord= data.cord2;
+        this.board.move(piece,newCord);
+        this.board.amountOfMoves++;
+        this.drawGameboard();
+        GameState.PlayedMoves.Moveadd(new Coordinate(newCord.x,newCord.y),this.board.amountOfMoves,this.board,piece);
+        this.updatePlayedMoves(GameState.PlayedMoves.GetMoves());
+        this.playMove=this.play_move_bot;
+        //eventlisteners trg voegen
+      /*
+
+       let newCord;
         let piece;
         this.bot.nextMove(this.board).then(array=>{
             this.board.move(array[0], array[1])
@@ -132,10 +150,11 @@ export class GameState{
         }).then(()=>{
             GameState.PlayedMoves.Moveadd(newCord,this.board.amountOfMoves,this.board,piece);
             this.updatePlayedMoves(GameState.PlayedMoves.GetMoves());
-        });
+        });*/
     }
 
-    async play_move_bot(event){
+     play_move_bot(event){
+
         let rect=this.canvas.getBoundingClientRect();
         let x=Math.floor((event.clientX-rect.x)/this.square_size);
         let y=Math.floor((event.clientY-rect.y)/this.square_size);
@@ -144,6 +163,7 @@ export class GameState{
         let color=this.board.colorToMove();
         this.drawGameboard()
         if(this.clicked){
+            let oldcord=this.clicked_piece.pos;
             if(this.board.moveWithCheck(this.clicked_piece,cord)) {
                 GameState.PlayedMoves.Moveadd(cord,this.board.amountOfMoves,this.board,this.clicked_piece);
                 let status = this.board.isEnd(!color);
@@ -152,7 +172,16 @@ export class GameState{
                         alert(status)
                     }, 500);
                 }
-                this.bot_move();
+                this.drawGameboard()
+                let data={
+                    "type":"move",
+                    "cord1":oldcord,
+                    "cord2":cord
+                }
+                this.playMove=()=>{};
+                this.bot.postMessage(JSON.stringify(data));
+
+                // even eventlistener van UndoMove en PlayMove uitzetten
                 this.openEndGame(color);
             }
             this.clicked = false;
@@ -167,6 +196,7 @@ export class GameState{
         }
     }
     play_move_player(event){
+
         let rect=this.canvas.getBoundingClientRect();
         let x=Math.floor((event.clientX-rect.x)/this.square_size);
         let y=Math.floor((event.clientY-rect.y)/this.square_size);
@@ -210,12 +240,23 @@ export class GameState{
         let col=parseInt(color.value)===0;
         this.bodDifficulty= botDiff.value;
         //console.log(col+"     "+this.bodDifficulty);
-        this.playMove=(event)=>{this.play_move_bot(event)};
-        this.bot=new Bot(col,this.bodDifficulty);
-        if(col){
-            this.bot_move();
+        this.playMove=this.play_move_bot;
+        const baseURL = window.location.href.split('/').slice(0, -1).join('/');
+        this.bot=new Worker(`${baseURL}/scripts/Bot/Bot.js`, { type: "module" });
+
+        let data={//opdracht sturen naar de webworker --> zodat volledig async werkt
+            "type":"maakbot",
+            "color":col,
+            "depth":this.bodDifficulty
         }
+        data=JSON.stringify(data);
+        this.bot.addEventListener("message",(event)=>{ this.bot_move(event)})// zodat -> bot zijn move telkens kan terugsturen als wij hem data verzenden
+        this.bot.postMessage(data);
+
+
+
         this.close(popupDifficulty);
+        console.log("this.bord->",this.board)
 
     }
     closePopup(popup,popupDifficulty,botDiff){
@@ -229,9 +270,14 @@ export class GameState{
         this.close(popup);
     }
     openEndGame(color){
+
         let status = this.board.isEnd(!color);
         console.log(status)
         if (status !== "continue") {
+            if (this.bot!==undefined){
+                this.bot.terminate();
+                this.bot=undefined;
+            }
             setTimeout(() => {
                 popup_end.classList.add("open-popup")
             }, 500);

@@ -8,11 +8,11 @@ class APiece {
 
     constructor(pos,value,kleur,img,imageload) {
         this.value=value;
-        this.taken=false;
+        this.type=img;// string w_king gelijk zetten aan type voor vereenvoudiging if structuur in Evaluation--> veel efficienter
         this.pos=pos;
         this.kleur=kleur;
         this.image=undefined;
-        if (imageload){
+        if (!(typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScope) && imageload){ // kijken of we niet in de webworker zitten want deze kan geen images laden && imageload gewenst
             this.image=new Image();
             this.image.src="picture/"+img+"_png_128px.png";
 
@@ -31,12 +31,13 @@ class APiece {
     possibleMoves(bord) {
         throw new Error("Method 'possibleMoves()' must be implemented.");
     }
+    getType(){
+        return this.type;
+    }
 
     move(cord){
         this.pos = cord;
     }
 
-    getPos(){
-        return this.pos
-    }
+
 }

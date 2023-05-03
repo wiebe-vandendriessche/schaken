@@ -9,8 +9,21 @@ export class LegalChecker{
         this.whiteking=Board.board[7][4];
         this.blackking=Board.board[0][4];
         this.possiblemoves=null;
+        this.enpasentcord=null;
         this.attackMapWhite=[[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]];
         this.attackMapBlack=[[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]];
+    }
+
+    enpasentPossible(cord,enpasentcord){
+        if(this.enpasentcord!==null && (cord.x+1===this.enpasentcord.x || cord.x-1===this.enpasentcord.x) && cord.y+1===this.enpasentcord.y){
+            return this.enpasentcord;
+        }
+    }
+    addEnpasentSquare(cord){
+
+    }
+    clearEnpassentSquare(){
+
     }
 
 

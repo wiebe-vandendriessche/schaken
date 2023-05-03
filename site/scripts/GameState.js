@@ -132,6 +132,7 @@ export class GameState{
             this.drawGameboard();
 
         }).then(()=>{
+            this.openEndGame(piece.color);
             GameState.PlayedMoves.Moveadd(newCord,this.board.amountOfMoves,this.board,piece);
             this.updatePlayedMoves(GameState.PlayedMoves.GetMoves());
         });
@@ -149,12 +150,6 @@ export class GameState{
         if(this.clicked){
             if(this.board.moveWithCheck(this.clicked_piece,cord)) {
                 GameState.PlayedMoves.Moveadd(cord,this.board.amountOfMoves,this.board,this.clicked_piece);
-                let status = this.board.isEnd(!color);
-                if (status !== "continue") {
-                    setTimeout(() => {
-                        alert(status)
-                    }, 500);
-                }
                 this.bot_move();
                 this.openEndGame(color);
             }
@@ -246,7 +241,7 @@ export class GameState{
 
     setEndPopupText(color,status,popup){
         let text;
-        let text_color=color?"Withe":"Black";
+        console.log("hunk")
         if(status==="checkmate"){
             let text_color=color?"Withe":"Black";
             text=`${text_color} won by ${status}`;

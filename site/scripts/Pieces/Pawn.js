@@ -7,6 +7,11 @@ class Pawn extends APiece {
         super(pos, kleur ? 100 : -100, kleur, kleur ? "w_pawn" : "b_pawn",imageLoad);
         this.moved = false;
         this.endY=kleur?0:7;
+        this.enpasent=null//array[oldcord,newcord]
+    }
+
+    setEnpasent(oldcord,newcord){
+        this.enpasent=[oldcord,newcord]
     }
 
 

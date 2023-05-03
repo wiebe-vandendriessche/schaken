@@ -26,7 +26,7 @@ export class GameState{
         this.colorA=colorA;
         this.colorB=colorB;
         this.colorC=colorC;
-        this.colorD=colorD
+        this.colorD=colorD;
         this.playMove=(event)=>{};
     }
     dummy(){
@@ -44,8 +44,8 @@ export class GameState{
         if(this.botAdversairy){
             undoAantal=2;
         }
-        //chekken voor de loop voor onnodige itteraties tegen te gaan
-        //chekken na de loop voor als je twee keer terug wil maar maar een keer terug kan;
+        //checken voor de loop voor onnodige iterates tegen te gaan
+        //checken na de loop voor als je twee keer terug wil maar maar een keer terug kan;
         if(GameState.PlayedMoves.moves!==""){
             for(let i=0;i<undoAantal;i++){
                 if(GameState.PlayedMoves.moves!==""){
@@ -84,7 +84,7 @@ export class GameState{
     drawPieces(list_piece){
         for (let i = 0; i < 8; i++) {
             for (let j = 0; j < 8; j++) {
-                if(list_piece[i][j]!==0){//chekken of het vak niet leeg is want dan tekene van een piece
+                if(list_piece[i][j]!==0){//checken of het vak niet leeg is want dan tekenen van een piece
                     let piece= list_piece[i][j];
 
                     let img=piece.image;

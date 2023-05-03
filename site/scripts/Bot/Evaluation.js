@@ -10,22 +10,24 @@ export class Evaluation{
     constructor(){
         this.tableDictionary=new Map();
         this.squareTables();
+        this.whiteMaterialCount=0;
+        this.blackMaterialCount=0;
     }
 
     Evaluate(board){
 
         let tableScore = this.materialCount(board)+this.checkmate(board);
-
-        /*let whiteEndGameWeight = this.endGameWeight((this.whiteMaterialCount-(this.whitePawns*100)));
-        let blackEndGameWeight = this.endGameWeight(-1*(this.blackMaterialCount+(this.blackPawns*100)));
+/*
+        let whiteEndGameWeight = this.endGameWeight((this.whiteMaterialCount-5000));
+        let blackEndGameWeight = this.endGameWeight(-1*(this.blackMaterialCount+5000));
         if(whiteEndGameWeight)
-            whiteScore += this.endGameEval(whiteScore, -1*this.blackMaterialCount, false);
+            tableScore += this.endGameEval(whiteScore, -1*this.blackMaterialCount, false);
         else
-            whiteScore += this.tableDictionary.get("w_king")[this.whiteKing.x][this.whiteKing.y];
+            tableScore += this.tableDictionary.get("w_king")[this.whiteKing.x][this.whiteKing.y];
         if(blackEndGameWeight)
-            blackScore -= this.endGameEval(-1*blackScore, this.whiteMaterialCount, true);
+            tableScore -= this.endGameEval(-1*blackScore, this.whiteMaterialCount, true);
         else
-            blackScore += this.tableDictionary.get("b_king")[this.blackKing.x][this.blackKing.y];
+            tableScore += this.tableDictionary.get("b_king")[this.blackKing.x][this.blackKing.y];
 */
 
         return tableScore;
@@ -51,10 +53,24 @@ export class Evaluation{
             for (let x = 0; x < 8; x++) {
                 let piece = speelveld[y][x];
                 if (piece !== 0) {
-
-
+                    let type=piece.getType();
                     score += piece.value;
-                    score += this.tableDictionary.get(piece.getType())[y][x];
+                    if (piece.kleur){
+                        this.whiteMaterialCount+=piece.value;
+                    }else{
+                        this.blackMaterialCount+=piece.value;
+                    }
+
+
+                    if (type.includes("king")){
+                        if (piece.kleur){
+                            this.whiteking=piece
+                        }else{
+                            this.blackking=piece
+                        }
+                    }else{
+                        score += this.tableDictionary.get(type)[y][x];
+                    }
 
                 }
             }
@@ -62,25 +78,39 @@ export class Evaluation{
         return score;
 
     }
-/*
-    endGameEval(myScore, opponentScore, color){
+    endGameEval(myScore, opponentScore, endGameWeight, color){
         let endGameEval = 0;
-        if(myScore < opponentScore){
-            let king=color?this.whiteKing.x:this.blackKing.x;
-            let distance = Math.min(king.x,7-(king.x),7-king.y,king.y);
-            endGameEval += distance*5;
-            endGameEval += (14-(Math.abs(this.whiteKing.x-this.blackKing.x)+Math.abs(this.whiteKing.y-this.blackKing.y)))*2
-            // console.log("EndgameEval:",endGameEval);
+        if(myScore > opponentScore+200){
+            let king=color?this.whiteking:this.blackking;
+            let distanceToEdge = this.endGameTable[king.y][king.x]
+            // console.log(distanceToEdge);
+            endGameEval += (distanceToEdge)*5;
+            endGameEval += (14-(Math.abs(this.whiteKing.x-this.blackKing.x)+Math.abs(this.whiteKing.y-this.blackKing.y)))*5
+            // console.log(`color: ${color}, EndgameEval: ${endGameEval}`);
         }
-        return endGameEval;
-    }*/
-
-    endGameWeight(material){
-        const multiplier = 1/6000;
-        return 1 > multiplier*material;
+        return Math.round(endGameEval);
     }
 
+    endGameWeight(material){
+        const multiplier = 1/1200;
+        return multiplier*material <1;
+    }
+
+
+
+
+
     squareTables(){
+        this.endGameTable=[
+            [6, 5, 4, 3, 3, 4, 5, 6],
+            [5, 4, 3, 2, 2, 3, 4, 5],
+            [4, 3, 2, 1, 1, 2, 3, 4],
+            [3, 2, 1, 0, 0, 1, 2, 3],
+            [3, 2, 1, 0, 0, 1, 2, 3],
+            [4, 3, 2, 1, 1, 2, 3, 4],
+            [5, 4, 3, 2, 2, 3, 4, 5],
+            [6, 5, 4, 3, 3, 4, 5, 6]
+        ];
         this.tableDictionary.set("w_pawn", [
             [0,  0,  0,  0,  0,  0,  0,  0],
             [10, 10, 10, 10, 10, 10, 10, 10],

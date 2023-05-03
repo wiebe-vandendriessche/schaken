@@ -2,19 +2,24 @@
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <title>Schaken/Ons-Team</title>
+    <!--titel-->
+    <title>Schaken/Settings</title>
 
-    <link rel="stylesheet" href="css/homestyle.css">
+    <!--stylesheets-->
+    <link rel="stylesheet" href="css/settings.css">
     <link rel="stylesheet" href="css/navbar.css">
 
 
+    <!--boxicons-->
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
 
+    <!--canvaspreview-->
+    <script type="module" src="scripts/CanvasPreview.js"></script>
 
     <script src="scripts/Onload.js"></script>
     <script src="./scripts/Sidebar.js"></script>
-    <script src="./scripts/TypingAnimation.js" defer></script>
 
+    <!--bootstrap-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
 </head>
@@ -127,18 +132,70 @@
                 <i class='bx bx-menu' onclick="SidebarToggle()"></i>
                 <span class="text">Menu</span>
             </div>
-            <div class="row" >
-                <div class="home">
-                    <div class="home-title" id="idTyping"></div>
-                    <p class="uppercase">door Team 02</p>
-                    <div class="names">
-                        <p>Jelle De Moerloose <br>
-                            Stijn De Schrijver <br>
-                            Brecht Stevens <br>
-                            Wiebe Vandendriessche <br>
-                        </p>
+            <div class="settings-content">
+                <div class="row">
+                    <h1 class="title-instellingen">Instellingen</h1>
+                    <br>
+                </div>
+                <div class="row">
+                    <h2>Veldkleuren</h2>
+                    <div class="col">
+                        <h3>Kleur 1</h3>
+
+                        <div class="color-picker"></div>
+                        <div id="color-indicator" class="color-indicator"></div>
+                        <div id="color-picker"></div>
+
+                        <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
+
+                        <script>
+                            let colorIndicator = document.getElementById('color-indicator');
+                            const colorPicker = new iro.ColorPicker('#color-picker', {width: 180, color: "#fff"});
+                            colorPicker.on('color:change', function (color) {
+                                colorIndicator.style.backgroundColor = color.hexString;
+                            });
+                        </script>
+                        <div class="row">
+                            <button class="save-button">Opslaan</button>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <h3>Kleur 2</h3>
+
+                        <div class="color-picker"></div>
+                        <div id="color-indicator2" class="color-indicator"></div>
+                        <div id="color-picker2"></div>
+
+                        <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
+
+                        <script>
+                            let colorIndicator2 = document.getElementById('color-indicator2');
+                            const colorPicker2 = new iro.ColorPicker('#color-picker2', {width: 180, color: "#fff"});
+                            colorPicker2.on('color:change', function (color) {
+                                colorIndicator2.style.backgroundColor = color.hexString;
+                            });
+                        </script>
+                        <div class="row">
+                            <button class="save-button">Opslaan</button>
+                        </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="canvas-preview-element">
+                        <canvas id="canvas-preview"></canvas>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <h2>Pionnen</h2>
+
+                </div>
+                <br>
+                <div class="row">
+                    <h2>Geluid</h2>
+
+                </div>
+                <br>
             </div>
         </div>
     </div>

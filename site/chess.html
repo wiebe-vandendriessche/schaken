@@ -59,7 +59,7 @@
                 <ul class="sub-menu">
                     <li><a class="link_name" href="#">Spelen</a></li>
                     <li><a href="chess.html" id="speel">speel</a></li>
-                    <li><a href="#">Puzzels</a></li>
+                    <li><a href="chessPuzzel.html">Puzzels</a></li>
                 </ul>
             </li>
 
@@ -135,12 +135,12 @@
         </div>
         <div class="row">
             <div class="row">
-                <h1 class="title-color">Speel: PvP</h1>
+                <h1 class="title-color" id="type_gamestate">Speel: PvP</h1>
             </div>
             <div class="col-8" id="canvas_element">
                 <canvas id="canvas"></canvas>
             </div>
-            <div class="col-4">
+            <div class="col-4 col-sm-10" id="card_element">
                 <div class="card" id="moves_cards">
                     <div class="top_moves">
                         <i class='bx bx-user player' id="player1"></i>
@@ -154,17 +154,17 @@
                         <div class="scroll" id="playedMoves"></div>
                     </div>
                     <div id="buttons_movecard">
-                        <button id="undo_move" class='chesgame_buttons'>
-                            <span class="button_chesgame_icon bx bx-undo"></span>
-                            <span class="button_chesgame_text">undo</span>
+                        <button id="undo_move" class='chessgame_buttons'>
+                            <i class="button_chessgame_icon bx bx-undo"></i>
+                            <span class="button_chessgame_text">undo</span>
                         </button>
-                        <button id="risign" class='chesgame_buttons'>
-                            <span class="button_chesgame_icon bx bx-flag"></span>
-                            <span class="button_chesgame_text">risign</span>
+                        <button id="resign" class='chessgame_buttons'>
+                            <i class="button_chessgame_icon bx bx-flag"></i>
+                            <span class="button_chessgame_text">risign</span>
                         </button>
-                        <button id="restart" class='chesgame_buttons'>
-                            <span class="button_chesgame_icon bx bx-revision"></span>
-                            <span class="button_chesgame_text">restart</span>
+                        <button id="restart" class='chessgame_buttons'>
+                            <i class="button_chessgame_icon bx bx-revision"></i>
+                            <span class="button_chessgame_text">restart</span>
                         </button>
                     </div>
 
@@ -172,7 +172,6 @@
             </div>
         </div>
 
-        #popups needed for this site
         <div class="popup" id="popup">
             <img src="picture/bot.jpg" alt="bot">
             <p>Speel</p>

@@ -1,50 +1,99 @@
-#canvas_element{
-    display: flex;
+body:not(.dark) {
+    --body-color: #fff;
+    --sidebar-color: #b2b2b2;
+    --primary-color-light: #cbcaca;
+    --toggle-color: #101010;
+    --text-color: #101010;
+    --card-color: #d0d0d0;
+    background: var(--body-color);
 }
-canvas{
+
+body.dark {
+    --body-color: #212121;
+    --sidebar-color: #101010;
+    --primary-color-light: #383838;
+    --toggle-color: #fff;
+    --text-color: #fff;
+    --card-color: #131313;
+    background: var(--body-color);
+}
+
+#canvas_element {
+    height: 0;
+    padding-bottom: 70%;
+    min-width: 400px;
+    max-width: 650px;
+    margin-inline: auto;
+}
+
+#card_element {
+    height: 100%;
+    max-height: 400px;
+    width: 600px;
+    margin-inline: auto;
+}
+
+.title-color {
+    margin-bottom: 5%;
+    margin-top: 10%;
+    text-align: center;
+    font-size: xxx-large;
+}
+
+
+canvas {
     align-items: center;
 }
 
-body,html{
-    padding:0;
-    margin:0;
+body, html {
+    padding: 0;
+    margin: 0;
     height: 100%;
 }
-#spacer{
+
+#spacer {
     width: 100%;
 }
 
-.top_moves{
+.top_moves {
     display: flex;
     width: 100%;
 }
-.player{
+
+.player {
     align-items: center;
     font-size: 50px;
     margin: 5px;
 }
-#player1,#player2{
+
+#player1, #player2 {
     display: flex;
     align-items: center;
 }
-#pl,#pl_bot{
+
+#pl, #pl_bot {
     display: flex;
     margin-top: 20px;
 }
-#pl_bot,#player2{
+
+#pl_bot, #player2 {
     display: flex;
     flex-direction: row;
     text-align: right;
 }
-#move_title{
+
+#move_title {
     white-space: pre;
-    font-size:  2.5em;
+    font-size: 2.5em;
+    text-align: center;
 }
-#playedMoves{
+
+#playedMoves {
     white-space: pre;
-    font-size:  2.5em;
+    font-size: 2.3em;
 }
-#card_height{
+
+#card_height {
     height: 100%;
     margin: 2%;
 
@@ -58,106 +107,125 @@ body,html{
     display: flex;
     flex-direction: column-reverse;
 }
+
 #moves_cards {
     height: 100%;
 
 }
-#buttons_movecard{
-    margin-bottom:10px;
+
+#buttons_movecard {
+    margin-bottom: 10px;
 }
 
-.chesgame_buttons{
+.card {
+    background-color: var(--sidebar-color) !important;
+    color: var(--text-color) !important;
+}
+
+.chessgame_buttons {
     display: inline-flex;
     width: 29%;
-    height: 100%;
+    height: 50px;
     padding: 0%;
     margin-bottom: 10px;
     margin-left: 10px;
-    background:rgb(56,107,234,1);
+    background: var(--primary-color-light);
     border: none;
     outline: none;
     border-radius: 5px;
     overflow: hidden;
 }
-.chesgame_buttons:hover{
-    background-color: rgb(76,127,254,1);
 
+.chessgame_buttons:hover {
+    background-color: var(--body-color);
 }
 
-.button_chesgame_icon, .button_chesgame_text {
-    display: inline-flex;
-    align-items: center;
-    padding:0 6px;
-    height: 100%;
-    color: white;
-}
-.button_chesgame_icon{
-    display: inline-flex;
-    padding-top: 10px;
+.button_chessgame_text {
+    margin-left: 20px;
+    margin-top: 10px;
+    color: var(--text-color);
+    font-size: large;
 }
 
-.popup{
+.button_chessgame_icon {
+    margin-left: 20px;
+    margin-top: 10px;
+    font-size: 25px;
+    color: var(--text-color);
+}
+
+.popup {
     width: 400px;
-    background: white;
+    background: var(--sidebar-color);
     border-radius: 5px;
     position: absolute;
     top: 0;
     left: 50%;
-    transform: translate(-50%,-50%) scale(0.1);
+    transform: translate(-50%, -50%) scale(0.1);
     text-align: center;
     padding: 0 30px 30px;
-    color: #333;
+    color: var(--text-color);
     visibility: hidden;
     transition: transform 0.4s, top 0.4s;
 }
-.open-popup{
+
+.open-popup {
     visibility: visible;
     top: 50%;
-    transform: translate(-50%,-50%) scale(1);
+    transform: translate(-50%, -50%) scale(1);
+
 }
 
-.popup img{
+.popup img {
     width: 100px;
     margin-top: -50px;
     border-radius: 50%;
-    box-shadow: 0 2px 5px rgb(0,0,0,0.2);
+    box-shadow: 0 2px 5px rgb(0, 0, 0, 0.2);
 }
 
-.popup p{
+.popup p {
     font-size: 38px;
     font-weight: 500;
     margin: 30px 0 10px;
+
 }
-.popup i{
+
+.popup i {
     font-size: 25px;
     margin: 10px 0 10px;
 }
-.popup button{
+
+.popup button {
     width: 100%;
     margin-top: 20px;
     padding: 10px 0;
-    background: rgb(76,127,254,1) ;
-    color: white;
+    background: var(--primary-color-light);
+    color: var(--text-color);
     border: 0;
     outline: none;
     font-size: 18px;
     border-radius: 5px;
     cursor: pointer;
-    box-shadow: 0 2px 5px rgb(0,0,0,0.2);
+    box-shadow: 0 2px 5px rgb(0, 0, 0, 0.2);
 }
 
-.selectInPopup{
+.popup button:hover {
+    background-color: var(--body-color);
+}
+
+.selectInPopup {
     width: 50%;
     margin-top: 10px;
-    background:rgb(76,127,254,1);
+    background: var(--primary-color-light);
     border: 0;
     outline: none;
     border-radius: 5px;
     font-size: 20px;
-    color:white;
+    color: var(--text-color);
     text-align: center;
-    box-shadow: 0 2px 5px rgb(0,0,0,0.2);
+    box-shadow: 0 2px 5px rgb(0, 0, 0, 0.2);
 }
+
 
 
 

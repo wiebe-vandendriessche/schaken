@@ -13,6 +13,7 @@ export class GameState{
         this.botAdversairy=false;
         this.bodDifficulty=0;
 
+        this.canvasElement = document.getElementById("canvas_element");
         this.canvas=canvas;
         this.lenght=lenght;
         this.square_size=this.lenght/8;
@@ -27,7 +28,6 @@ export class GameState{
         this.colorC=colorC;
         this.colorD=colorD
         this.playMove=(event)=>{};
-
     }
     dummy(){
         this.board.setupPieces("q3k1nr/1pp1nQpp/3p4/1P2p3/4P3/B1PP1b2/B5PP/5K2 b k - 0 17");
@@ -40,7 +40,6 @@ export class GameState{
         this.drawPieces(this.board.getPieces());
     }
     undoMove(){
-        //console.log(Board.PlayedMoves.GetMoves())
         let undoAantal=1;
         if(this.botAdversairy){
             undoAantal=2;
@@ -51,12 +50,15 @@ export class GameState{
             for(let i=0;i<undoAantal;i++){
                 if(GameState.PlayedMoves.moves!==""){
                     this.ReturnToPreviousBoard();
+                    this.clicked_piece=0;
+                    this.clicked=false;
                     this.updatePlayedMoves(GameState.PlayedMoves.GetMoves());
 
                 }
             }
             this.drawGameboard();
         }
+        //console.log(GameState.PlayedMoves.GetMoves());
     }
     drawSquare(i,j,colorA,colorB){
         this.ctx.beginPath();
@@ -135,26 +137,11 @@ export class GameState{
         this.updatePlayedMoves(GameState.PlayedMoves.GetMoves());
         this.playMove=this.play_move_bot;
         //eventlisteners trg voegen
-      /*
 
-       let newCord;
-        let piece;
-        this.bot.nextMove(this.board).then(array=>{
-            this.board.move(array[0], array[1])
-            newCord=array[1];
-            piece=array[0]
-        }).then(()=>{
-            this.board.amountOfMoves++;
-            this.drawGameboard();
-
-        }).then(()=>{
-            GameState.PlayedMoves.Moveadd(newCord,this.board.amountOfMoves,this.board,piece);
-            this.updatePlayedMoves(GameState.PlayedMoves.GetMoves());
-        });*/
     }
 
-     play_move_bot(event){
 
+     play_move_bot(event){
         let rect=this.canvas.getBoundingClientRect();
         let x=Math.floor((event.clientX-rect.x)/this.square_size);
         let y=Math.floor((event.clientY-rect.y)/this.square_size);
@@ -182,6 +169,7 @@ export class GameState{
                 this.bot.postMessage(JSON.stringify(data));
 
                 // even eventlistener van UndoMove en PlayMove uitzetten
+
                 this.openEndGame(color);
             }
             this.clicked = false;
@@ -206,9 +194,11 @@ export class GameState{
         if(this.clicked){
             if(this.board.moveWithCheck(this.clicked_piece,cord)){
                 GameState.PlayedMoves.Moveadd(cord,this.board.amountOfMoves,this.board,this.clicked_piece);
+                this.drawGameboard();//moet hier ook eens staan voor het geval dat het d
                 this.openEndGame(color);
+            }else{
+                this.drawGameboard();
             }
-            this.drawGameboard()
             this.updatePlayedMoves(GameState.PlayedMoves.GetMoves())
             this.clicked=false;
             this.clicked_piece=0;
@@ -220,7 +210,7 @@ export class GameState{
                 this.clicked=true;
             }
         }
-
+        console.log(GameState.PlayedMoves)
     }
 
     ReturnToPreviousBoard(){
@@ -272,18 +262,41 @@ export class GameState{
     openEndGame(color){
 
         let status = this.board.isEnd(!color);
-        console.log(status)
         if (status !== "continue") {
             if (this.bot!==undefined){
                 this.bot.terminate();
                 this.bot=undefined;
             }
+
             setTimeout(() => {
-                popup_end.classList.add("open-popup")
+                popup_end.classList.add("open-popup");
+                this.setEndPopupText(color,status,popup_end);
             }, 500);
         }
     }
+
+    setEndPopupText(color,status,popup){
+        let text;
+        console.log("hunk")
+        if(status==="checkmate"){
+            let text_color=color?"Withe":"Black";
+            text=`${text_color} won by ${status}`;
+        }else if(status==="stalemate"){//else if gebruikt voor andere eindes zoals 50 zetten zonder capture en 3 zelfde posities
+            text=`draw by ${status}`
+        }else if(status==="resign"){
+            let text_color=!color?"Withe":"Black";
+            text=`${text_color} won by ${status}ation`
+        }
+        popup.children[1].textContent=text;
+    }
     close(popup){
         popup.classList.remove("open-popup");
+    }
+
+    rescale(){
+        this.length = Math.min(this.canvasElement.offsetWidth, this.canvasElement.offsetHeight);
+        this.square_size = this.length/8;
+        console.log(`length: ${this.length}`);
+        this.drawGameboard();
     }
 }

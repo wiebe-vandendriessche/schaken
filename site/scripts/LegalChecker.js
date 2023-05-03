@@ -9,9 +9,23 @@ export class LegalChecker{
         this.whiteking=Board.board[7][4];
         this.blackking=Board.board[0][4];
         this.possiblemoves=null;
+        this.enpasentcord=null;
         this.attackMapWhite=[[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]];
         this.attackMapBlack=[[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]];
     }
+
+    enpasentPossible(cord,enpasentcord){
+        if(this.enpasentcord!==null && (cord.x+1===this.enpasentcord.x || cord.x-1===this.enpasentcord.x) && cord.y+1===this.enpasentcord.y){
+            return this.enpasentcord;
+        }
+    }
+    addEnpasentSquare(cord){
+
+    }
+    clearEnpassentSquare(){
+
+    }
+
 
     castlingPossible(color){ // king checked zelf al of hij zelf niet gemoved heeft
 
@@ -23,8 +37,8 @@ export class LegalChecker{
         if (attackmap[y_axis][4]>0) {//checked
             return "";
         }
-        let rookleft= color?speelveld[7][0] :speelveld[0][0];
-        let rookright=color?speelveld[7][7]: speelveld[0][7];
+        let rookleft =speelveld[y_axis][0];
+        let rookright=speelveld[y_axis][7];
 
         let string="";
         if ((rookleft!==0 && rookleft instanceof Rook )|| (rookright!==0 && rookright instanceof Rook)){

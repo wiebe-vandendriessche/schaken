@@ -51,6 +51,52 @@ class Board {
         this.amountOfMoves=(parseInt(Information[5])-1)*2 + halveMove;
     }
 
+    boardToFen(){
+        var Fen;
+        let castelstring;
+        for(let i=0;i<8;i++){
+            let count=0;
+            for(let j=0;j<8;i++){
+                let piece=this.board[i][i]
+                if(piece===0){
+                    count++;
+                }else{
+                    let type=typeof piece;
+                    let firstletter=type[0];
+                    if(piece.color){
+                        firstletter.toLowerCase()
+                    }
+                    if(firstletter==="R" || firstletter==="r"){
+                        if(piece.moved){
+                            if(piece.pos.x===8){
+                                castelstring+=piece.color?"q":"Q"
+                            }else{
+                                castelstring+=piece.color?"k":"K"
+                            }
+
+                        }
+                    }
+                    if(piece.color){
+                       firstletter.toLowerCase()
+                    }
+                    if(count!==0){
+                        Fen+=`${count}${firstletter}`
+                    }else{
+                        Fen+=`${firstletter}`
+                    }
+                }
+            }
+            Fen+="/";
+        }
+
+        Fen+=this.amountOfMoves%2===0?" b ":" w "
+        Fen += `${castelstring} `;
+        Fen += "- ";
+        Fen +=`${this.amountOfMoves%2}`;
+        Fen +=`${this.amountOfMoves/2}`;
+        return Fen
+    }
+
     creatPiece(letter,x,y){
         let color= letter===letter.toUpperCase()
         letter=letter.toUpperCase()

@@ -45,10 +45,10 @@ closePopupDifficultyButton.addEventListener("click",()=>{gameState.closePopupDif
 
 restartEndButton.addEventListener("click",()=>{gameState.close(popup_end);gameState.restart(popup);});
 
-window.addEventListener("keypress",()=>{gameState.dummy()});
+window.addEventListener("keypress",()=>{gameState.fetchNewPuzzels()});
 
 window.addEventListener("resize", ()=>{gameState.rescale()});
 window.addEventListener("load", ()=>{gameState.rescale()});
 
 resignebutton.addEventListener("click",()=>{gameState.openPopup(popup_end);gameState.setEndPopupText(gameState,"resign",popup_end)})
-window.addEventListener("keypress",()=>{gameState.dummy()});
+

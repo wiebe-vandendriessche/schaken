@@ -210,7 +210,6 @@ export class GameState{
                 this.clicked=true;
             }
         }
-        console.log(GameState.PlayedMoves)
     }
 
     ReturnToPreviousBoard(){
@@ -296,7 +295,7 @@ export class GameState{
     rescale(){
         this.length = Math.min(this.canvasElement.offsetWidth, this.canvasElement.offsetHeight);
         this.square_size = this.length/8;
-        console.log(`length: ${this.length}`);
+        //console.log(`length: ${this.length}`);
         this.drawGameboard();
     }
 }

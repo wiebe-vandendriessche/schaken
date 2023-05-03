@@ -13,6 +13,7 @@ export class GameState{
         this.botAdversairy=false;
         this.bodDifficulty=0;
 
+        this.canvasElement = document.getElementById("canvas_element");
         this.canvas=canvas;
         this.lenght=lenght;
         this.square_size=this.lenght/8;
@@ -26,7 +27,6 @@ export class GameState{
         this.colorC=colorC;
         this.colorD=colorD
         this.playMove=(event)=>{};
-
     }
     dummy(){
         this.board.setupPieces("q3k1nr/1pp1nQpp/3p4/1P2p3/4P3/B1PP1b2/B5PP/5K2 b k - 0 17");
@@ -255,5 +255,12 @@ export class GameState{
     }
     close(popup){
         popup.classList.remove("open-popup");
+    }
+
+    rescale(){
+        this.length = Math.min(this.canvasElement.offsetWidth, this.canvasElement.offsetHeight);
+        this.square_size = this.length/8;
+        console.log(`length: ${this.length}`);
+        this.drawGameboard();
     }
 }

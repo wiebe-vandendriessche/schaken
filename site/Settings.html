@@ -15,6 +15,8 @@
 
     <!--canvaspreview-->
     <script type="module" src="scripts/show.js"></script>
+    <script defer src="scripts/ColorPicker.js"></script>
+
 
     <script src="scripts/Onload.js"></script>
     <script src="./scripts/Sidebar.js"></script>
@@ -59,8 +61,8 @@
                     </div>
                     <ul class="sub-menu">
                         <li><a class="link_name" href="#">Spelen</a></li>
-                        <li><a href="chess.html" id="speel">speel</a></li>
-                        <li><a href="#">Puzzels</a></li>
+                        <li><a href="chess.html" id="speel">Speel</a></li>
+                        <li><a href="chessPuzzel.html">Puzzels</a></li>
                     </ul>
                 </li>
 
@@ -76,7 +78,7 @@
                     <ul class="sub-menu">
                         <li><a class="link_name" href="#">Info</a></li>
                         <li><a href="GeschiedenisSchaak.html">Geschiedenis</a></li>
-                        <li><a href="#">Bekende spelers</a></li>
+                        <li><a href="rules.html">Spelregels</a></li>
                         <li><a href="AboutUs.html">Ons Team</a></li>
                     </ul>
                 </li>
@@ -145,19 +147,8 @@
                         <div class="color-picker"></div>
                         <div id="color-indicator" class="color-indicator"></div>
                         <div id="color-picker"></div>
-
                         <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
 
-                        <script>
-                            let colorIndicator = document.getElementById('color-indicator');
-                            const colorPicker = new iro.ColorPicker('#color-picker', {width: 180, color: "#fff"});
-                            colorPicker.on('color:change', function (color) {
-                                colorIndicator.style.backgroundColor = color.hexString;
-                            });
-                        </script>
-                        <div class="row">
-                            <button class="save-button">Opslaan</button>
-                        </div>
                     </div>
                     <div class="col">
                         <h3>Kleur 2</h3>
@@ -165,25 +156,12 @@
                         <div class="color-picker"></div>
                         <div id="color-indicator2" class="color-indicator"></div>
                         <div id="color-picker2"></div>
-
                         <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
 
-                        <script>
-                            let colorIndicator2 = document.getElementById('color-indicator2');
-                            const colorPicker2 = new iro.ColorPicker('#color-picker2', {width: 180, color: "#fff"});
-                            colorPicker2.on('color:change', function (color) {
-                                colorIndicator2.style.backgroundColor = color.hexString;
-                            });
-                        </script>
-                        <div class="row">
-                            <button class="save-button">Opslaan</button>
-                        </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="canvas-preview-element">
-                        <canvas id="canvas-preview"></canvas>
-                    </div>
+                    <button onclick="setStandaardKleuren()" id="Standaard" class="save-button default">Standaard kleuren</button>
                 </div>
                 <br>
                 <div class="row">

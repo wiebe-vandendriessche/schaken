@@ -16,4 +16,16 @@ function OnloadMode(){
     if(localStorage.getItem("darkmode") === "true"){
         modeText.innerText = "Light";
     }
+
+    //voor als er nog niets in local storage kleuren zit
+    if(localStorage.getItem('color1') == null){
+        let skleur1 = "#fff2e0"
+        let skleur2 = "#000000"
+        localStorage.setItem('color1', skleur1);
+        localStorage.setItem('color2', skleur2);
+        skleur1 = localStorage.getItem('color1');
+        skleur2 = localStorage.getItem('color2');
+        colorPicker.color.hexString = skleur1;
+        colorPicker2.color.hexString = skleur2;
+    }
 }

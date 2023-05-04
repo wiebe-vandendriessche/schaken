@@ -35,7 +35,7 @@ export let popup_end=document.getElementById("end");
 window.addEventListener("load", ()=>{gameState.openPopup(popup)});
 
 gameState.drawGameboard();
-undobutton.addEventListener("click",()=>{gameState.undoMove()});
+undobutton.addEventListener("click",()=>{gameState.undo()});
 restartbutton.addEventListener("click",()=>{gameState.restart(popup)});
 canvas.addEventListener("click",(event)=>{gameState.play(event)});
 

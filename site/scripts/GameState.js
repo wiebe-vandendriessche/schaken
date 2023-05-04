@@ -28,6 +28,7 @@ export class GameState{
         this.colorC=colorC;
         this.colorD=colorD;
         this.playMove=(event)=>{};
+        this.undo=this.undoMove;
     }
     dummy(){
         this.board.setupPieces("q3k1nr/1pp1nQpp/3p4/1P2p3/4P3/B1PP1b2/B5PP/5K2 b k - 0 17");
@@ -136,10 +137,10 @@ export class GameState{
         GameState.PlayedMoves.Moveadd(new Coordinate(newCord.x,newCord.y),this.board.amountOfMoves,this.board,piece);
         this.updatePlayedMoves(GameState.PlayedMoves.GetMoves());
         this.playMove=this.play_move_bot;
-        //eventlisteners trg voegen
+        //eventlisteners toevoegen
+        this.undo=this.undoMove;
 
     }
-
 
      play_move_bot(event){
         let rect=this.canvas.getBoundingClientRect();
@@ -154,11 +155,7 @@ export class GameState{
             if(this.board.moveWithCheck(this.clicked_piece,cord)) {
                 GameState.PlayedMoves.Moveadd(cord,this.board.amountOfMoves,this.board,this.clicked_piece);
                 let status = this.board.isEnd(!color);
-                if (status !== "continue") {
-                    setTimeout(() => {
-                        alert(status)
-                    }, 500);
-                }
+                this.openEndGame()
                 this.drawGameboard()
                 let data={
                     "type":"move",
@@ -169,6 +166,7 @@ export class GameState{
                 this.bot.postMessage(JSON.stringify(data));
 
                 // even eventlistener van UndoMove en PlayMove uitzetten
+                this.undo=()=>{}
 
                 this.openEndGame(color);
             }

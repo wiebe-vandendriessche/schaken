@@ -34,7 +34,7 @@ class Board {
                 x=0;
                 y+=1;
             }else if(isNaN(letterFen)){
-                this.board[y][x]=this.creatPiece(letterFen,x,y);
+                this.board[y][x]=this.createPiece(letterFen,x,y);
                 x+=1;
             }else {
                 let cijferFen=parseInt(letterFen);
@@ -97,7 +97,7 @@ class Board {
         return Fen
     }
 
-    creatPiece(letter,x,y){
+    createPiece(letter, x, y){
         let color= letter===letter.toUpperCase()
         letter=letter.toUpperCase()
         if (letter==="R"){

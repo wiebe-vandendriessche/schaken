@@ -34,7 +34,7 @@ body{
     vertical-align: middle;
     margin-left: 13px;
     margin-top: 13px;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
 }
 
 #color-picker2 {
@@ -42,10 +42,11 @@ body{
     vertical-align: middle;
     margin-left: 13px;
     margin-top: 13px;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
 }
 
 .save-button{
+
     height: 50px;
     width: 200px !important;
     background: var(--sidebar-color);
@@ -53,7 +54,12 @@ body{
     margin-left: 15px;
     outline: none;
     border-radius: 5px;
+    margin-bottom: 40px;
+    color: var(--text-color);
+}
 
+.default{
+    width: 300px !important;
 }
 
 .save-button:hover{

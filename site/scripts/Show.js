@@ -31,7 +31,7 @@ if (localStorage.getItem('color1')) {
 
 // juiste gamestate bepalen
 let gameState
-if (typeOFGame === "Speel: PvP") {
+if (typeOFGame === "Speel") {
     gameState = new GameState(document.getElementById("canvas"), 680, kleur1, kleur2, "rgba(147,239,132,0.5)", "rgba(87,173,73,0.5)");
 } else {
     gameState = new PuzzelGameState(document.getElementById("canvas"), 680, kleur1, kleur2, "rgba(147,239,132,0.5)", "rgba(87,173,73,0.5)");

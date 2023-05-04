@@ -249,6 +249,7 @@ export class GameState{
     closePopup(popup,popupDifficulty,botDiff){
         let difficulty=parseInt(botDiff.value);
         this.botAdversairy= difficulty!==0;
+        console.log("1")
         if(!this.botAdversairy){
             this.playMove=(event)=>{this.play_move_player(event)};
         }else{

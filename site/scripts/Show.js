@@ -44,14 +44,13 @@ window.addEventListener("load", () => {
 
 gameState.drawGameboard();
 undobutton.addEventListener("click",()=>{gameState.undo()});
-restartbutton.addEventListener("click",()=>{gameState.restart(popup)});
-canvas.addEventListener("click",(event)=>{gameState.play(event)});
+
 
 restartbutton.addEventListener("click", () => {
     gameState.restart(popup)
 });
 canvas.addEventListener("click", (event) => {
-    gameState.play(event)
+    gameState.playMove(event);
 });
 
 

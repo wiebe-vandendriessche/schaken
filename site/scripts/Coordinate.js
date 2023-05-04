@@ -9,7 +9,9 @@ class Coordinate{
 
     convertToCHessCords(){
         let chescord="";
-        chescord+=`${Coordinate.decode[this.x]}${this.y+1}`;
+        chescord+=`${Coordinate.decode[this.x]}${Math.abs(this.y-8)}`;
+        // de min acht is nodig omdat onze nul bovenaan het bord ligt
+        // terwijl in het echt dit onderaan is
         return chescord
     }
     static changeToCord(cord){

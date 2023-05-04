@@ -182,7 +182,7 @@ export class GameState{
         }
     }
     play_move_player(event){
-
+        console.log(GameState.PlayedMoves);
         let rect=this.canvas.getBoundingClientRect();
         let x=Math.floor((event.clientX-rect.x)/this.square_size);
         let y=Math.floor((event.clientY-rect.y)/this.square_size);

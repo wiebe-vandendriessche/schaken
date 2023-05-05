@@ -134,6 +134,7 @@ export class GameState{
         this.board.move(piece,newCord);
         this.board.amountOfMoves++;
         this.drawGameboard();
+        this.openEndGame(this.bot.color);
         GameState.PlayedMoves.Moveadd(new Coordinate(newCord.x,newCord.y),this.board.amountOfMoves,this.board,piece);
         this.updatePlayedMoves(GameState.PlayedMoves.GetMoves());
         this.playMove=this.play_move_bot;

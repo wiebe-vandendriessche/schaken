@@ -142,9 +142,9 @@
                 <div class="card" id="moves_cards">
                     <div class="top_moves">
                         <i class='bx bx-user player' id="player1"></i>
-                        <div id="pl"><h3>player 1</h3></div>
+                        <div id="pl"><h3>Player1</h3></div>
                         <div id="spacer"></div>
-                        <div id="pl_bot"><h3>puzzel</h3></div>
+                        <div id="pl_bot"><h3>Puzzel</h3></div>
                         <i class='bx bx-user player' id="player2"></i>
                     </div>
                     <div id="move_title">Schaakzetten</div>
@@ -155,6 +155,14 @@
                         <button id="restart" class='chessgame_buttons puzzel_chessgame_buttons'>
                             <i class="button_chessgame_icon bx bx-revision"></i>
                             <span class="button_chessgame_text">Nieuwe Puzzel</span>
+                        </button>
+                        <button hidden id="resign" class='chessgame_buttons'>
+                            <i class="button_chessgame_icon bx bx-flag"></i>
+                            <span class="button_chessgame_text">Opgeven</span>
+                        </button>
+                        <button hidden id="undo_move" class='chessgame_buttons'>
+                            <i class="button_chessgame_icon bx bx-revision"></i>
+                            <span class="button_chessgame_text">Undo move</span>
                         </button>
                     </div>
                 </div>
@@ -183,18 +191,18 @@
             <div></div>
             <i>Kies welk kleur u wilt spelen</i>
             <select class="selectInPopup" id="color">
-                <option class="choicAdversary" value="0">zwart</option>
-                <option class="choicAdversary" value="1" selected>wit</option>
+                <option class="choicAdversary" value="0">Zwart</option>
+                <option class="choicAdversary" value="1" selected>Wit</option>
             </select>
 
-            <button type="button" id="close_popup_difficulty">start</button>
+            <button type="button" id="close_popup_difficulty">Start</button>
         </div>
 
         <div class="popup" id="end">
             <img src="picture/bot.jpg" alt="bot">
             <p>you lost</p>
-            <button type="button" id="close_popup_end">speel opnieuw</button>
-            <button type="button" id="close_popup_puzzels">ga naar puzzels</button>
+            <button type="button" id="close_popup_end">Speel Opnieuw</button>
+            <button type="button" id="close_popup_puzzels">Ga naar Puzzels</button>
         </div>
 
     </section>

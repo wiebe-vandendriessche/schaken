@@ -128,7 +128,7 @@ export class PuzzelGameState extends GameState{
 
         setTimeout(() => {
             popup_end.classList.add("open-popup");
-            this.setEndPopupText("you solved the puzzle", popup_end);
+            this.setEndPopupText("Je hebt de puzzel correct opgelost!", popup_end);
         }, 500);
     }
 

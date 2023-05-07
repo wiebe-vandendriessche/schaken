@@ -32,9 +32,9 @@ if (localStorage.getItem('color1')) {
 // juiste gamestate bepalen
 let gameState
 if (typeOFGame === "Speel") {
-    gameState = new GameState(document.getElementById("canvas"), 680, kleur1, kleur2, "rgba(147,239,132,0.5)", "rgba(87,173,73,0.5)");
+    gameState = new GameState(canvas, 1000, kleur1, kleur2, "rgba(147,239,132,0.5)", "rgba(87,173,73,0.5)");
 } else {
-    gameState = new PuzzelGameState(document.getElementById("canvas"), 680, kleur1, kleur2, "rgba(147,239,132,0.5)", "rgba(87,173,73,0.5)");
+    gameState = new PuzzelGameState(canvas, 1000, kleur1, kleur2, "rgba(147,239,132,0.5)", "rgba(87,173,73,0.5)");
 }
 
 export let popup_end = document.getElementById("end");
@@ -43,7 +43,7 @@ window.addEventListener("load", () => {
 });
 
 gameState.drawGameboard();
-undobutton.addEventListener("click",()=>{gameState.undo()});
+undobutton.addEventListener("click",()=>{gameState.undoMove()});
 
 
 restartbutton.addEventListener("click", () => {

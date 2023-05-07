@@ -65,3 +65,11 @@ body{
 .save-button:hover{
     background-color: var(--primary-color-light);
 }
+#canvas_preview{
+    min-width: 300px;
+    width: 35%;
+
+}
+#canvas_element{
+    align-content: center;
+}

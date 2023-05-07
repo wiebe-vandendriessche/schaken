@@ -7,19 +7,18 @@ import {popup_end} from "./Show.js";//ik weet niet zeker of dit mag en of dit de
 export class GameState{
     static ofsetPiece=5;
     static PlayedMoves=new MoveCacher();
-    bot;
-    constructor(canvas,lenght,colorA,colorB,colorC,colorD) {
+
+    constructor(canvas,length,colorA,colorB,colorC,colorD) {
 
         this.botAdversairy=false;
         this.bodDifficulty=0;
-
-        this.canvasElement = document.getElementById("canvas_element");
+        this.bot=undefined;
+        this.canvasElement = canvas.parentElement;
         this.canvas=canvas;
-        this.lenght=lenght;
+        this.lenght=length;
         this.square_size=this.lenght/8;
         this.ctx=canvas.getContext("2d");
         this.board= new Board(true);
-
         this.clicked=false;
         this.clicked_piece=0;
         GameState.PlayedMoves.setStart(new Board(true));
@@ -27,14 +26,10 @@ export class GameState{
         this.colorB=colorB;
         this.colorC=colorC;
         this.colorD=colorD;
-        this.playMove=(event)=>{};
-        this.undo=this.undoMove;
+        this.playMove=()=>{};
+
     }
-    dummy(){
-        this.board.setupPieces("q3k1nr/1pp1nQpp/3p4/1P2p3/4P3/B1PP1b2/B5PP/5K2 b k - 0 17");
-        GameState.PlayedMoves.setStart(this.board);
-        this.drawGameboard();
-    }
+
 
     drawGameboard(){
         this.drawBoard();
@@ -73,8 +68,7 @@ export class GameState{
     }
 
     drawBoard() {
-        this.canvas.setAttribute("height", this.lenght.toString());
-        this.canvas.setAttribute("width", this.lenght.toString());
+
         for (let i = 0; i < 8; i++) {
             for (let j = 0; j < 8; j++) {
                 this.drawSquare(i,j,this.colorA,this.colorB);
@@ -122,9 +116,6 @@ export class GameState{
     }
 
 
-    play(event){
-        this.playMove(event)
-    }
 
     bot_move(event){
 
@@ -183,7 +174,6 @@ export class GameState{
         }
     }
     play_move_player(event){
-        console.log(GameState.PlayedMoves);
         let rect=this.canvas.getBoundingClientRect();
         let x=Math.floor((event.clientX-rect.x)/this.square_size);
         let y=Math.floor((event.clientY-rect.y)/this.square_size);
@@ -293,9 +283,11 @@ export class GameState{
     }
 
     rescale(){
-        this.length = Math.min(this.canvasElement.offsetWidth, this.canvasElement.offsetHeight);
+        this.length = this.canvasElement.offsetWidth
         this.square_size = this.length/8;
-        //console.log(`length: ${this.length}`);
+        this.canvas.width=this.length;
+        this.canvas.height=this.length;
+
         this.drawGameboard();
     }
 }

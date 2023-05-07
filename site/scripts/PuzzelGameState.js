@@ -44,7 +44,7 @@ export class PuzzelGameState extends GameState{
 
     closePopup(popup){
         this.fetchNewPuzzels();
-        this.playMove=(event)=>{this.play_move_Puzzle(event)};
+        this.playMove=this.play_move_Puzzle;
         this.close(popup);
     }
     play_move_Puzzle(event){
@@ -55,17 +55,14 @@ export class PuzzelGameState extends GameState{
         let cord=new Coordinate(x,y);
         let color=this.board.colorToMove();
         if(this.clicked){
-
-            if(this.chekMoves(this.clicked_piece.pos,cord)) {
-                if(this.board.moveWithCheck(this.clicked_piece,cord)){
-
-                    GameState.PlayedMoves.Moveadd(cord, this.board.amountOfMoves, this.board, this.clicked_piece);
-                    this.drawGameboard();//moet hier ook eens staan voor het geval dat het het einde van het spel is
-                    this.puzzlemove();
-                }
-            }else{
-                this.drawGameboard();
+            if(this.checkMoves(this.clicked_piece.pos,cord)) {
+                this.board.move(this.clicked_piece,cord)
+                this.board.amountOfMoves++;
+                GameState.PlayedMoves.Moveadd(cord, this.board.amountOfMoves, this.board, this.clicked_piece);
+                this.playMove=()=>{};
+                this.puzzlemove();
             }
+            this.drawGameboard();
             this.updatePlayedMoves(GameState.PlayedMoves.GetMoves())
             this.clicked=false;
             this.clicked_piece=0;
@@ -81,7 +78,6 @@ export class PuzzelGameState extends GameState{
 
     puzzlemove(){
         setTimeout(() => {
-
             if(this.movesPuzzel.length>0){
                 let move=this.movesPuzzel[0];
                 this.movesPuzzel=this.movesPuzzel.slice(1);
@@ -97,9 +93,11 @@ export class PuzzelGameState extends GameState{
                 this.updatePlayedMoves(GameState.PlayedMoves.GetMoves());
                 this.clicked=false;
                 this.clicked_piece=0;
+                this.playMove=this.play_move_Puzzle;
             }else{
                 this.openEndGame(true);
             }
+
         }, 500);
 
 
@@ -111,7 +109,7 @@ export class PuzzelGameState extends GameState{
         return [oldcord,newcord];
     }
 
-    chekMoves(oldC,newC){
+    checkMoves(oldC,newC){
         let move=this.movesPuzzel[0]
 
         let oldcord=Coordinate.changeToCord(move.slice(0,2));
@@ -124,8 +122,6 @@ export class PuzzelGameState extends GameState{
     }
 
     openEndGame(color) {
-
-
         setTimeout(() => {
             popup_end.classList.add("open-popup");
             this.setEndPopupText("Je hebt de puzzel correct opgelost!", popup_end);

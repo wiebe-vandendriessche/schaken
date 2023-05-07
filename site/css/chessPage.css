@@ -19,10 +19,12 @@ body.dark {
 }
 
 #canvas_element {
-    height: 0;
-    padding-bottom: 70%;
+    min-height:400px ;
+
+
+
     min-width: 400px;
-    max-width: 650px;
+    max-width: 45%;
     margin-inline: auto;
 }
 
@@ -41,9 +43,7 @@ body.dark {
 }
 
 
-canvas {
-    align-items: center;
-}
+
 
 body, html {
     padding: 0;

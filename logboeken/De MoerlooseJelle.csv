@@ -22,3 +22,6 @@ Datum,Start,Einde,Plaats,Omschrijving
 26/04/2023,9:30,12:30,Contacturen, de BOT sneller maken met undomove ipv cloneboard->nog niet werkende gekregen
 26/04/2023,15:00,19:00,Thuis,Javawebworkers gebruiken op algoritme asynchroon te krijgen
 27/04/2023,9:00,11:45,Thuis, de bot helemaal asynchroon gekregen me js multithreading samen met brecht
+3/05/2023,9:30,12:30,Contacturen,Merge gdn en testing
+6/05/2023,21:00,22:30,Thuis, Alle nieuwe code bekijken verbteren
+7/05/2023,9:00,11:20,Thuis, canvas preview maken voor thema selector and bugfix voor responsive canvas

@@ -26,13 +26,13 @@ class MoveCacher{
             if(number<10){
                 ending_spatie=" ";
             }
-            this.moves+=`${number}.\t ${firstLetter}${NewCord.convertToCHessCords(NewCord)}${ending_spatie}`;
+            this.moves+=`${number}.   ${firstLetter}${NewCord.convertToCHessCords(NewCord)}${ending_spatie}`;
         }else{//kleine letter gebruiken volgend de regels moet een zwart piece met een kleine letter
-            this.moves+=`\t\t ${firstLetter.toLowerCase()}${NewCord.convertToCHessCords(NewCord)} \n`;
+            this.moves+=`\t\t  ${firstLetter.toLowerCase()}${NewCord.convertToCHessCords(NewCord)} \n`;
         }
     }
     MoveRemove(){
-        this.moves=this.moves.slice(0,this.moves.length-8);
+        this.moves=this.moves.slice(0,this.moves.length-9);
     }
 
     ReturnToPreviousMoves(){

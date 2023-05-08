@@ -2,24 +2,17 @@
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <!--titel-->
-    <title>Schaken/Puzzel</title>
+    <title>Schaken/Regels</title>
 
-    <!--stylesheets-->
-    <link rel="stylesheet" href="css/chessPage.css">
+
     <link rel="stylesheet" href="css/navbar.css">
 
-    <!--boxicons-->
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
 
-    <!--canvas-->
-    <script type="module" src="scripts/Show.js"></script>
 
     <script src="scripts/Onload.js"></script>
     <script src="./scripts/Sidebar.js"></script>
 
-
-    <!--bootstrap-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
 </head>
@@ -99,7 +92,7 @@
                             <i class='bx bx-moon icon moon'></i>
                             <i class='bx bx-sun icon sun'></i>
                         </div>
-                        <span class="link_name2">Light</span>
+                        <span class="link_name2">Dark</span>
                         <div class="toggle-switch" onclick="Darkmode()">
                             <span class="switch"></span>
                         </div>
@@ -132,85 +125,11 @@
             <span class="text">Menu</span>
         </div>
         <div class="row">
-            <div class="row title">
-                <h1 class="title-color" id="type_gamestate">Puzzels</h1>
-            </div>
-            <div class="col-8" id="canvas_element">
-                <canvas id="canvas"></canvas>
-            </div>
-            <div class="col-4 col-sm-10" id="card_element">
-                <div class="card" id="moves_cards">
-                    <div class="top_moves">
-                        <i class='bx bx-user player' id="player1"></i>
-                        <div id="pl"><h3>Player1</h3></div>
-                        <div id="spacer"></div>
-                        <div id="pl_bot"><h3>Puzzel</h3></div>
-                        <i class='bx bx-user player' id="player2"></i>
-                    </div>
-                    <div id="move_title">Schaakzetten</div>
-                    <div id="card_height">
-                        <div class="scroll" id="playedMoves"></div>
-                    </div>
-                    <div id="buttons_movecard">
-                        <button id="restart" class='chessgame_buttons puzzel_chessgame_buttons'>
-                            <i class="button_chessgame_icon bx bx-revision"></i>
-                            <span class="button_chessgame_text">Nieuwe Puzzel</span>
-                        </button>
-                        <button hidden id="resign" class='chessgame_buttons'>
-                            <i class="button_chessgame_icon bx bx-flag"></i>
-                            <span class="button_chessgame_text">Opgeven</span>
-                        </button>
-                        <button hidden id="undo_move" class='chessgame_buttons'>
-                            <i class="button_chessgame_icon bx bx-revision"></i>
-                            <span class="button_chessgame_text">Undo move</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
+            <h1>Regels</h1>
         </div>
-
-        <div class="popup" id="popup">
-            <img src="picture/bot.jpg" alt="bot">
-            <p>Speel puzzels</p>
-
-            <button type="button" id="close_popup">start</button>
-        </div>
-
-        <div class="popup" id="popup_difficulty">
-            <img src="picture/bot.jpg" alt="bot">
-            <p>Speel</p>
-            <i>Kies de moelijkheidsgraad</i>
-            <select class="selectInPopup" id="difficulty">
-                <option class="choicAdversary" value="1">bot level 1</option>
-                <option class="choicAdversary" value="2">bot level 2</option>
-                <option class="choicAdversary" value="3">bot level 3</option>
-                <option class="choicAdversary" value="4">bot level 4</option>
-                <option class="choicAdversary" value="5">bot level 5</option>
-                <option class="choicAdversary" value="6">bot level 6</option>
-            </select>
-            <div></div>
-            <i>Kies welk kleur u wilt spelen</i>
-            <select class="selectInPopup" id="color">
-                <option class="choicAdversary" value="0">Zwart</option>
-                <option class="choicAdversary" value="1" selected>Wit</option>
-            </select>
-
-            <button type="button" id="close_popup_difficulty">Start</button>
-        </div>
-
-        <div class="popup" id="end">
-            <img src="picture/bot.jpg" alt="bot">
-            <p>you lost</p>
-            <button type="button" id="close_popup_end">Speel Opnieuw</button>
-            <button type="button" id="close_popup_puzzels">Ga naar Puzzels</button>
-        </div>
-
     </section>
 </div>
 
-
-</body>
-</html>
 
 </body>
 </html>

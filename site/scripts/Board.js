@@ -34,7 +34,7 @@ class Board {
                 x=0;
                 y+=1;
             }else if(isNaN(letterFen)){
-                this.board[y][x]=this.creatPiece(letterFen,x,y);
+                this.board[y][x]=this.createPiece(letterFen,x,y);
                 x+=1;
             }else {
                 let cijferFen=parseInt(letterFen);
@@ -51,7 +51,53 @@ class Board {
         this.amountOfMoves=(parseInt(Information[5])-1)*2 + halveMove;
     }
 
-    creatPiece(letter,x,y){
+    boardToFen(){
+        var Fen;
+        let castelstring;
+        for(let i=0;i<8;i++){
+            let count=0;
+            for(let j=0;j<8;i++){
+                let piece=this.board[i][i]
+                if(piece===0){
+                    count++;
+                }else{
+                    let type=typeof piece;
+                    let firstletter=type[0];
+                    if(piece.color){
+                        firstletter.toLowerCase()
+                    }
+                    if(firstletter==="R" || firstletter==="r"){
+                        if(piece.moved){
+                            if(piece.pos.x===8){
+                                castelstring+=piece.color?"q":"Q"
+                            }else{
+                                castelstring+=piece.color?"k":"K"
+                            }
+
+                        }
+                    }
+                    if(piece.color){
+                       firstletter.toLowerCase()
+                    }
+                    if(count!==0){
+                        Fen+=`${count}${firstletter}`
+                    }else{
+                        Fen+=`${firstletter}`
+                    }
+                }
+            }
+            Fen+="/";
+        }
+
+        Fen+=this.amountOfMoves%2===0?" b ":" w "
+        Fen += `${castelstring} `;
+        Fen += "- ";
+        Fen +=`${this.amountOfMoves%2}`;
+        Fen +=`${this.amountOfMoves/2}`;
+        return Fen
+    }
+
+    createPiece(letter, x, y){
         let color= letter===letter.toUpperCase()
         letter=letter.toUpperCase()
         if (letter==="R"){
@@ -67,7 +113,7 @@ class Board {
         }else if (letter==="K") {
             return new King(new Coordinate(x,y),color,true);
         }else{
-            return null//eigenlijk hier exeption opwerpen om aan te tonen dat de input fout is
+            return null//eigenlijk hier exeption opwerpen om aan te tonen dat de input fout is -> doe dit dan!!
         }
     }
 

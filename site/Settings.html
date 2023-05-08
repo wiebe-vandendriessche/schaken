@@ -2,19 +2,26 @@
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <title>Schaken/Home</title>
+    <!--titel-->
+    <title>Schaken/Settings</title>
 
-    <link rel="stylesheet" href="css/homestyle.css">
+    <!--stylesheets-->
+    <link rel="stylesheet" href="css/settings.css">
     <link rel="stylesheet" href="css/navbar.css">
 
 
+    <!--boxicons-->
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+
+    <!--canvaspreview-->
+
+    <script defer src="scripts/ColorPicker.js"></script>
 
 
     <script src="scripts/Onload.js"></script>
     <script src="./scripts/Sidebar.js"></script>
-    <script src="./scripts/TypingAnimation.js" defer></script>
 
+    <!--bootstrap-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
 </head>
@@ -127,18 +134,49 @@
                 <i class='bx bx-menu' onclick="SidebarToggle()"></i>
                 <span class="text">Menu</span>
             </div>
-            <div class="row" >
-                <div class="home">
-                    <div class="home-title" id="idTyping"></div>
-                    <p class="uppercase">door Team 02</p>
-                    <div class="names">
-                        <p>Jelle De Moerloose <br>
-                            Stijn De Schrijver <br>
-                            Brecht Stevens <br>
-                            Wiebe Vandendriessche <br>
-                        </p>
+            <div class="settings-content">
+                <div class="row">
+                    <h1 class="title-instellingen">Instellingen</h1>
+                    <br>
+                </div>
+                <div class="row">
+                    <h2>Veldkleuren</h2>
+                    <div class="col">
+                        <h3>Kleur 1</h3>
+
+                        <div class="color-picker"></div>
+                        <div id="color-indicator" class="color-indicator"></div>
+                        <div id="color-picker"></div>
+                        <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
+
+                    </div>
+                    <div class="col">
+                        <h3>Kleur 2</h3>
+
+                        <div class="color-picker"></div>
+                        <div id="color-indicator2" class="color-indicator"></div>
+                        <div id="color-picker2"></div>
+                        <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
+
                     </div>
                 </div>
+                <div class="row">
+                    <button onclick="setStandaardKleuren()" id="Standaard" class="save-button default">Standaard kleuren</button>
+                </div>
+                <div class="row" id="canvas_element">
+                    <canvas id="canvas_preview"  > </canvas>
+                </div>
+                <br>
+                <div class="row">
+                    <h2>Pionnen</h2>
+
+                </div>
+                <br>
+                <div class="row">
+                    <h2>Geluid</h2>
+
+                </div>
+                <br>
             </div>
         </div>
     </div>

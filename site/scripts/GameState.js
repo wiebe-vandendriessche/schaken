@@ -1,21 +1,21 @@
 import {Board} from "./Board.js";
 import {Coordinate} from "./Coordinate.js";
-import {Bot} from "./Bot/Bot.js";
+
 import {MoveCacher} from "./MoveCacher.js";
 import {popup_end} from "./Show.js";//ik weet niet zeker of dit mag en of dit de mooiste oplossing is
 
 export class GameState{
     static ofsetPiece=5;
     static PlayedMoves=new MoveCacher();
-    bot;
-    constructor(canvas,lenght,colorA,colorB,colorC,colorD) {
+
+    constructor(canvas,length,colorA,colorB,colorC,colorD) {
 
         this.botAdversairy=false;
         this.bodDifficulty=0;
-
-        this.canvasElement = document.getElementById("canvas_element");
+        this.bot=undefined;
+        this.canvasElement = canvas.parentElement;
         this.canvas=canvas;
-        this.lenght=lenght;
+        this.lenght=length;
         this.square_size=this.lenght/8;
         this.ctx=canvas.getContext("2d");
         this.board= new Board(true);
@@ -25,14 +25,11 @@ export class GameState{
         this.colorA=colorA;
         this.colorB=colorB;
         this.colorC=colorC;
-        this.colorD=colorD
-        this.playMove=(event)=>{};
+        this.colorD=colorD;
+        this.playMove=()=>{};
+
     }
-    dummy(){
-        this.board.setupPieces("q3k1nr/1pp1nQpp/3p4/1P2p3/4P3/B1PP1b2/B5PP/5K2 b k - 0 17");
-        GameState.PlayedMoves.setStart(this.board);
-        this.drawGameboard();
-    }
+
 
     drawGameboard(){
         this.drawBoard();
@@ -43,8 +40,8 @@ export class GameState{
         if(this.botAdversairy){
             undoAantal=2;
         }
-        //chekken voor de loop voor onnodige itteraties tegen te gaan
-        //chekken na de loop voor als je twee keer terug wil maar maar een keer terug kan;
+        //checken voor de loop voor onnodige iterates tegen te gaan
+        //checken na de loop voor als je twee keer terug wil maar maar een keer terug kan;
         if(GameState.PlayedMoves.moves!==""){
             for(let i=0;i<undoAantal;i++){
                 if(GameState.PlayedMoves.moves!==""){
@@ -71,8 +68,7 @@ export class GameState{
     }
 
     drawBoard() {
-        this.canvas.setAttribute("height", this.lenght.toString());
-        this.canvas.setAttribute("width", this.lenght.toString());
+
         for (let i = 0; i < 8; i++) {
             for (let j = 0; j < 8; j++) {
                 this.drawSquare(i,j,this.colorA,this.colorB);
@@ -83,7 +79,7 @@ export class GameState{
     drawPieces(list_piece){
         for (let i = 0; i < 8; i++) {
             for (let j = 0; j < 8; j++) {
-                if(list_piece[i][j]!==0){//chekken of het vak niet leeg is want dan tekene van een piece
+                if(list_piece[i][j]!==0){//checken of het vak niet leeg is want dan tekenen van een piece
                     let piece= list_piece[i][j];
 
                     let img=piece.image;
@@ -105,6 +101,10 @@ export class GameState{
 
 
     restart(popup){
+        if (this.bot!==undefined){
+            this.bot.terminate();
+            this.bot=undefined;
+        }
         this.board=new Board(true);
         GameState.PlayedMoves.reset();
         this.clicked=false;
@@ -116,30 +116,25 @@ export class GameState{
     }
 
 
-    play(event){
-        this.playMove(event)
+
+    bot_move(event){
+
+        let data=JSON.parse(event.data);
+        let piece= this.board.board[data.cord1.y][data.cord1.x];
+        let newCord= data.cord2;
+        this.board.move(piece,newCord);
+        this.board.amountOfMoves++;
+        this.drawGameboard();
+        this.openEndGame(this.bot.color);
+        GameState.PlayedMoves.Moveadd(new Coordinate(newCord.x,newCord.y),this.board.amountOfMoves,this.board,piece);
+        this.updatePlayedMoves(GameState.PlayedMoves.GetMoves());
+        this.playMove=this.play_move_bot;
+        //eventlisteners toevoegen
+        this.undo=this.undoMove;
+
     }
 
-    bot_move(){
-        let newCord;
-        let piece;
-        this.bot.nextMove(this.board).then(array=>{
-            this.board.move(array[0], array[1])
-            newCord=array[1];
-            piece=array[0]
-        }).then(()=>{
-            this.board.amountOfMoves++;
-            this.drawGameboard();
-
-        }).then(()=>{
-            this.openEndGame(piece.color);
-            GameState.PlayedMoves.Moveadd(newCord,this.board.amountOfMoves,this.board,piece);
-            this.updatePlayedMoves(GameState.PlayedMoves.GetMoves());
-        });
-    }
-
-    //duplicated code voor efficientie van de botmove om een if test minder te moeten doen nog geen tijd gehad of het een groot verschil maakt als de chek er bij komt
-    async play_move_bot(event){
+     play_move_bot(event){
         let rect=this.canvas.getBoundingClientRect();
         let x=Math.floor((event.clientX-rect.x)/this.square_size);
         let y=Math.floor((event.clientY-rect.y)/this.square_size);
@@ -148,9 +143,23 @@ export class GameState{
         let color=this.board.colorToMove();
         this.drawGameboard()
         if(this.clicked){
+            let oldcord=this.clicked_piece.pos;
             if(this.board.moveWithCheck(this.clicked_piece,cord)) {
                 GameState.PlayedMoves.Moveadd(cord,this.board.amountOfMoves,this.board,this.clicked_piece);
-                this.bot_move();
+                let status = this.board.isEnd(!color);
+                this.openEndGame()
+                this.drawGameboard()
+                let data={
+                    "type":"move",
+                    "cord1":oldcord,
+                    "cord2":cord
+                }
+                this.playMove=()=>{};
+                this.bot.postMessage(JSON.stringify(data));
+
+                // even eventlistener van UndoMove en PlayMove uitzetten
+                this.undo=()=>{}
+
                 this.openEndGame(color);
             }
             this.clicked = false;
@@ -190,7 +199,6 @@ export class GameState{
                 this.clicked=true;
             }
         }
-        console.log(GameState.PlayedMoves)
     }
 
     ReturnToPreviousBoard(){
@@ -210,17 +218,29 @@ export class GameState{
         let col=parseInt(color.value)===0;
         this.bodDifficulty= botDiff.value;
         //console.log(col+"     "+this.bodDifficulty);
-        this.playMove=(event)=>{this.play_move_bot(event)};
-        this.bot=new Bot(col,this.bodDifficulty);
-        if(col){
-            this.bot_move();
+        this.playMove=this.play_move_bot;
+        const baseURL = window.location.href.split('/').slice(0, -1).join('/');
+        this.bot=new Worker(`${baseURL}/scripts/Bot/Bot.js`, { type: "module" });
+
+        let data={//opdracht sturen naar de webworker --> zodat volledig async werkt
+            "type":"maakbot",
+            "color":col,
+            "depth":this.bodDifficulty
         }
+        data=JSON.stringify(data);
+        this.bot.addEventListener("message",(event)=>{ this.bot_move(event)})// zodat -> bot zijn move telkens kan terugsturen als wij hem data verzenden
+        this.bot.postMessage(data);
+
+
+
         this.close(popupDifficulty);
+        console.log("this.bord->",this.board)
 
     }
     closePopup(popup,popupDifficulty,botDiff){
         let difficulty=parseInt(botDiff.value);
         this.botAdversairy= difficulty!==0;
+        console.log("1")
         if(!this.botAdversairy){
             this.playMove=(event)=>{this.play_move_player(event)};
         }else{
@@ -229,9 +249,14 @@ export class GameState{
         this.close(popup);
     }
     openEndGame(color){
+
         let status = this.board.isEnd(!color);
-        console.log(status)
-        if (status !== "continue") {//alles binnen deze functie moet niet effiecient zijn dit aangezien dat het maar en keer per spel wordt opgeroepen
+        if (status !== "continue") {
+            if (this.bot!==undefined){
+                this.bot.terminate();
+                this.bot=undefined;
+            }
+
             setTimeout(() => {
                 popup_end.classList.add("open-popup");
                 this.setEndPopupText(color,status,popup_end);
@@ -258,9 +283,11 @@ export class GameState{
     }
 
     rescale(){
-        this.length = Math.min(this.canvasElement.offsetWidth, this.canvasElement.offsetHeight);
+        this.length = this.canvasElement.offsetWidth
         this.square_size = this.length/8;
-        console.log(`length: ${this.length}`);
+        this.canvas.width=this.length;
+        this.canvas.height=this.length;
+
         this.drawGameboard();
     }
 }

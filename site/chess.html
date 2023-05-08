@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <!--titel-->
-    <title>Schaken/speel</title>
+    <title>Schaken/Speel</title>
 
     <!--stylesheets-->
     <link rel="stylesheet" href="css/chessPage.css">
@@ -58,7 +58,7 @@
                 </div>
                 <ul class="sub-menu">
                     <li><a class="link_name" href="#">Spelen</a></li>
-                    <li><a href="chess.html" id="speel">speel</a></li>
+                    <li><a href="chess.html" id="speel">Speel</a></li>
                     <li><a href="chessPuzzel.html">Puzzels</a></li>
                 </ul>
             </li>
@@ -75,19 +75,19 @@
                 <ul class="sub-menu">
                     <li><a class="link_name" href="#">Info</a></li>
                     <li><a href="GeschiedenisSchaak.html">Geschiedenis</a></li>
-                    <li><a href="#">Bekende spelers</a></li>
+                    <li><a href="rules.html">Spelregels</a></li>
                     <li><a href="AboutUs.html">Ons Team</a></li>
                 </ul>
             </li>
 
 
             <li>
-                <a href="#">
+                <a href="Settings.html">
                     <i class='bx bx-cog'></i>
                     <span class="link_name">Instellingen</span>
                 </a>
                 <ul class="sub-menu blank">
-                    <li><a class="link_name" href="#">Instellingen</a></li>
+                    <li><a class="link_name" href="Settings.html">Instellingen</a></li>
                 </ul>
             </li>
 
@@ -134,37 +134,37 @@
             <span class="text">Menu</span>
         </div>
         <div class="row">
-            <div class="row">
-                <h1 class="title-color" id="type_gamestate">Speel: PvP</h1>
+            <div class="row title">
+                <h1 class="title-color" id="type_gamestate">Speel</h1>
             </div>
-            <div class="col-8" id="canvas_element">
-                <canvas id="canvas"></canvas>
+            <div class="col-8" id="canvas_element" >
+                <canvas id="canvas" height="3000px"></canvas>
             </div>
             <div class="col-4 col-sm-10" id="card_element">
                 <div class="card" id="moves_cards">
                     <div class="top_moves">
                         <i class='bx bx-user player' id="player1"></i>
-                        <div id="pl">player1</div>
+                        <div id="pl"><h3>Speler1</h3></div>
                         <div id="spacer"></div>
-                        <div id="pl_bot">player2</div>
+                        <div id="pl_bot"><h3>Speler2</h3></div>
                         <i class='bx bx-user player' id="player2" ></i>
                     </div>
-                    <div id="move_title">moves</div>
+                    <div id="move_title">Schaakzetten</div>
                     <div id="card_height">
                         <div class="scroll" id="playedMoves"></div>
                     </div>
                     <div id="buttons_movecard">
                         <button id="undo_move" class='chessgame_buttons'>
                             <i class="button_chessgame_icon bx bx-undo"></i>
-                            <span class="button_chessgame_text">undo</span>
+                            <span class="button_chessgame_text">Terug</span>
                         </button>
                         <button id="resign" class='chessgame_buttons'>
                             <i class="button_chessgame_icon bx bx-flag"></i>
-                            <span class="button_chessgame_text">risign</span>
+                            <span class="button_chessgame_text">Opgeven</span>
                         </button>
                         <button id="restart" class='chessgame_buttons'>
                             <i class="button_chessgame_icon bx bx-revision"></i>
-                            <span class="button_chessgame_text">restart</span>
+                            <span class="button_chessgame_text">Herstarten</span>
                         </button>
                     </div>
 
@@ -177,17 +177,17 @@
             <p>Speel</p>
             <i>Kies Tegenstander</i>
             <select class="selectInPopup" id="adversary">
-                <option class="choicAdversary" value="0">speler</option>
-                <option class="choicAdversary" value="1">bot</option>
+                <option class="choicAdversary" value="0">Speler</option>
+                <option class="choicAdversary" value="1">Bot</option>
             </select>
 
-            <button type="button" id="close_popup">start</button>
+            <button type="button" id="close_popup">Start</button>
         </div>
 
         <div class="popup" id="popup_difficulty">
             <img src="picture/bot.jpg" alt="bot">
             <p>Speel</p>
-            <i>Kies de moelijkheidsgraad</i>
+            <i>Kies de moeilijkheidsgraad</i>
             <select class="selectInPopup" id="difficulty">
                 <option class="choicAdversary" value="1">bot level 1</option>
                 <option class="choicAdversary" value="2">bot level 2</option>
@@ -199,18 +199,18 @@
             <div></div>
             <i>Kies welk kleur u wilt spelen</i>
             <select class="selectInPopup" id="color">
-                <option class="choicAdversary" value="0">zwart</option>
-                <option class="choicAdversary" value="1" selected>wit</option>
+                <option class="choicAdversary" value="0">Zwart</option>
+                <option class="choicAdversary" value="1" selected>Wit</option>
             </select>
 
-            <button type="button" id="close_popup_difficulty">start</button>
+            <button type="button" id="close_popup_difficulty">Start</button>
         </div>
 
         <div class="popup" id="end">
             <img src="picture/bot.jpg" alt="bot">
             <p>you lost</p>
-            <button type="button" id="close_popup_end">speel opnieuw</button>
-            <button type="button" id="close_popup_puzzels">ga naar puzzels</button>
+            <button type="button" id="close_popup_end">Speel Opnieuw</button>
+            <button type="button" id="close_popup_puzzels">Ga naar Puzzels</button>
         </div>
 
     </section>

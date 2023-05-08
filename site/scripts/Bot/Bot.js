@@ -14,6 +14,71 @@ export class Bot{
         this.evaluation = new Evaluation();
         // this.counter = 0;
     }
+
+    negamax(board,depth, alpha, beta, color){
+        let speelveld = board.board;
+        let bestScore = undefined;
+        if(depth === 0) {
+            if(color)
+                return this.evaluation.Evaluate(board);
+            else
+                return -this.evaluation.Evaluate(board);
+        }
+        for(let y = 0; y < 8; y++){
+            for(let x = 0; x < 8; x++){
+                let piece = speelveld[y][x];
+                if(piece !== 0 && piece.kleur === color){
+                    let posMoves = piece.possibleMoves(board);
+                    for(let cord of posMoves){
+                        let cloneBoard = board.clone(false);
+                        let fakePiece = cloneBoard.board[piece.pos.y][piece.pos.x];
+                        cloneBoard.move(fakePiece, cord);
+                        if (!cloneBoard.legalchecker.isChecked(piece.kleur)) {
+                            let score = -this.negamax(cloneBoard, depth-1, -beta, -alpha, !color);
+                            if(score >= beta){
+                                return score;
+                            }
+                            if(bestScore === undefined || score > bestScore){
+                                bestScore = score;
+                                if(score > alpha){
+                                    alpha = score;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if(bestScore === undefined){
+            if(color)
+                return this.evaluation.Evaluate(board);
+            else
+                return -this.evaluation.Evaluate(board);
+        }
+        return bestScore;
+    }
+
+    // if(bestScore === undefined)
+    // return this.evaluation.Evaluate(board, color);
+
+//     let val = this.minimax(cloneBoard, depth - 1, alpha, beta, !color);
+//     if(color){
+//         if (bestScore === undefined || val > bestScore)
+//             bestScore = val;
+//         if (alpha < val)
+//             alpha = val;
+//         if (beta <= alpha)
+//             return bestScore;
+//     }
+//     else{
+//     if (bestScore === undefined || val < bestScore)
+//     bestScore = val;
+//     if (beta > val)
+//     beta = val;
+//     if (beta <= alpha)
+//     return bestScore;
+// }
+
     minimax(board, depth, alpha, beta, color){
         let speelveld = board.board;
         // this.counter++;
@@ -98,7 +163,8 @@ export class Bot{
                             let fakePiece = cloneBoard.board[y][x];
                             cloneBoard.move(fakePiece, cord);
                             if (!cloneBoard.legalchecker.isChecked(piece.kleur)) {
-                                let val = this.minimax(cloneBoard, this.depth, -20000, 20000, !this.color);
+                                // let val = this.minimax(cloneBoard, this.depth, -20000, 20000, !this.color);
+                                let val = this.negamax(cloneBoard, this.depth, -20000, 20000, !this.color);
                                 if (this.color && (subEval === undefined || subEval < val)) {
                                     subEval = val;
                                     array2 = [piece, cord];

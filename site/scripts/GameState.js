@@ -27,7 +27,7 @@ export class GameState{
         this.colorC=colorC;
         this.colorD=colorD;
         this.playMove=()=>{};
-
+        this.sound = new Audio("./sounds/chess.mp3");
     }
 
 
@@ -125,6 +125,7 @@ export class GameState{
         this.board.move(piece,newCord);
         this.board.amountOfMoves++;
         this.drawGameboard();
+        this.playSound();
         this.openEndGame(this.bot.color);
         GameState.PlayedMoves.Moveadd(new Coordinate(newCord.x,newCord.y),this.board.amountOfMoves,this.board,piece);
         this.updatePlayedMoves(GameState.PlayedMoves.GetMoves());
@@ -149,6 +150,7 @@ export class GameState{
                 let status = this.board.isEnd(!color);
                 this.openEndGame()
                 this.drawGameboard()
+                this.playSound();
                 let data={
                     "type":"move",
                     "cord1":oldcord,
@@ -184,6 +186,7 @@ export class GameState{
             if(this.board.moveWithCheck(this.clicked_piece,cord)){
                 GameState.PlayedMoves.Moveadd(cord,this.board.amountOfMoves,this.board,this.clicked_piece);
                 this.drawGameboard();//moet hier ook eens staan voor het geval dat het d
+                this.playSound();
                 this.openEndGame(color);
             }else{
                 this.drawGameboard();
@@ -289,5 +292,9 @@ export class GameState{
         this.canvas.height=this.length;
 
         this.drawGameboard();
+    }
+
+    playSound(){
+        this.sound.play();
     }
 }

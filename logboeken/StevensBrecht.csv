@@ -28,3 +28,4 @@ Datum, Start, Einde, Plaats, Omschrijving
 03/05/2023,14:00,15:00,thuis, afwerken puzzels zetten van de tegestander in de puzzel en einde puzzel
 04/05/2023,13:30,15:00,bib, bugfixen van van allerlei dingen movecaher formating endagame die nie altijd juist word opgeroepen
 09/05/2023,09:30;12:00,thuis, afwerken van de board to fen methode
+09/05/2023,21:00;22:00,thuis, start opslitsen van verschillende verantwoordelijkheden van gamestate classe

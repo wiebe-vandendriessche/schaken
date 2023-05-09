@@ -68,7 +68,7 @@ restartEndButton.addEventListener("click", () => {
 });
 
 window.addEventListener("keypress", () => {
-    gameState.fetchNewPuzzels()
+    //gameState.fetchNewPuzzels()
 });
 
 window.addEventListener("resize", () => {
@@ -83,3 +83,4 @@ resignebutton.addEventListener("click", () => {
     gameState.setEndPopupText(gameState, "resign", popup_end)
 })
 
+window.addEventListener("keypress",()=>{gameState.dummy()})

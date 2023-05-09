@@ -52,48 +52,74 @@ class Board {
     }
 
     boardToFen(){
-        var Fen;
-        let castelstring;
+        let Fen;
+        let castelstring="";
+        let witheKingMove=false;
+        let BlackKingMove=false;
         for(let i=0;i<8;i++){
             let count=0;
-            for(let j=0;j<8;i++){
-                let piece=this.board[i][i]
+
+            for(let j=0;j<8;j++){
+                let piece=this.board[i][j]
                 if(piece===0){
                     count++;
                 }else{
-                    let type=typeof piece;
-                    let firstletter=type[0];
-                    if(piece.color){
-                        firstletter.toLowerCase()
-                    }
+                    let firstletter=piece.constructor.name[0];
                     if(firstletter==="R" || firstletter==="r"){
-                        if(piece.moved){
-                            if(piece.pos.x===8){
-                                castelstring+=piece.color?"q":"Q"
+                        if(!piece.moved){
+                            if(piece.pos.x===7){
+                                castelstring+=piece.kleur?"q":"Q"
                             }else{
-                                castelstring+=piece.color?"k":"K"
+                                castelstring+=piece.kleur?"k":"K"
                             }
 
                         }
                     }
-                    if(piece.color){
-                       firstletter.toLowerCase()
+                    if(firstletter==="K" || firstletter==="k"){
+                        if(piece.kleur && piece.moved){
+                            witheKingMove=true;
+                        }else if(piece.moved){//je moet niet meer cheken op kleur wat je weet al dat het niet wit is
+                            BlackKingMove=true;
+                        }
+                    }
+                    if(!piece.kleur){
+                       firstletter=firstletter.toLowerCase()
                     }
                     if(count!==0){
                         Fen+=`${count}${firstletter}`
+                        count=0;
                     }else{
                         Fen+=`${firstletter}`
                     }
                 }
+                if(j===7 && count!==0){
+                    Fen+=`${count}`
+                }
             }
-            Fen+="/";
+            if(i<7){
+                Fen+="/";
+            }
+
+        }
+        if(witheKingMove){
+            castelstring=castelstring.replace("K","");
+            castelstring=castelstring.replace("Q","");
+        }
+        if(BlackKingMove){
+            castelstring=castelstring.replace("k","");
+            castelstring=castelstring.replace("q","");
         }
 
-        Fen+=this.amountOfMoves%2===0?" b ":" w "
-        Fen += `${castelstring} `;
-        Fen += "- ";
-        Fen +=`${this.amountOfMoves%2}`;
-        Fen +=`${this.amountOfMoves/2}`;
+        Fen +=this.amountOfMoves%2!==0?" b ":" w "
+        if(castelstring===""){
+            Fen += "- ";//geen enkele rokade is nog mogelijk
+        }else{
+            Fen += `${castelstring} `;
+        }
+
+        Fen += "- "; //hier komen normaal de posites waar enpassent mogelijk is
+        Fen +=`${this.amountOfMoves%2} `;
+        Fen +=`${Math.floor(this.amountOfMoves/2)}`;
         return Fen
     }
 

@@ -31,6 +31,11 @@ export class GameState{
     }
 
 
+    dummy(){
+        console.log(this.board);
+        console.log(this.board.boardToFen());
+    }
+
     drawGameboard(){
         this.drawBoard();
         this.drawPieces(this.board.getPieces());

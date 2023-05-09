@@ -129,56 +129,60 @@
         </div>
 
 
-        <div class="home-section">
-            <div class="home-content" class="row">
-                <i class='bx bx-menu' onclick="SidebarToggle()"></i>
-                <span class="text">Menu</span>
-            </div>
-            <div class="settings-content">
-                <div class="row">
-                    <h1 class="title-instellingen">Instellingen</h1>
+        <section class="home-section">
+            <div class="row">
+                <div class="home-content">
+                    <i class='bx bx-menu' onclick="SidebarToggle()"></i>
+                    <span class="text">Menu</span>
+                </div>
+                <div class="settings-content">
+                    <div class="row">
+                        <h1 class="title-instellingen">Instellingen</h1>
+                        <br>
+                    </div>
+                    <div class="row">
+                        <h2>Veldkleuren</h2>
+                        <div class="col">
+                            <h3>Kleur 1</h3>
+
+                            <div class="color-picker"></div>
+                            <div id="color-indicator" class="color-indicator"></div>
+                            <div id="color-picker"></div>
+                            <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
+
+                        </div>
+                        <div class="col">
+                            <h3>Kleur 2</h3>
+
+                            <div class="color-picker"></div>
+                            <div id="color-indicator2" class="color-indicator"></div>
+                            <div id="color-picker2"></div>
+                            <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <button onclick="setStandaardKleuren()" id="Standaard" class="save-button default">Standaard
+                            kleuren
+                        </button>
+                    </div>
+                    <div class="row" id="canvas_element">
+                        <canvas id="canvas_preview"></canvas>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <h2>Pionnen</h2>
+
+                    </div>
+                    <br>
+                    <div class="row">
+                        <h2>Geluid</h2>
+
+                    </div>
                     <br>
                 </div>
-                <div class="row">
-                    <h2>Veldkleuren</h2>
-                    <div class="col">
-                        <h3>Kleur 1</h3>
-
-                        <div class="color-picker"></div>
-                        <div id="color-indicator" class="color-indicator"></div>
-                        <div id="color-picker"></div>
-                        <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
-
-                    </div>
-                    <div class="col">
-                        <h3>Kleur 2</h3>
-
-                        <div class="color-picker"></div>
-                        <div id="color-indicator2" class="color-indicator"></div>
-                        <div id="color-picker2"></div>
-                        <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
-
-                    </div>
-                </div>
-                <div class="row">
-                    <button onclick="setStandaardKleuren()" id="Standaard" class="save-button default">Standaard kleuren</button>
-                </div>
-                <div class="row" id="canvas_element">
-                    <canvas id="canvas_preview"  > </canvas>
-                </div>
-                <br>
-                <div class="row">
-                    <h2>Pionnen</h2>
-
-                </div>
-                <br>
-                <div class="row">
-                    <h2>Geluid</h2>
-
-                </div>
-                <br>
             </div>
-        </div>
+        </section>
     </div>
 
 </div>

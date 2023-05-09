@@ -5,7 +5,7 @@ body{
 
 .settings-content {
     color: var(--text-color);
-    padding-left: 10%;
+    padding-left: 10% !important;
     padding-top: 50px;
 }
 

@@ -226,7 +226,7 @@ body.dark{
     justify-content: space-between;
     background: var(--primary-color-light);
     padding: 12px 0;
-    transition: all 0.5s ease;
+    transition: all 0.2s ease;
 }
 .sidebar.close .profile-details{
     background: none;

@@ -1,4 +1,4 @@
-import {Board} from "./Board.js";
+import {Board} from "./Model/Board.js";
 import {Coordinate} from "./Coordinate.js";
 
 import {MoveCacher} from "./MoveCacher.js";
@@ -10,7 +10,8 @@ import {Draw} from "./Draw.js";
 export class GameState{
     static PlayedMoves=new MoveCacher();
 
-    constructor(canvas,colorA,colorB,colorC,colorD) {
+    constructor(canvas,colorA,colorB,colorC,colorD,          sound = new Audio("sounds/standard.mp3")) {
+
 
         this.botAdversairy=false;
         this.bodDifficulty=0;
@@ -20,13 +21,15 @@ export class GameState{
 
         this.canvas=canvas;
 
+
         this.board= new Board(true);
         this.clicked=false;
         this.clicked_piece=0;
 
         GameState.PlayedMoves.setStart(new Board(true));
         this.playMove=()=>{};
-        this.sound = new Audio("./sounds/chess.mp3");
+
+        this.sound = sound;
     }
 
 
@@ -173,7 +176,7 @@ export class GameState{
         //console.log(col+"     "+this.bodDifficulty);
         this.playMove=this.play_move_bot;
         const baseURL = window.location.href.split('/').slice(0, -1).join('/');
-        this.bot=new Worker(`${baseURL}/scripts/Bot/Bot.js`, { type: "module" });
+        this.bot=new Worker(`${baseURL}/scripts/Model/Bot/Bot.js`, { type: "module" });
 
         let data={//opdracht sturen naar de webworker --> zodat volledig async werkt
             "type":"maakbot",
@@ -235,8 +238,14 @@ export class GameState{
         popup.classList.remove("open-popup");
     }
 
+
     playSound(){
-        this.sound.play();
+        // this.sound = new Audio("sounds/chess.mp3");
+        this.sound.play()
+            .then(()=>{
+                console.log(`playing sound ${this.sound.src}`);
+            })
+            .catch(err => console.error(err));
     }
 
 

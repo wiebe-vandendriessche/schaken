@@ -29,12 +29,21 @@ if (localStorage.getItem('color1')) {
     kleur2 = localStorage.getItem('color2');
 }
 
+//default geluid instellen
+let sound = new Audio("sounds/standard.mp3");
+if(localStorage.getItem("sound")){
+    let src = localStorage.getItem("sound")
+    sound = new Audio(src);
+    sound.muted = JSON.parse(localStorage.getItem("muted"));
+}
+
 // juiste gamestate bepalen
 let gameState
 if (typeOFGame === "Speel") {
+
     gameState = new GameState(canvas,kleur1, kleur2, "rgba(147,239,132,0.5)", "rgba(87,173,73,0.5)");
 } else {
-    gameState = new PuzzelGameState(canvas,kleur1, kleur2, "rgba(147,239,132,0.5)", "rgba(87,173,73,0.5)");
+    gameState = new PuzzelGameState(canvas, kleur1, kleur2, "rgba(147,239,132,0.5)", "rgba(87,173,73,0.5)");
 }
 
 export let popup_end = document.getElementById("end");
@@ -82,5 +91,3 @@ resignebutton.addEventListener("click", () => {
     gameState.openPopup(popup_end);
     gameState.setEndPopupText(gameState, "resign", popup_end)
 })
-
-window.addEventListener("keypress",()=>{gameState.dummy()})

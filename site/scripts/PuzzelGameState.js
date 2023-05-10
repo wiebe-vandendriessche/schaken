@@ -10,17 +10,17 @@ export class PuzzelGameState extends GameState{
         super(canvas,lenght,colorA,colorB,colorC,colorD);
         this.currentPuzele=undefined;
         this.movesPuzzel=undefined;
-
+        this.amountofPuzzels=250;µ
+        this.playedPuzzels
     }
 
     // op dit moment is het efficient geschreven voor geheugen dat we nooit het hele document bij houden dat wil wel zeggen bij heel grote fetchopdrachten dat we dit meerdere keren gaan moeten doen.
 
     fetchNewPuzzels(){
-        fetch('puzzels.csv')
-            .then((response) => response.text())
-            .then((puzzelsstring) => this.selectPuzzel(puzzelsstring))
-            .then((puzzels)=>{
-                this.selectFenOfPuzzel(puzzels);
+        fetch(`http://localhost:3000/puzzels/${this.selectPuzzel()}`)
+            .then((response) => response.json())
+            .then((puzzel)=>{
+                this.selectFenOfPuzzel(puzzel);
                 this.board.setupPieces(this.currentPuzele);
                 this.drawGameboard();
                 this.puzzlemove();
@@ -29,16 +29,14 @@ export class PuzzelGameState extends GameState{
 
     }
 
-    selectPuzzel(data){
-        let puzzels=data.split("\n");
-        let puzzel=puzzels[Math.floor(Math.random()*puzzels.length)];
-        return puzzel
+    selectPuzzel(){
+        return Math.floor(Math.random()*this.amountofPuzzels);
+
     }
 
     selectFenOfPuzzel(data){
-        let puzzel=data.split(",");
-        this.movesPuzzel=puzzel[2].split(" ");
-        this.currentPuzele=puzzel[1];
+        this.movesPuzzel=data.Moves.split(" ");
+        this.currentPuzele=data.FEN;
     }
 
 

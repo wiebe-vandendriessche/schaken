@@ -1,4 +1,4 @@
-import {Knight} from "./Pieces/Knight.js";
+import {Knight} from "./Model/Pieces/Knight.js";
 
 export {MoveCacher};
 class MoveCacher{

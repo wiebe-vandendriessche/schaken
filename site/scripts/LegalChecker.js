@@ -1,7 +1,7 @@
-import {Board} from "./Board.js";
-import {Pawn} from "./Pieces/Pawn.js";
-import {King} from "./Pieces/King.js";
-import {Rook} from "./Pieces/Rook.js";
+import {Board} from "./Model/Board.js";
+import {Pawn} from "./Model/Pieces/Pawn.js";
+import {King} from "./Model/Pieces/King.js";
+import {Rook} from "./Model/Pieces/Rook.js";
 
 export class LegalChecker{
     constructor(Board){

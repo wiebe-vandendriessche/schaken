@@ -1,4 +1,4 @@
-import {Board} from "./Board.js";
+import {Board} from "./Model/Board.js";
 import {Coordinate} from "./Coordinate.js";
 
 import {MoveCacher} from "./MoveCacher.js";
@@ -228,7 +228,7 @@ export class GameState{
         //console.log(col+"     "+this.bodDifficulty);
         this.playMove=this.play_move_bot;
         const baseURL = window.location.href.split('/').slice(0, -1).join('/');
-        this.bot=new Worker(`${baseURL}/scripts/Bot/Bot.js`, { type: "module" });
+        this.bot=new Worker(`${baseURL}/scripts/Model/Bot/Bot.js`, { type: "module" });
 
         let data={//opdracht sturen naar de webworker --> zodat volledig async werkt
             "type":"maakbot",

@@ -20,7 +20,9 @@ export class Plot {
                 title: "Rating"
             },
             axisX: {
-                title: "Puzzels opgelost deze sessie"
+                title: "Puzzels opgelost deze sessie",
+                interval:1,
+                minimum:0
             },
             data: [{
                 type: "line",

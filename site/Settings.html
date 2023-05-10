@@ -16,6 +16,7 @@
     <!--canvaspreview-->
 
     <script defer src="scripts/ColorPicker.js"></script>
+    <script defer src="./scripts/SoundPicker.js"></script>
 
 
     <script src="scripts/Onload.js"></script>
@@ -174,14 +175,35 @@
                         <h2>Pionnen</h2>
 
                     </div>
-                    <br>
-                    <div class="row">
-                        <h2>Geluid</h2>
-
+                <br>
+                <div class="row">
+                    <h2>Geluid</h2>
+                    
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" onclick="toggleSound()" type="checkbox" id="flexSwitchCheckChecked" checked>
+                        <label class="form-check-label" for="flexSwitchCheckChecked">Checked switch checkbox input</label>
                     </div>
-                    <br>
+
+                    <div class="form-check">
+                        <input class="form-check-input" onchange="changeSound(event)" type="radio" name="flexRadioDefault" value="chess.com geluid" id="sounds/standard.mp3">
+                        <label class="form-check-label" for="sounds/standard.mp3">
+                            Chess.com geluid
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" onchange="changeSound(event)" type="radio" name="flexRadioDefault" value="capture geluid" id="sounds/capture.mp3">
+                        <label class="form-check-label" for="sounds/capture.mp3">
+                            capture geluid
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" onchange="changeSound(event)" type="radio" name="flexRadioDefault" value="ander geluid" id="sounds/chess.mp3">
+                        <label class="form-check-label" for="sounds/chess.mp3">
+                            ander geluid
+                        </label>
+                    </div>
                 </div>
-            </div>
+                <br>
         </section>
     </div>
 

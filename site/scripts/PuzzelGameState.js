@@ -58,6 +58,7 @@ export class PuzzelGameState extends GameState{
                 this.board.amountOfMoves++;
                 GameState.PlayedMoves.Moveadd(cord, this.board.amountOfMoves, this.board, this.clicked_piece);
                 this.playMove=()=>{};
+                this.playSound();
                 this.puzzlemove();
             }
             this.drawGameboard();
@@ -88,6 +89,7 @@ export class PuzzelGameState extends GameState{
                 this.board.amountOfMoves++;
                 GameState.PlayedMoves.Moveadd(newcord,this.board.amountOfMoves,this.board,this.clicked_piece);
                 this.drawGameboard();
+                this.playSound();
                 this.updatePlayedMoves(GameState.PlayedMoves.GetMoves());
                 this.clicked=false;
                 this.clicked_piece=0;

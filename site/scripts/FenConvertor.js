@@ -114,7 +114,17 @@ export class FenConvertor{
         }else if (letter==="N"){
             return new Knight(new Coordinate(x,y),color,true);
         }else if (letter==="P"){
-            return new Pawn(new Coordinate(x,y),color,true);
+            let pawn= new Pawn(new Coordinate(x,y),color,true);
+            if (color){
+                if (y!==6){
+                    pawn.moved=true;
+                }
+            }else {
+                if (y!==1){
+                    pawn.moved=true;
+                }
+            }
+            return  pawn;
         }else if (letter==="B"){
             return new Bisshop(new Coordinate(x,y),color,true);
         }else if (letter==="Q"){

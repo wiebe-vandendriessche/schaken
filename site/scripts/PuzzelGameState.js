@@ -2,6 +2,7 @@ import {GameState} from "./GameState.js";
 import {Coordinate} from "./Coordinate.js";
 import {popup_end} from "./Show.js";
 import {FenConvertor} from "./FenConvertor.js";
+import {Plot} from "./PlotElo.js";
 
 
 export class PuzzelGameState extends GameState{
@@ -9,10 +10,16 @@ export class PuzzelGameState extends GameState{
 
     constructor(canvas,colorA,colorB,colorC,colorD) {
         super(canvas,colorA,colorB,colorC,colorD);
-        this.currentPuzele=undefined;
+        this.currentPuzzel=undefined;
         this.movesPuzzel=undefined;
         this.amountofPuzzels=100;
         this.playedPuzzels=[];
+        this.soundwrong=new Audio("../sounds/wrong.mp3");
+        this.possibleScore=0;
+        this.amountOfMistakes=0;
+        this.plot=new Plot("Vooruitgang");
+
+        this.updateRating();
     }
 
 
@@ -21,9 +28,15 @@ export class PuzzelGameState extends GameState{
             .then((response) => response.json())
             .then((puzzel)=>{
                 this.selectFenOfPuzzel(puzzel);
-                FenConvertor.setupPieces(this.board,this.currentPuzele);
+                FenConvertor.setupPieces(this.board,this.currentPuzzel.FEN);
                 this.draw.drawGameboard(this.board);
                 this.puzzlemove();
+                let ratingelement=document.getElementById("puz_rating");
+                ratingelement.textContent=`Moeilijkheid puzzel : ${this.currentPuzzel.Rating}`;
+                this.possibleScore=parseInt(this.currentPuzzel.Rating)/100;
+                this.amountOfMistakes=0;
+
+
             })
 
     }
@@ -43,7 +56,7 @@ export class PuzzelGameState extends GameState{
 
     selectFenOfPuzzel(data){
         this.movesPuzzel=data.Moves.split(" ");
-        this.currentPuzele=data.FEN;
+        this.currentPuzzel=data;
     }
 
 
@@ -68,14 +81,17 @@ export class PuzzelGameState extends GameState{
                 this.playSound();
                 this.puzzlemove();
                 this.updatePlayedMoves(GameState.PlayedMoves.GetMoves())
+            }else{
+                if (this.genuineClick(this.clicked_piece,cord)) { // kijken of player niet gwn een andere pion aanklikt of misklikt
+                    console.log("fout");
+                    this.soundwrong.play();
+                    this.possibleScore -= 5;
+                    this.amountOfMistakes += 1;
+                }
             }
-
             this.draw.drawGameboard(this.board);
-
-
             this.clicked=false;
             this.clicked_piece=0;
-
         }else{
             if(piece_clicked_now!==0 && piece_clicked_now.kleur===color){
                 this.draw.drawPossible(this.board.possibleMoves(cord));
@@ -84,7 +100,12 @@ export class PuzzelGameState extends GameState{
             }
         }
     }
-
+    genuineClick(piece,cord){
+        if (this.board.possibleMovesPiece(piece).some(cordc=>(cordc.x===cord.x && cordc.y===cord.y))){
+            return true;
+        }
+        return false;
+    }
     puzzlemove(){
         setTimeout(() => {
             if(this.movesPuzzel.length>0){
@@ -106,6 +127,13 @@ export class PuzzelGameState extends GameState{
                 this.clicked_piece=0;
                 this.playMove=this.play_move_Puzzle;
             }else{
+                let ratingelement=document.getElementById("puz_rating");
+                ratingelement.textContent=`Moeilijkheid puzzel : `;
+                let rating=parseInt(localStorage.getItem("rating"));
+                this.possibleScore=Math.max(Math.abs(Math.round(this.possibleScore)),-20);
+                document.getElementById("elodiv").textContent=` Jouw Score:\n${rating} ${this.possibleScore>=0?"+":"-"} ${this.possibleScore}`;
+                localStorage.setItem("rating",""+(rating+this.possibleScore));
+                this.updateRating();
                 this.openEndGame(true);
             }
 
@@ -113,7 +141,17 @@ export class PuzzelGameState extends GameState{
 
 
     }
-
+    updateRating(){
+        let rating= localStorage.getItem("rating");
+        if (rating==undefined){
+            localStorage.setItem("rating","1000");
+            rating=1000;
+        }else{
+            rating=parseInt(rating)
+        }
+        document.getElementById("currentrating").textContent=`Jouw Score : ${rating}`;
+        this.plot.plotData([this.playedPuzzels.length,rating]);
+    }
     cordToMove(move){
         let oldcord=Coordinate.changeToCord(move.slice(0,2));
         let newcord=Coordinate.changeToCord(move.slice(2));
@@ -135,7 +173,7 @@ export class PuzzelGameState extends GameState{
     openEndGame(color) {
         setTimeout(() => {
             popup_end.classList.add("open-popup");
-            this.setEndPopupText("Je hebt de puzzel correct opgelost!", popup_end);
+            this.setEndPopupText(`Je hebt de puzzel opgelost met ${this.amountOfMistakes} fouten!`, popup_end);
         }, 500);
     }
 

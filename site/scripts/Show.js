@@ -5,8 +5,7 @@ import {PuzzelGameState} from "./PuzzelGameState.js";
 let canvas = document.getElementById("canvas");
 let undobutton = document.getElementById("undo_move");
 let restartbutton = document.getElementById("restart");
-let menuButton = document.getElementById("menuButton");
-let resignebutton = document.getElementById("resign");
+let resignbutton = document.getElementById("resign");
 
 
 let typeOFGame = document.getElementById("type_gamestate").textContent
@@ -28,6 +27,8 @@ if (localStorage.getItem('color1')) {
     kleur1 = localStorage.getItem('color1');
     kleur2 = localStorage.getItem('color2');
 }
+
+
 
 //default geluid instellen
 let sound = new Audio("sounds/standard.mp3");
@@ -75,9 +76,7 @@ restartEndButton.addEventListener("click", () => {
     gameState.restart(popup);
 });
 
-window.addEventListener("keypress", () => {
-    //gameState.fetchNewPuzzels()
-});
+
 
 window.addEventListener("resize", () => {
     gameState.draw.rescale(gameState.board)
@@ -86,7 +85,7 @@ window.addEventListener("load", () => {
     gameState.draw.rescale(gameState.board)
 });
 
-resignebutton.addEventListener("click", () => {
+resignbutton.addEventListener("click", () => {
     gameState.openPopup(popup_end);
     gameState.setEndPopupText(gameState, "resign", popup_end)
 })

@@ -7,15 +7,14 @@ import {popup_end} from "./Show.js";//ik weet niet zeker of dit mag en of dit de
 export class GameState{
     static ofsetPiece=5;
     static PlayedMoves=new MoveCacher();
-
-    constructor(canvas,length,colorA,colorB,colorC,colorD) {
+    constructor(canvas,length,colorA,colorB,colorC,colorD,          sound = new Audio("sounds/standard.mp3")) {
 
         this.botAdversairy=false;
         this.bodDifficulty=0;
         this.bot=undefined;
         this.canvasElement = canvas.parentElement;
         this.canvas=canvas;
-        this.lenght=length;
+
         this.square_size=this.lenght/8;
         this.ctx=canvas.getContext("2d");
         this.board= new Board(true);
@@ -27,9 +26,8 @@ export class GameState{
         this.colorC=colorC;
         this.colorD=colorD;
         this.playMove=()=>{};
-        this.sound = new Audio("./sounds/chess.mp3");
+        this.sound = sound;
     }
-
 
     drawGameboard(){
         this.drawBoard();
@@ -286,15 +284,20 @@ export class GameState{
     }
 
     rescale(){
-        this.length = this.canvasElement.offsetWidth
-        this.square_size = this.length/8;
-        this.canvas.width=this.length;
-        this.canvas.height=this.length;
+        length = this.canvasElement.offsetWidth
+        this.square_size = length/8;
+        this.canvas.width=length;
+        this.canvas.height=length;
 
         this.drawGameboard();
     }
 
     playSound(){
-        this.sound.play();
+        // this.sound = new Audio("sounds/chess.mp3");
+        this.sound.play()
+            .then(()=>{
+                console.log(`playing sound ${this.sound.src}`);
+            })
+            .catch(err => console.error(err));
     }
 }

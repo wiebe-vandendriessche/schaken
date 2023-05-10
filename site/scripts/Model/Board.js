@@ -47,6 +47,9 @@ class Board {
             return false;
         }
     }
+    possibleMovesPiece(piece){
+        return this.legalchecker.possibleMoves(piece,false);
+    }
 
 
     move(piece,cord){

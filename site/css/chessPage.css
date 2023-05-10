@@ -234,6 +234,16 @@ body, html {
 .row .title {
     height: 100px;
 }
+.ratingcomponents{
+    white-space: pre;
+    font-size: 1.75em;
+    text-align: center;
+}
+#elodiv{
+    white-space: pre;
+    font-size: 1.75em;
+    text-align: center;
+}
 
 
 

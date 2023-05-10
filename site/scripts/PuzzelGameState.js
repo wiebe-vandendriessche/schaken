@@ -1,6 +1,7 @@
 import {GameState} from "./GameState.js";
 import {Coordinate} from "./Coordinate.js";
 import {popup_end} from "./Show.js";
+import {FenConvertor} from "./FenConvertor.js";
 
 
 export class PuzzelGameState extends GameState{
@@ -21,8 +22,8 @@ export class PuzzelGameState extends GameState{
             .then((puzzelsstring) => this.selectPuzzel(puzzelsstring))
             .then((puzzels)=>{
                 this.selectFenOfPuzzel(puzzels);
-                this.board.setupPieces(this.currentPuzele);
-                this.drawGameboard();
+                FenConvertor.setupPieces(this.board,this.currentPuzele);
+                this.draw.drawGameboard(this.board);
                 this.puzzlemove();
 
             })
@@ -49,8 +50,8 @@ export class PuzzelGameState extends GameState{
     }
     play_move_Puzzle(event){
         let rect=this.canvas.getBoundingClientRect();
-        let x=Math.floor((event.clientX-rect.x)/this.square_size);
-        let y=Math.floor((event.clientY-rect.y)/this.square_size);
+        let x=Math.floor((event.clientX-rect.x)/this.draw.squareSize);
+        let y=Math.floor((event.clientY-rect.y)/this.draw.squareSize);
         let piece_clicked_now=this.board.getPieces()[y][x];
         let cord=new Coordinate(x,y);
         let color=this.board.colorToMove();
@@ -62,14 +63,14 @@ export class PuzzelGameState extends GameState{
                 this.playMove=()=>{};
                 this.puzzlemove();
             }
-            this.drawGameboard();
+            this.draw.drawGameboard(this.board);
             this.updatePlayedMoves(GameState.PlayedMoves.GetMoves())
             this.clicked=false;
             this.clicked_piece=0;
 
         }else{
             if(piece_clicked_now!==0 && piece_clicked_now.kleur===color){
-                this.drawPossible(this.board.possibleMoves(cord));
+                this.draw.drawPossible(this.board.possibleMoves(cord));
                 this.clicked_piece=piece_clicked_now
                 this.clicked=true;
             }
@@ -89,7 +90,7 @@ export class PuzzelGameState extends GameState{
                 this.board.move(piece,newcord);
                 this.board.amountOfMoves++;
                 GameState.PlayedMoves.Moveadd(newcord,this.board.amountOfMoves,this.board,this.clicked_piece);
-                this.drawGameboard();
+                this.draw.drawGameboard(this.board);
                 this.updatePlayedMoves(GameState.PlayedMoves.GetMoves());
                 this.clicked=false;
                 this.clicked_piece=0;

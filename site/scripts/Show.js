@@ -32,9 +32,9 @@ if (localStorage.getItem('color1')) {
 // juiste gamestate bepalen
 let gameState
 if (typeOFGame === "Speel") {
-    gameState = new GameState(canvas, 1000, kleur1, kleur2, "rgba(147,239,132,0.5)", "rgba(87,173,73,0.5)");
+    gameState = new GameState(canvas,kleur1, kleur2, "rgba(147,239,132,0.5)", "rgba(87,173,73,0.5)");
 } else {
-    gameState = new PuzzelGameState(canvas, 1000, kleur1, kleur2, "rgba(147,239,132,0.5)", "rgba(87,173,73,0.5)");
+    gameState = new PuzzelGameState(canvas,kleur1, kleur2, "rgba(147,239,132,0.5)", "rgba(87,173,73,0.5)");
 }
 
 export let popup_end = document.getElementById("end");
@@ -42,7 +42,7 @@ window.addEventListener("load", () => {
     gameState.openPopup(popup)
 });
 
-gameState.drawGameboard();
+gameState.draw.drawGameboard(gameState.board);
 undobutton.addEventListener("click",()=>{gameState.undoMove()});
 
 
@@ -72,10 +72,10 @@ window.addEventListener("keypress", () => {
 });
 
 window.addEventListener("resize", () => {
-    gameState.rescale()
+    gameState.draw.rescale(gameState.board)
 });
 window.addEventListener("load", () => {
-    gameState.rescale()
+    gameState.draw.rescale(gameState.board)
 });
 
 resignebutton.addEventListener("click", () => {

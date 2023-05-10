@@ -7,6 +7,7 @@ import {Queen} from "./Pieces/Queen.js";
 import {Rook} from "./Pieces/Rook.js";
 import {Coordinate} from "./Coordinate.js";
 import {LegalChecker} from "./LegalChecker.js";
+import {FenConvertor} from "./FenConvertor.js";
 
 export {Board};
 
@@ -23,32 +24,7 @@ class Board {
     }
 
     setupPieces(FEN){//krijgt een string van de vorm rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1 zie https://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation voor meer uitleg over FEN
-        let Information=FEN.split(" ");
-        let boardFEN=Information[0]
-        let y = 0;
-        let x = 0;
-
-        for(let i=0;i<boardFEN.length;i++){
-            let letterFen=boardFEN[i];
-            if (letterFen==="/"){
-                x=0;
-                y+=1;
-            }else if(isNaN(letterFen)){
-                this.board[y][x]=this.createPiece(letterFen,x,y);
-                x+=1;
-            }else {
-                let cijferFen=parseInt(letterFen);
-                for(let i=0;i<cijferFen;i++){
-                    this.board[y][x+i]=0;
-                }
-                x+=cijferFen;
-            }
-        }
-        let halveMove=0;
-        if(Information[1]==="b"){
-            halveMove+=1;
-        }
-        this.amountOfMoves=(parseInt(Information[5])-1)*2 + halveMove;
+        FenConvertor.setupPieces(this,FEN)
     }
 
     boardToFen(){

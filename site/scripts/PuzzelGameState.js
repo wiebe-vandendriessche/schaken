@@ -1,30 +1,29 @@
 import {GameState} from "./GameState.js";
 import {Coordinate} from "./Coordinate.js";
 import {popup_end} from "./Show.js";
+import {FenConvertor} from "./FenConvertor.js";
 
 
 export class PuzzelGameState extends GameState{
 
 
-    constructor(canvas,lenght,colorA,colorB,colorC,colorD) {
-        super(canvas,lenght,colorA,colorB,colorC,colorD);
+    constructor(canvas,colorA,colorB,colorC,colorD) {
+        super(canvas,colorA,colorB,colorC,colorD);
         this.currentPuzele=undefined;
         this.movesPuzzel=undefined;
         this.amountofPuzzels=100;
         this.playedPuzzels=[];
     }
 
-    // op dit moment is het efficient geschreven voor geheugen dat we nooit het hele document bij houden dat wil wel zeggen bij heel grote fetchopdrachten dat we dit meerdere keren gaan moeten doen.
 
     fetchNewPuzzels(){
         fetch(`https://645b63c3a8f9e4d6e767035c.mockapi.io/Puzzels/${this.selectPuzzel()}`)
             .then((response) => response.json())
             .then((puzzel)=>{
                 this.selectFenOfPuzzel(puzzel);
-                this.board.setupPieces(this.currentPuzele);
-                this.drawGameboard();
+                FenConvertor.setupPieces(this.board,this.currentPuzele);
+                this.draw.drawGameboard(this.board);
                 this.puzzlemove();
-
             })
 
     }
@@ -55,8 +54,8 @@ export class PuzzelGameState extends GameState{
     }
     play_move_Puzzle(event){
         let rect=this.canvas.getBoundingClientRect();
-        let x=Math.floor((event.clientX-rect.x)/this.square_size);
-        let y=Math.floor((event.clientY-rect.y)/this.square_size);
+        let x=Math.floor((event.clientX-rect.x)/this.draw.squareSize);
+        let y=Math.floor((event.clientY-rect.y)/this.draw.squareSize);
         let piece_clicked_now=this.board.getPieces()[y][x];
         let cord=new Coordinate(x,y);
         let color=this.board.colorToMove();
@@ -70,13 +69,16 @@ export class PuzzelGameState extends GameState{
                 this.puzzlemove();
                 this.updatePlayedMoves(GameState.PlayedMoves.GetMoves())
             }
-            this.drawGameboard();
+
+            this.draw.drawGameboard(this.board);
+
+
             this.clicked=false;
             this.clicked_piece=0;
 
         }else{
             if(piece_clicked_now!==0 && piece_clicked_now.kleur===color){
-                this.drawPossible(this.board.possibleMoves(cord));
+                this.draw.drawPossible(this.board.possibleMoves(cord));
                 this.clicked_piece=piece_clicked_now
                 this.clicked=true;
             }
@@ -91,12 +93,13 @@ export class PuzzelGameState extends GameState{
                 let cords=this.cordToMove(move)
                 let oldcord=cords[0];
                 let newcord=cords[1];
-
                 let piece=this.board.board[oldcord.y][oldcord.x];
                 this.board.move(piece,newcord);
                 this.board.amountOfMoves++;
                 GameState.PlayedMoves.Moveadd(newcord,this.board.amountOfMoves,this.board,this.clicked_piece);
-                this.drawGameboard();
+
+                this.draw.drawGameboard(this.board);
+
                 this.playSound();
                 this.updatePlayedMoves(GameState.PlayedMoves.GetMoves());
                 this.clicked=false;

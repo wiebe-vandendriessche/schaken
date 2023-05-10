@@ -10,7 +10,7 @@ self.addEventListener("message",(event)=>{
    let data=JSON.parse(event.data);
 
     let backdata;
-    console.log(data.type,data.type==="move")
+    //console.log(data.type,data.type==="move")
     if (data.type==="maakbot"){
 
         bot= new Bot(data.color,+data.depth);
@@ -249,7 +249,7 @@ export class Bot{
                     }
                 }
             }
-            console.log(mainEval, this.color, array);
+            //console.log(mainEval, this.color, array);
             return array;
     }
 }

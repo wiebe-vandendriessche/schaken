@@ -11,7 +11,7 @@ let length = 680;
 let c;
 console.log("drawing");
 c = new GameState(CanvasPreview, length, colorA, colorB, colorC, colorD);
-c.drawBoard();
+c.draw.drawBoard();
 
 
 

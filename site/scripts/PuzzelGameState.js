@@ -10,14 +10,14 @@ export class PuzzelGameState extends GameState{
         super(canvas,lenght,colorA,colorB,colorC,colorD);
         this.currentPuzele=undefined;
         this.movesPuzzel=undefined;
-        this.amountofPuzzels=250;µ
-        this.playedPuzzels
+        this.amountofPuzzels=100;
+        this.playedPuzzels=[];
     }
 
     // op dit moment is het efficient geschreven voor geheugen dat we nooit het hele document bij houden dat wil wel zeggen bij heel grote fetchopdrachten dat we dit meerdere keren gaan moeten doen.
 
     fetchNewPuzzels(){
-        fetch(`http://localhost:3000/puzzels/${this.selectPuzzel()}`)
+        fetch(`https://645b63c3a8f9e4d6e767035c.mockapi.io/Puzzels/${this.selectPuzzel()}`)
             .then((response) => response.json())
             .then((puzzel)=>{
                 this.selectFenOfPuzzel(puzzel);
@@ -30,7 +30,15 @@ export class PuzzelGameState extends GameState{
     }
 
     selectPuzzel(){
-        return Math.floor(Math.random()*this.amountofPuzzels);
+        let index=Math.floor(Math.random()*this.amountofPuzzels);//selecteer een puzzelid
+        if (this.playedPuzzels.length>=this.amountofPuzzels){
+            this.playedPuzzels=[];// maakt de played puzzels leeg als ze alemaal gespeeld;
+        }
+        while(this.playedPuzzels.some(id=>id==index)){
+            index=Math.floor(Math.random()*this.amountofPuzzels);
+        }
+        this.playedPuzzels.push(index);
+        return index;
 
     }
 

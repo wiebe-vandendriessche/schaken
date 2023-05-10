@@ -19,3 +19,4 @@ Datum,Start,Einde,Plaats,Omschrijving
 26/04/23,09:30,12:30,Contacturen,Het herschalen van het canvas implementeren
 03/05/23,09:30,12:30,Contacturen,Minimax vervangen door Negamax voor minder duplicate code
 08/05/23,20:30,23:15,Thuis,Code lezen + geluid toevoegen + code mergen
+10/05/23,09:30,12:30,Contacturen, Geluid kunnen aan en uitzetten en het geluid kunnen kiezen

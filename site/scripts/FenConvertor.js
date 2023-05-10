@@ -120,8 +120,8 @@ export class FenConvertor{
                     pawn.moved=true;
                 }
             }else {
-                if (y===1){
-                    pawn.moved=false;
+                if (y!==1){
+                    pawn.moved=true;
                 }
             }
             return  pawn;

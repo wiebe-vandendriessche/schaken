@@ -55,7 +55,8 @@ body.dark{
     width: 260px;
     background: var(--sidebar-color);
     z-index: 100;
-    transition: all 0.5s ease;
+    transition: all 0.2s ease;
+
 }
 .sidebar.close{
     width: 78px;
@@ -109,6 +110,7 @@ body.dark{
 .sidebar .nav-links li:hover{
     background: var(--primary-color-light);
 }
+
 .sidebar .nav-links li .icon-link{
     display: flex;
     align-items: center;
@@ -178,6 +180,7 @@ body.dark{
 }
 .sidebar .nav-links li .sub-menu a:hover{
     opacity: 1;
+    transform: scale(105%);
 }
 .sidebar.close .nav-links li .sub-menu{
     position: absolute;
@@ -223,7 +226,7 @@ body.dark{
     justify-content: space-between;
     background: var(--primary-color-light);
     padding: 12px 0;
-    transition: all 0.5s ease;
+    transition: all 0.2s ease;
 }
 .sidebar.close .profile-details{
     background: none;
@@ -269,7 +272,7 @@ body.dark{
     height: 100vh;
     left: 260px;
     width: calc(100% - 260px);
-    transition: all 0.5s ease;
+    transition: all 0.3s ease;
     padding: 12px;
 }
 .sidebar.close ~ .home-section{
@@ -280,6 +283,12 @@ body.dark{
     display: flex;
     align-items: center;
     flex-wrap: wrap;
+    width: 150px !important;
+    height: 50px;
+    margin-left: 20px;
+    background: var(--sidebar-color);
+    transition: all 0.2s ease;
+
 }
 .home-section .home-content .bx-menu,
 .home-section .home-content .text
@@ -380,4 +389,20 @@ body.dark .mode .sun-moon i.moon{
 
 body.dark .switch::before{
     left: 20px;
+}
+
+.bxs-chess{
+    transition: transform 0.7s ease-in-out;
+}
+
+.bxs-chess:hover{
+    transform: rotate(360deg);
+}
+
+.bx-menu{
+    transition: transform 0.4s ease-in-out;
+}
+
+.bx-menu:hover{
+    transform: scale(120%);
 }

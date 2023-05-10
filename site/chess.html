@@ -129,9 +129,11 @@
 
 
     <section class="home-section">
-        <div class="home-content" class="row">
-            <i class='bx bx-menu' onclick="SidebarToggle()"></i>
-            <span class="text">Menu</span>
+        <div class="row">
+            <div class="home-content">
+                <i class='bx bx-menu' onclick="SidebarToggle()"></i>
+                <span class="text">Menu</span>
+            </div>
         </div>
         <div class="row">
             <div class="row title">
@@ -210,7 +212,7 @@
             <img src="picture/bot.jpg" alt="bot">
             <p>you lost</p>
             <button type="button" id="close_popup_end">Speel Opnieuw</button>
-            <button type="button" id="close_popup_puzzels">Ga naar Puzzels</button>
+            <button type="button" id="close_popup_puzzels" onclick = "window.location.href='chessPuzzel.html';">Ga naar Puzzels</button>
         </div>
 
     </section>

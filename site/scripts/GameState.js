@@ -240,9 +240,8 @@ export class GameState{
 
 
     playSound(){
-        // this.sound = new Audio("sounds/chess.mp3");
-        this.sound.play()
-
+        console.log(`soundsource: ${this.sound.src}`);
+        this.sound.play();
     }
 
 

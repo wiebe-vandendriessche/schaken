@@ -68,9 +68,9 @@ export class PuzzelGameState extends GameState{
                 this.playMove=()=>{};
                 this.playSound();
                 this.puzzlemove();
+                this.updatePlayedMoves(GameState.PlayedMoves.GetMoves())
             }
             this.drawGameboard();
-            this.updatePlayedMoves(GameState.PlayedMoves.GetMoves())
             this.clicked=false;
             this.clicked_piece=0;
 

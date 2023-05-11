@@ -5,8 +5,7 @@ import {PuzzelGameState} from "./PuzzelGameState.js";
 let canvas = document.getElementById("canvas");
 let undobutton = document.getElementById("undo_move");
 let restartbutton = document.getElementById("restart");
-let menuButton = document.getElementById("menuButton");
-let resignebutton = document.getElementById("resign");
+let resignbutton = document.getElementById("resign");
 
 
 let typeOFGame = document.getElementById("type_gamestate").textContent
@@ -29,6 +28,8 @@ if (localStorage.getItem('color1')) {
     kleur2 = localStorage.getItem('color2');
 }
 
+
+
 //default geluid instellen
 let sound = new Audio("sounds/standard.mp3");
 if(localStorage.getItem("sound")){
@@ -41,9 +42,9 @@ if(localStorage.getItem("sound")){
 let gameState
 if (typeOFGame === "Speel") {
 
-    gameState = new GameStatePlay(canvas,kleur1, kleur2, "rgba(147,239,132,0.5)", "rgba(87,173,73,0.5)");
+    gameState = new GameStatePlay(canvas,kleur1, kleur2, "rgba(147,239,132,0.5)", "rgba(87,173,73,0.5)", sound);
 } else {
-    gameState = new PuzzelGameState(canvas, kleur1, kleur2, "rgba(147,239,132,0.5)", "rgba(87,173,73,0.5)");
+    gameState = new PuzzelGameState(canvas, kleur1, kleur2, "rgba(147,239,132,0.5)", "rgba(87,173,73,0.5)", sound);
 }
 
 export let popup_end = document.getElementById("end");
@@ -76,9 +77,7 @@ restartEndButton.addEventListener("click", () => {
     gameState.restart(popup);
 });
 
-window.addEventListener("keypress", () => {
-    //gameState.fetchNewPuzzels()
-});
+
 
 window.addEventListener("resize", () => {
     gameState.draw.rescale(gameState.board)
@@ -87,7 +86,7 @@ window.addEventListener("load", () => {
     gameState.draw.rescale(gameState.board)
 });
 
-resignebutton.addEventListener("click", () => {
+resignbutton.addEventListener("click", () => {
     gameState.openPopup(popup_end);
     gameState.setEndPopupText(gameState, "resign", popup_end)
 })

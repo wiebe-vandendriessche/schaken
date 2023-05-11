@@ -11,8 +11,12 @@ import {AGamestate} from "./AGamestate.js";
 export class GameStatePlay extends AGamestate{
 
 
+
     constructor(canvas,colorA,colorB,colorC,colorD,          sound = new Audio("sounds/standard.mp3")) {
         super(canvas,colorA,colorB,colorC,colorD,sound)
+        this.botAdversairy=false;
+        this.bodDifficulty=0;
+        this.bot=undefined;
     }
 
 

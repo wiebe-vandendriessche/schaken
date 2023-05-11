@@ -6,7 +6,7 @@ import {Pawn} from "./Pieces/Pawn.js";
 import {Queen} from "./Pieces/Queen.js";
 import {Rook} from "./Pieces/Rook.js";
 import {Coordinate} from "../Coordinate.js";
-import {LegalChecker} from "../LegalChecker.js";
+import {LegalChecker} from "./LegalChecker.js";
 import {FenConvertor} from "../FenConvertor.js";
 
 
@@ -28,98 +28,6 @@ class Board {
         FenConvertor.setupPieces(this,FEN)
     }
 
-    boardToFen(){
-        let Fen;
-        let castelstring="";
-        let witheKingMove=false;
-        let BlackKingMove=false;
-        for(let i=0;i<8;i++){
-            let count=0;
-
-            for(let j=0;j<8;j++){
-                let piece=this.board[i][j]
-                if(piece===0){
-                    count++;
-                }else{
-                    let firstletter=piece.constructor.name[0];
-                    if(firstletter==="R" || firstletter==="r"){
-                        if(!piece.moved){
-                            if(piece.pos.x===7){
-                                castelstring+=piece.kleur?"q":"Q"
-                            }else{
-                                castelstring+=piece.kleur?"k":"K"
-                            }
-
-                        }
-                    }
-                    if(firstletter==="K" || firstletter==="k"){
-                        if(piece.kleur && piece.moved){
-                            witheKingMove=true;
-                        }else if(piece.moved){//je moet niet meer cheken op kleur wat je weet al dat het niet wit is
-                            BlackKingMove=true;
-                        }
-                    }
-                    if(!piece.kleur){
-                       firstletter=firstletter.toLowerCase()
-                    }
-                    if(count!==0){
-                        Fen+=`${count}${firstletter}`
-                        count=0;
-                    }else{
-                        Fen+=`${firstletter}`
-                    }
-                }
-                if(j===7 && count!==0){
-                    Fen+=`${count}`
-                }
-            }
-            if(i<7){
-                Fen+="/";
-            }
-
-        }
-        if(witheKingMove){
-            castelstring=castelstring.replace("K","");
-            castelstring=castelstring.replace("Q","");
-        }
-        if(BlackKingMove){
-            castelstring=castelstring.replace("k","");
-            castelstring=castelstring.replace("q","");
-        }
-
-        Fen +=this.amountOfMoves%2!==0?" b ":" w "
-        if(castelstring===""){
-            Fen += "- ";//geen enkele rokade is nog mogelijk
-        }else{
-            Fen += `${castelstring} `;
-        }
-
-        Fen += "- "; //hier komen normaal de posites waar enpassent mogelijk is
-        Fen +=`${this.amountOfMoves%2} `;
-        Fen +=`${Math.floor(this.amountOfMoves/2)}`;
-        return Fen
-    }
-
-    createPiece(letter, x, y){
-        let color= letter===letter.toUpperCase()
-        letter=letter.toUpperCase()
-        if (letter==="R"){
-            return new Rook(new Coordinate(x,y),color,true);
-        }else if (letter==="N"){
-            return new Knight(new Coordinate(x,y),color,true);
-        }else if (letter==="P"){
-            return new Pawn(new Coordinate(x,y),color,true);
-        }else if (letter==="B"){
-            return new Bisshop(new Coordinate(x,y),color,true);
-        }else if (letter==="Q"){
-            return new Queen(new Coordinate(x,y),color,true);
-        }else if (letter==="K") {
-            return new King(new Coordinate(x,y),color,true);
-        }else{
-            return null//eigenlijk hier exeption opwerpen om aan te tonen dat de input fout is -> doe dit dan!!
-        }
-    }
-
     possibleMoves(cord) {
         let piece = this.board[cord.y][cord.x];
         return this.legalchecker.possibleMoves(piece,false);
@@ -138,6 +46,9 @@ class Board {
         }else {
             return false;
         }
+    }
+    possibleMovesPiece(piece){
+        return this.legalchecker.possibleMoves(piece,false);
     }
 
 

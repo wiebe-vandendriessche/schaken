@@ -12,11 +12,6 @@ export class AGamestate {
 
     constructor(canvas,colorA,colorB,colorC,colorD,          sound = new Audio("sounds/standard.mp3")) {
 
-
-        this.botAdversairy=false;
-        this.bodDifficulty=0;
-        this.bot=undefined;
-
         this.draw=new Draw(canvas,colorA,colorB,colorC,colorD,5);
 
         this.canvas=canvas;

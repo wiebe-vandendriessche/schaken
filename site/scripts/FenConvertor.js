@@ -1,3 +1,11 @@
+import {Rook} from "./Model/Pieces/Rook.js";
+import {Coordinate} from "./Coordinate.js";
+import {Knight} from "./Model/Pieces/Knight.js";
+import {Pawn} from "./Model/Pieces/Pawn.js";
+import {Bisshop} from "./Model/Pieces/Bisshop.js";
+import {Queen} from "./Model/Pieces/Queen.js";
+import {King} from "./Model/Pieces/King.js";
+
 export class FenConvertor{
     static setupPieces(board,FEN){//krijgt een string van de vorm rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1 zie https://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation voor meer uitleg over FEN
         let Information=FEN.split(" ");
@@ -11,7 +19,7 @@ export class FenConvertor{
                 x=0;
                 y+=1;
             }else if(isNaN(letterFen)){
-                board.board[y][x]=board.createPiece(letterFen,x,y);
+                board.board[y][x]=this.createPiece(letterFen,x,y);
                 x+=1;
             }else {
                 let cijferFen=parseInt(letterFen);
@@ -97,5 +105,32 @@ export class FenConvertor{
         Fen +=`${board.amountOfMoves%2} `;
         Fen +=`${Math.floor(board.amountOfMoves/2)}`;
         return Fen
+    }
+     static createPiece(letter, x, y){
+        let color= letter===letter.toUpperCase()
+        letter=letter.toUpperCase()
+        if (letter==="R"){
+            return new Rook(new Coordinate(x,y),color,true);
+        }else if (letter==="N"){
+            return new Knight(new Coordinate(x,y),color,true);
+        }else if (letter==="P"){
+            let pawn= new Pawn(new Coordinate(x,y),color,true);
+            if (color){
+                if (y!==6){
+                    pawn.moved=true;
+                }
+            }else {
+                if (y!==1){
+                    pawn.moved=true;
+                }
+            }
+            return  pawn;
+        }else if (letter==="B"){
+            return new Bisshop(new Coordinate(x,y),color,true);
+        }else if (letter==="Q"){
+            return new Queen(new Coordinate(x,y),color,true);
+        }else  {
+            return new King(new Coordinate(x,y),color,true);
+        }
     }
 }

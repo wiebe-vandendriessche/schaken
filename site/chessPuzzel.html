@@ -12,6 +12,9 @@
     <!--boxicons-->
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
 
+    <!--grafiek-->
+    <script defer src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+    <script defer src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
     <!--canvas-->
     <script type="module" src="scripts/Show.js"></script>
 
@@ -22,6 +25,7 @@
     <!--bootstrap-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+
 </head>
 <body onload="OnloadMode()">
 
@@ -149,6 +153,13 @@
                         <div id="pl_bot"><h3>Puzzel</h3></div>
                         <i class='bx bx-user player' id="player2"></i>
                     </div>
+                    <div class="rating">
+                        <div class="ratingcomponents" id="puz_rating" >Moeilijkheid puzzel :</div>
+                        <div class="ratingcomponents" id="currentrating">Jouw Score :</div>
+                    </div>
+                    <div id="plot">
+
+                    </div>
                     <div id="move_title">Schaakzetten</div>
                     <div id="card_height">
                         <div class="scroll" id="playedMoves"></div>
@@ -203,8 +214,9 @@
         <div class="popup" id="end">
             <img src="picture/bot.jpg" alt="bot">
             <p>you lost</p>
+            <div id="elodiv"> Jouw rating:<br>oldrating+newrating</div>
             <button type="button" id="close_popup_end">Speel Opnieuw</button>
-            <button type="button" id="close_popup_puzzels">Ga naar Puzzels</button>
+            <button type="button" id="close_popup_puzzels" onclick = "window.location.href='chess.html';">Ga naar Spelen</button>
         </div>
 
     </section>

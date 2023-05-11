@@ -1,4 +1,4 @@
-import {GameState} from "./GameState.js";
+import {GameStatePlay} from "./GameStatePlay.js";
 import {PuzzelGameState} from "./PuzzelGameState.js";
 
 
@@ -41,7 +41,8 @@ if(localStorage.getItem("sound")){
 // juiste gamestate bepalen
 let gameState
 if (typeOFGame === "Speel") {
-    gameState = new GameState(canvas,kleur1, kleur2, "rgba(147,239,132,0.5)", "rgba(87,173,73,0.5)", sound);
+
+    gameState = new GameStatePlay(canvas,kleur1, kleur2, "rgba(147,239,132,0.5)", "rgba(87,173,73,0.5)", sound);
 } else {
     gameState = new PuzzelGameState(canvas, kleur1, kleur2, "rgba(147,239,132,0.5)", "rgba(87,173,73,0.5)", sound);
 }

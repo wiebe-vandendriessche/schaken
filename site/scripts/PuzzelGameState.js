@@ -1,17 +1,19 @@
-import {GameState} from "./GameState.js";
+import {GameStatePlay} from "./GameStatePlay.js";
 import {Coordinate} from "./Coordinate.js";
 import {popup_end} from "./Show.js";
 import {FenConvertor} from "./FenConvertor.js";
 import {Plot} from "./PlotElo.js";
+import {AGamestate} from "./AGamestate.js";
 
 
-export class PuzzelGameState extends GameState{
+export class PuzzelGameState extends GameStatePlay{
 
 
     constructor(canvas,colorA,colorB,colorC,colorD) {
         super(canvas,colorA,colorB,colorC,colorD);
         this.currentPuzzel=undefined;
         this.movesPuzzel=undefined;
+
         this.amountofPuzzels=100;
         this.playedPuzzels=[];
         this.soundwrong=new Audio("../sounds/wrong.mp3");
@@ -20,6 +22,7 @@ export class PuzzelGameState extends GameState{
         this.plot=new Plot("Vooruitgang");
 
         this.updateRating();
+
     }
 
 
@@ -62,43 +65,29 @@ export class PuzzelGameState extends GameState{
 
     closePopup(popup){
         this.fetchNewPuzzels();
-        this.playMove=this.play_move_Puzzle;
+        this.playMoveType=(color,cord)=>{this.playPuzzelInPlay(color,cord)};
+        this.playMove=this.play;
         this.close(popup);
     }
-    play_move_Puzzle(event){
-        let rect=this.canvas.getBoundingClientRect();
-        let x=Math.floor((event.clientX-rect.x)/this.draw.squareSize);
-        let y=Math.floor((event.clientY-rect.y)/this.draw.squareSize);
-        let piece_clicked_now=this.board.getPieces()[y][x];
-        let cord=new Coordinate(x,y);
-        let color=this.board.colorToMove();
-        if(this.clicked){
-            if(this.checkMoves(this.clicked_piece.pos,cord)) {
-                this.board.move(this.clicked_piece,cord)
-                this.board.amountOfMoves++;
-                GameState.PlayedMoves.Moveadd(cord, this.board.amountOfMoves, this.board, this.clicked_piece);
-                this.playMove=()=>{};
-                this.playSound();
-                this.puzzlemove();
-                this.updatePlayedMoves(GameState.PlayedMoves.GetMoves())
-            }else{
-                if (this.genuineClick(this.clicked_piece,cord)) { // kijken of player niet gwn een andere pion aanklikt of misklikt
-                    console.log("fout");
-                    this.soundwrong.play();
-                    this.possibleScore -= 5;
-                    this.amountOfMistakes += 1;
-                }
-            }
-            this.draw.drawGameboard(this.board);
-            this.clicked=false;
-            this.clicked_piece=0;
+
+    playPuzzelInPlay(color,cord){
+        if(this.checkMoves(this.clicked_piece.pos,cord)) {
+            this.board.move(this.clicked_piece,cord)
+            this.board.amountOfMoves++;
+            AGamestate.PlayedMoves.Moveadd(cord, this.board.amountOfMoves, this.board, this.clicked_piece);
+            this.playMove=()=>{};
+            this.playSound();
+            this.puzzlemove();
+            this.updatePlayedMoves(AGamestate.PlayedMoves.GetMoves())
         }else{
-            if(piece_clicked_now!==0 && piece_clicked_now.kleur===color){
-                this.draw.drawPossible(this.board.possibleMoves(cord));
-                this.clicked_piece=piece_clicked_now
-                this.clicked=true;
+            if (this.genuineClick(this.clicked_piece,cord)) { // kijken of player niet gwn een andere pion aanklikt of misklikt
+                console.log("fout");
+                this.soundwrong.play();
+                this.possibleScore -= 5;
+                this.amountOfMistakes += 1;
             }
         }
+        this.draw.drawGameboard(this.board);
     }
     genuineClick(piece,cord){
         if (this.board.possibleMovesPiece(piece).some(cordc=>(cordc.x===cord.x && cordc.y===cord.y))){
@@ -117,29 +106,27 @@ export class PuzzelGameState extends GameState{
                 let piece=this.board.board[oldcord.y][oldcord.x];
                 this.board.move(piece,newcord);
                 this.board.amountOfMoves++;
-                GameState.PlayedMoves.Moveadd(newcord,this.board.amountOfMoves,this.board,this.clicked_piece);
+                GameStatePlay.PlayedMoves.Moveadd(newcord,this.board.amountOfMoves,this.board,this.clicked_piece);
 
                 this.draw.drawGameboard(this.board);
 
                 this.playSound();
-                this.updatePlayedMoves(GameState.PlayedMoves.GetMoves());
+                this.updatePlayedMoves(GameStatePlay.PlayedMoves.GetMoves());
                 this.clicked=false;
                 this.clicked_piece=0;
-                this.playMove=this.play_move_Puzzle;
+                this.playMove=this.play;
             }else{
                 let ratingelement=document.getElementById("puz_rating");
                 ratingelement.textContent=`Moeilijkheid puzzel : `;
                 let rating=parseInt(localStorage.getItem("rating"));
-                this.possibleScore=Math.max(Math.abs(Math.round(this.possibleScore)),-20);
-                document.getElementById("elodiv").textContent=` Jouw Score:\n${rating} ${this.possibleScore>=0?"+":"-"} ${this.possibleScore}`;
+                this.possibleScore=Math.max(Math.round(this.possibleScore),-20);
+                document.getElementById("elodiv").textContent=` Jouw Score:\n${rating} ${this.possibleScore}`;
                 localStorage.setItem("rating",""+(rating+this.possibleScore));
                 this.updateRating();
                 this.openEndGame(true);
             }
 
         }, 500);
-
-
     }
     updateRating(){
         let rating= localStorage.getItem("rating");

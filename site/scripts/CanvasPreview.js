@@ -1,4 +1,4 @@
-import {GameState} from "./GameState.js";
+import {GameStatePlay} from "./GameStatePlay.js";
 
 let CanvasPreview = document.getElementById("canvas-preview");
 
@@ -10,7 +10,7 @@ let length = 680;
 
 let c;
 console.log("drawing");
-c = new GameState(CanvasPreview, length, colorA, colorB, colorC, colorD);
+c = new GameStatePlay(CanvasPreview, length, colorA, colorB, colorC, colorD);
 c.draw.drawBoard();
 
 

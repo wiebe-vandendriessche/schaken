@@ -1,10 +1,10 @@
-import {GameState} from "./GameState.js";
+import {GameStatePlay} from "./GameStatePlay.js";
 import {Coordinate} from "./Coordinate.js";
 import {popup_end} from "./Show.js";
 import {FenConvertor} from "./FenConvertor.js";
 
 
-export class PuzzelGameState extends GameState{
+export class PuzzelGameState extends GameStatePlay{
 
 
     constructor(canvas,lenght,colorA,colorB,colorC,colorD) {
@@ -12,7 +12,7 @@ export class PuzzelGameState extends GameState{
         this.currentPuzele=undefined;
         this.movesPuzzel=undefined;
         this.amountofPuzzels=250;µ
-        this.playedPuzzels
+        this.playedPuzzels;
     }
 
     // op dit moment is het efficient geschreven voor geheugen dat we nooit het hele document bij houden dat wil wel zeggen bij heel grote fetchopdrachten dat we dit meerdere keren gaan moeten doen.
@@ -45,37 +45,21 @@ export class PuzzelGameState extends GameState{
 
     closePopup(popup){
         this.fetchNewPuzzels();
-        this.playMove=this.play_move_Puzzle;
+        this.playMoveType=(color,cord)=>{this.playPuzzelInPlay(color,cord)};
+        this.playMove=this.play;
         this.close(popup);
     }
-    play_move_Puzzle(event){
-        let rect=this.canvas.getBoundingClientRect();
-        let x=Math.floor((event.clientX-rect.x)/this.draw.squareSize);
-        let y=Math.floor((event.clientY-rect.y)/this.draw.squareSize);
-        let piece_clicked_now=this.board.getPieces()[y][x];
-        let cord=new Coordinate(x,y);
-        let color=this.board.colorToMove();
-        if(this.clicked){
-            if(this.checkMoves(this.clicked_piece.pos,cord)) {
-                this.board.move(this.clicked_piece,cord)
-                this.board.amountOfMoves++;
-                GameState.PlayedMoves.Moveadd(cord, this.board.amountOfMoves, this.board, this.clicked_piece);
-                this.playMove=()=>{};
-                this.playSound();
-                this.puzzlemove();
-            }
-            this.draw.drawGameboard(this.board);
-            this.updatePlayedMoves(GameState.PlayedMoves.GetMoves())
-            this.clicked=false;
-            this.clicked_piece=0;
-
-        }else{
-            if(piece_clicked_now!==0 && piece_clicked_now.kleur===color){
-                this.draw.drawPossible(this.board.possibleMoves(cord));
-                this.clicked_piece=piece_clicked_now
-                this.clicked=true;
-            }
+    playPuzzelInPlay(color,cord){
+        if(this.checkMoves(this.clicked_piece.pos,cord)) {
+            this.board.move(this.clicked_piece,cord)
+            this.board.amountOfMoves++;
+            GameStatePlay.PlayedMoves.Moveadd(cord, this.board.amountOfMoves, this.board, this.clicked_piece);
+            this.playMove=()=>{};
+            this.playSound();
+            this.puzzlemove();
         }
+        this.draw.drawGameboard(this.board);
+        this.updatePlayedMoves(GameStatePlay.PlayedMoves.GetMoves())
     }
 
     puzzlemove(){
@@ -90,22 +74,20 @@ export class PuzzelGameState extends GameState{
                 let piece=this.board.board[oldcord.y][oldcord.x];
                 this.board.move(piece,newcord);
                 this.board.amountOfMoves++;
-                GameState.PlayedMoves.Moveadd(newcord,this.board.amountOfMoves,this.board,this.clicked_piece);
+                GameStatePlay.PlayedMoves.Moveadd(newcord,this.board.amountOfMoves,this.board,this.clicked_piece);
 
                 this.draw.drawGameboard(this.board);
 
                 this.playSound();
-                this.updatePlayedMoves(GameState.PlayedMoves.GetMoves());
+                this.updatePlayedMoves(GameStatePlay.PlayedMoves.GetMoves());
                 this.clicked=false;
                 this.clicked_piece=0;
-                this.playMove=this.play_move_Puzzle;
+                this.playMove=this.play;
             }else{
                 this.openEndGame(true);
             }
 
         }, 500);
-
-
     }
 
     cordToMove(move){

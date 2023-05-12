@@ -71,16 +71,16 @@ export class PuzzelGameState extends GameStatePlay{
     }
 
     playPuzzelInPlay(color,cord){
-        if(this.checkMoves(this.clicked_piece.pos,cord)) {
-            this.board.move(this.clicked_piece,cord)
+        if(this.checkMoves(this.clickedPiece.pos,cord)) {
+            this.board.move(this.clickedPiece,cord)
             this.board.amountOfMoves++;
-            AGamestate.PlayedMoves.Moveadd(cord, this.board.amountOfMoves, this.board, this.clicked_piece);
+            AGamestate.PlayedMoves.Moveadd(cord, this.board.amountOfMoves, this.board, this.clickedPiece);
             this.playMove=()=>{};
             this.playSound();
             this.puzzlemove();
             this.updatePlayedMoves(AGamestate.PlayedMoves.GetMoves())
         }else{
-            if (this.genuineClick(this.clicked_piece,cord)) { // kijken of player niet gwn een andere pion aanklikt of misklikt
+            if (this.genuineClick(this.clickedPiece,cord)) { // kijken of player niet gwn een andere pion aanklikt of misklikt
                 console.log("fout");
                 this.soundwrong.play();
                 this.possibleScore -= 5;
@@ -106,14 +106,14 @@ export class PuzzelGameState extends GameStatePlay{
                 let piece=this.board.board[oldcord.y][oldcord.x];
                 this.board.move(piece,newcord);
                 this.board.amountOfMoves++;
-                GameStatePlay.PlayedMoves.Moveadd(newcord,this.board.amountOfMoves,this.board,this.clicked_piece);
+                GameStatePlay.PlayedMoves.Moveadd(newcord,this.board.amountOfMoves,this.board,this.clickedPiece);
 
                 this.draw.drawGameboard(this.board);
 
                 this.playSound();
                 this.updatePlayedMoves(GameStatePlay.PlayedMoves.GetMoves());
                 this.clicked=false;
-                this.clicked_piece=0;
+                this.clickedPiece=0;
                 this.playMove=this.play;
             }else{
                 let ratingelement=document.getElementById("puz_rating");

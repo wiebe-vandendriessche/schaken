@@ -2,11 +2,9 @@ import {Knight} from "./Model/Pieces/Knight.js";
 
 export {MoveCacher};
 class MoveCacher{
-
-
     constructor(){
         this.moves="";
-        this.alleBoards=[];
+        this.allBoards=[];
 
     }
     Moveadd (NewCord,amountOfMoves,board,piece){
@@ -19,7 +17,7 @@ class MoveCacher{
         }
 
 
-        this.alleBoards.push(board.clone(true));
+        this.allBoards.push(board.clone(true));
         if(amountOfMoves % 2===1){
             let number=Math.ceil(amountOfMoves/2)
             let ending_spatie="";//ending spatie is nodig voor als er een getal kleiner dan tien als zetnummer is om toch altijd even lange strings te krijgen
@@ -36,29 +34,17 @@ class MoveCacher{
     }
 
     ReturnToPreviousMoves(){
-        let len=this.alleBoards.length;
+        let len=this.allBoards.length;
         if(len>=1){
             this.MoveRemove();
-            this.alleBoards.pop();
-            return this.alleBoards[len - 2].clone(true);//moet een clone zijn om geen referentie naar een bord bij te houden
+            this.allBoards.pop();
+            return this.allBoards[len - 2].clone(true);//moet een clone zijn om geen referentie naar een bord bij te houden
         }else{
-            return this.alleBoards[len-1];
+            return this.allBoards[len-1];
         }
     }
     setStart(board){
-        this.alleBoards.push(board.clone(true));
-    }
-    clone(){
-        let clone=new MoveCacher();
-        clone.setAlleBoards(this.alleBoards)//dit is geen diepe copy van de array maar we smijten het oude object weg waardoor het eigenlijk niet echt een clone is maar eerder een vervanging
-        clone.setMoves(this.moves)//idem setAlleBoards
-        return clone
-    }
-    setMoves(moves){
-        this.moves=moves;
-    }
-    setAlleBoards(alleboards){
-        this.alleBoards=alleboards;
+        this.allBoards.push(board.clone(true));
     }
 
     GetMoves (){
@@ -66,6 +52,6 @@ class MoveCacher{
     }
     reset(){
         this.moves="";
-        this.alleBoards=[];
+        this.allBoards=[];
     }
 }

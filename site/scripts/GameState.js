@@ -65,7 +65,7 @@ export class GameState{
         this.clicked=false;
         this.draw.drawGameboard(this.board);
         this.updatePlayedMoves("");
-        GameState.PlayedMoves.alleBoards.push(new Board(true));
+        GameState.PlayedMoves.allBoards.push(new Board(true));
         this.playMove=(event)=>{};
         this.openPopup(popup)
     }

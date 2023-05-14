@@ -25,3 +25,6 @@ Datum,Start,Einde,Plaats,Omschrijving
 3/05/2023,9:30,12:30,Contacturen,Merge gdn en testing
 6/05/2023,21:00,22:30,Thuis, Alle nieuwe code bekijken verbteren
 7/05/2023,9:00,11:20,Thuis, canvas preview maken voor thema selector and bugfix voor responsive canvas
+9/05/2023,21:00,23:00,Thuis,JSON_server opzetten voor mockapi en puzzeldatabase
+10/05/2023,9:30,12:30,Contacturen,Json-server omzetten naar een mockapi en niet meer werken met mock en puzzelselector maken
+10/05/2023,14:00,19:00,Thuis, Puntensysteem maken voor puzzels met grafiek

@@ -1,5 +1,5 @@
 import {APiece} from "./APiece.js";
-import {Coordinate} from "../../View/Coordinate.js";
+import {Coordinate} from "../Coordinate.js";
 
 export {Queen}
 class Queen extends APiece{

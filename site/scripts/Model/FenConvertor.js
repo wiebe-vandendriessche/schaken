@@ -1,5 +1,5 @@
 import {Rook} from "./Pieces/Rook.js";
-import {Coordinate} from "../View/Coordinate.js";
+import {Coordinate} from "./Coordinate.js";
 import {Knight} from "./Pieces/Knight.js";
 import {Pawn} from "./Pieces/Pawn.js";
 import {Bisshop} from "./Pieces/Bisshop.js";

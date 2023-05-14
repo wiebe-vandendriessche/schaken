@@ -1,6 +1,7 @@
-
 import {Evaluation} from "./Evaluation.js";
 import {Board} from "../Board.js";
+import {Coordinate} from "../Coordinate.js";
+
 const board= new Board(true);
 let bot;
 console.log("Web worker script loaded successfully");
@@ -33,9 +34,7 @@ self.addEventListener("message",(event)=>{
 
 function move(){
     let [cord1,cord2] =bot.nextMove(board);
-
     board.move(board.board[cord1.y][cord1.x],cord2);
-
     let backdata= {
         "cord1": cord1,
         "cord2": cord2
@@ -43,23 +42,22 @@ function move(){
     return backdata;
 }
 
-
 export class Bot{
     constructor(color, depth) {
         this.color = color;
         this.depth = depth;
         this.evaluation = new Evaluation();
-        // this.counter = 0;
     }
 
     negamax(board,depth, alpha, beta, color){
         let speelveld = board.board;
         let bestScore = undefined;
+        let move = [];
         if(depth === 0) {
             if(color)
-                return this.evaluation.Evaluate(board);
+                return [this.evaluation.Evaluate(board), null];
             else
-                return -this.evaluation.Evaluate(board);
+                return [-this.evaluation.Evaluate(board), null];
         }
         for(let y = 0; y < 8; y++){
             for(let x = 0; x < 8; x++){
@@ -71,12 +69,14 @@ export class Bot{
                         let fakePiece = cloneBoard.board[piece.pos.y][piece.pos.x];
                         cloneBoard.move(fakePiece, cord);
                         if (!cloneBoard.legalchecker.isChecked(piece.kleur)) {
-                            let score = -this.negamax(cloneBoard, depth-1, -beta, -alpha, !color);
+                            let [score, array] = this.negamax(cloneBoard, depth-1, -beta, -alpha, !color);
+                            score *= -1;
                             if(score >= beta){
-                                return score;
+                                return [score, [x, y, cord]];
                             }
                             if(bestScore === undefined || score > bestScore){
                                 bestScore = score;
+                                move = [x, y, cord];
                                 if(score > alpha){
                                     alpha = score;
                                 }
@@ -88,34 +88,12 @@ export class Bot{
         }
         if(bestScore === undefined){
             if(color)
-                return this.evaluation.Evaluate(board);
+                return [this.evaluation.Evaluate(board), null];
             else
-                return -this.evaluation.Evaluate(board);
+                return [-this.evaluation.Evaluate(board), null];
         }
-        return bestScore;
+        return [bestScore, move];
     }
-
-    // if(bestScore === undefined)
-    // return this.evaluation.Evaluate(board, color);
-
-//     let val = this.minimax(cloneBoard, depth - 1, alpha, beta, !color);
-//     if(color){
-//         if (bestScore === undefined || val > bestScore)
-//             bestScore = val;
-//         if (alpha < val)
-//             alpha = val;
-//         if (beta <= alpha)
-//             return bestScore;
-//     }
-//     else{
-//     if (bestScore === undefined || val < bestScore)
-//     bestScore = val;
-//     if (beta > val)
-//     beta = val;
-//     if (beta <= alpha)
-//     return bestScore;
-// }
-
     /*
     undoMove(piece,oldcord,movedstatus,takenpiece,Board){
             let cordtaken=piece.pos;
@@ -137,11 +115,14 @@ export class Bot{
             }
     }
     */
+    nextMove(board){
+        let [val, array] = this.negamax(board, this.depth, -20000, 20000, this.color);
+        let cord = new Coordinate(array[0], array[1]);
+        return [cord, array[2]];
+    }
 
     minimax(board, depth, alpha, beta, color){
         let speelveld = board.board;
-        // this.counter++;
-        // console.log(this.counter);
         if(depth === 0){
             return this.evaluation.Evaluate(board, color);
         }
@@ -166,13 +147,10 @@ export class Bot{
                                     return maxEval;
                                 }
                             }
-
-
                         }
                     }
                 }
             }
-            // console.log("maxEval: " + maxEval);
             if(maxEval === undefined)
                 return this.evaluation.Evaluate(board, color);
             return maxEval;
@@ -184,20 +162,17 @@ export class Bot{
                     let piece = speelveld[y][x];
                     if(piece !== 0 && piece.kleur === color){
                         let posMoves = piece.possibleMoves(board);
-
                         for(let cord of posMoves){
                             let cloneBoard = board.clone(false);
                             let fakePiece = cloneBoard.board[piece.pos.y][piece.pos.x];
                             cloneBoard.move(fakePiece, cord);
                             if (!cloneBoard.legalchecker.isChecked(piece.kleur)) {
                                 let val = this.minimax(cloneBoard, depth - 1, alpha, beta, !color);
-
                                 if (minEval === undefined || val < minEval)
                                     minEval = val;
                                 if (beta > val)
                                     beta = val;
                                 if (beta <= alpha) {
-
                                     return minEval;
                                 }
                             }
@@ -206,50 +181,9 @@ export class Bot{
                     }
                 }
             }
-            // console.log("minEval: " + minEval);
             if(minEval === undefined)
                 return this.evaluation.Evaluate(board, color);
             return minEval;
         }
-    }
-
-    nextMove(board){
-            let speelveld = board.board;
-            let array;
-            let mainEval;
-            for (let y = 0; y < 8; y++) {
-                for (let x = 0; x < 8; x++) {
-                    let piece = speelveld[y][x];
-                    if (piece !== 0 && piece.kleur === this.color) {
-                        let posMoves = piece.possibleMoves(board);
-                        for (let cord of posMoves) {
-                            let cloneBoard = board.clone(false);
-                            let fakePiece = cloneBoard.board[piece.pos.y][piece.pos.x];
-                            cloneBoard.move(fakePiece, cord);
-                            if (!cloneBoard.legalchecker.isChecked(piece.kleur)) {
-                                // OUDE VERSIE
-                                // let val = this.minimax(cloneBoard, this.depth, -20000, 20000, !this.color);
-                                // let val = this.negamax(cloneBoard, this.depth, -20000, 20000, !this.color);
-                                // if (this.color && (subEval === undefined || subEval < val)) {
-                                //     subEval = val;
-                                //     array2 = [piece, cord];
-                                // } else if (!this.color && (subEval === undefined || subEval > val)) {
-                                //     subEval = val;
-                                //     array2 = [piece, cord];
-
-                                // NIEUWE VERSIE
-                                let val = this.negamax(cloneBoard, this.depth-1, -20000, 20000, !this.color);
-                                // niet meer nodig om te checken
-                                if ((mainEval === undefined || mainEval > val)) {
-                                    mainEval = val;
-                                    array = [piece.pos, cord];
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            //console.log(mainEval, this.color, array);
-            return array;
     }
 }

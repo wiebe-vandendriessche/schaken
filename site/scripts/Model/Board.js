@@ -5,7 +5,7 @@ import {Knight} from "./Pieces/Knight.js";
 import {Pawn} from "./Pieces/Pawn.js";
 import {Queen} from "./Pieces/Queen.js";
 import {Rook} from "./Pieces/Rook.js";
-import {Coordinate} from "../View/Coordinate.js";
+import {Coordinate} from "./Coordinate.js";
 import {LegalChecker} from "./LegalChecker.js";
 import {FenConvertor} from "./FenConvertor.js";
 

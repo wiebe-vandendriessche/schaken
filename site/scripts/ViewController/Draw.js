@@ -43,11 +43,11 @@ export class Draw{
         }
     }
 
-    drawPieces(list_piece){
+    drawPieces(listPieces){
         for (let i = 0; i < 8; i++) {
             for (let j = 0; j < 8; j++) {
-                if(list_piece[i][j]!==0){//checken of het vak niet leeg is want dan tekenen van een piece
-                    let piece= list_piece[i][j];
+                if(listPieces[i][j]!==0){//checken of het vak niet leeg is want dan tekenen van een piece
+                    let piece= listPieces[i][j];
                     let img=piece.image;
                     img.onload= () => {
                         this.ctx.drawImage(img,this.squareSize*j+this.offsetPiece,this.squareSize*i+this.offsetPiece,this.squareSize-2*this.offsetPiece,this.squareSize-2*this.offsetPiece);

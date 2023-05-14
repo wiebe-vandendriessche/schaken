@@ -1,5 +1,5 @@
 import {APiece} from "./APiece.js";
-import {Coordinate} from "../../View/Coordinate.js";
+import {Coordinate} from "../Coordinate.js";
 import {Bisshop} from "./Bisshop.js"
 import {Rook} from "./Rook.js"
 import {Knight} from "./Knight.js";

@@ -1,4 +1,4 @@
-import {Coordinate} from "../../View/Coordinate.js";
+import {Coordinate} from "../Coordinate.js";
 
 export {APiece}
 /**

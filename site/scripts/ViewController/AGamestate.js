@@ -1,8 +1,10 @@
 import {Board} from "../Model/Board.js";
-import {Coordinate} from "../View/Coordinate.js";
+import {Coordinate} from "../Model/Coordinate.js";
 
 import {MoveCacher} from "./MoveCacher.js";
+
 import {popup_end} from "../View/Show.js";
+
 import {Draw} from "./Draw.js";
 
 //ik weet niet zeker of dit mag en of dit de mooiste oplossing is
@@ -19,7 +21,7 @@ export class AGamestate {
 
         this.board= new Board(true);
         this.clicked=false;
-        this.clicked_piece=0;
+        this.clickedPiece=0;
 
         AGamestate.PlayedMoves.setStart(new Board(true));
         this.playMove=()=>{};//aan en uitzetten van play
@@ -46,51 +48,27 @@ export class AGamestate {
             this.playMoveType(color,cord);
 
             this.clicked=false;
-            this.clicked_piece=0;
+            this.clickedPiece=0;
 
         }else{
             if(piece_clicked_now!==0 && piece_clicked_now.kleur===color){
                 this.draw.drawPossible(this.board.possibleMoves(cord));
-                this.clicked_piece=piece_clicked_now
+                this.clickedPiece=piece_clicked_now
                 this.clicked=true;
             }
         }
     }
 
 
-    undoMove(){
-        let undoAantal=1;
-        if(this.botAdversairy){
-            undoAantal=2;
-        }
-        //checken voor de loop voor onnodige iterates tegen te gaan
-        //checken na de loop voor als je twee keer terug wil maar maar een keer terug kan;
-        if(AGamestate.PlayedMoves.moves!==""){
-            for(let i=0;i<undoAantal;i++){
-                if(AGamestate.PlayedMoves.moves!==""){
-                    this.ReturnToPreviousBoard();
-                    this.clicked_piece=0;
-                    this.clicked=false;
-                    this.updatePlayedMoves(AGamestate.PlayedMoves.GetMoves());
-
-                }
-            }
-            this.draw.drawGameboard(this.board);
-        }
-        //console.log(GameStatePlay.PlayedMoves.GetMoves());
-    }
+    undoMove(){ }
 
     restart(popup){
-        if (this.bot!==undefined){
-            this.bot.terminate();
-            this.bot=undefined;
-        }
         this.board=new Board(true);
         AGamestate.PlayedMoves.reset();
         this.clicked=false;
         this.draw.drawGameboard(this.board);
         this.updatePlayedMoves("");
-        AGamestate.PlayedMoves.alleBoards.push(new Board(true));
+        AGamestate.PlayedMoves.allBoards.push(new Board(true));
         this.playMove=(event)=>{};
         this.openPopup(popup)
     }

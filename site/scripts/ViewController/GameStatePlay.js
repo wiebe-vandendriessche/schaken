@@ -134,7 +134,7 @@ export class GameStatePlay extends AGamestate{
     setEndPopupText(color,status,popup){
         let text;
         if(status==="checkmate"){
-            let text_color=color?"Withe":"Black";
+            let text_color=color?"White":"Black";
             text=`${text_color} won by ${status}`;
         }else if(status==="stalemate"){//else if gebruikt voor andere eindes zoals 50 zetten zonder capture en 3 zelfde posities
             text=`draw by ${status}`
@@ -159,7 +159,9 @@ export class GameStatePlay extends AGamestate{
             }
             this.playMove=()=>{};
             this.openEndGame(!this.bot.color);
-            this.bot.postMessage(JSON.stringify(data));
+            if(this.bot!==undefined) {
+                this.bot.postMessage(JSON.stringify(data));
+            }
             // even eventlistener van UndoMove en PlayMove uitzetten
             this.undo=()=>{}
         }else{

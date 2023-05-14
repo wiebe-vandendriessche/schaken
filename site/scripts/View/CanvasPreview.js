@@ -1,4 +1,4 @@
-import {GameStatePlay} from "./GameStatePlay.js";
+import {GameStatePlay} from "../ViewController/GameStatePlay.js";
 
 let CanvasPreview = document.getElementById("canvas-preview");
 

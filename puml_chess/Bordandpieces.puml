@@ -4,23 +4,28 @@ class Board {
     +board:Apiece[][]
     -amountOfMoves:int
     +Board(alreadySetup:bool)
-    -setupPieces():void
-    +moveWithChecked(piece:Apiece,cord:Coordinate)
-    +move(piece:Apiece,cord:Coordinate,posMoves:Coordinates[]):bool
+    -setupPieces(FEN:string):void
     +possibleMoves(cord:Coordinate):Coordinate[]
+    +getPieces():Apiece[][]
+    +moveWithCheck(piece:Apiece,cord:Coordinate)
+    +move(piece:Apiece,cord:Coordinate):bool
     +colorToMove():bool
-    +clone():Board
+    +clone(imageOnLoad:bool):Board
     +isEnd(color:bool):string
 }
 abstract class Apiece {
     +value:int
     +pos:Coordinate
+    -type:string
     +color:bool
-    +image:string 
-    +Apiece(pos:Coordinate,value:int,color:bool,img:string)
+    +image:Image
+    +Apiece(pos:Coordinate,value:int,color:bool,img:string,imgOnLoad:bool)
+    +getType():string
+    +move(cord:Coordinate):void
+    #pushMoves(Coordinate[],Coordinate[],Apiece[][]):void
     +possibleMoves(board:Board) {abstract}
-    +move(cord:Coordinate) {abstract}
     +clone():Apiece {abstract}
+    
 
 }
 
@@ -28,9 +33,9 @@ abstract class Apiece {
 
 class King{
     +King(pos:Coordinate,kleur:bool)
-    -hasMoved:bool
-    
-
+    +moved:bool
+    +move(cord:Coordinate):void
+    +attackMoves(bord):Coordinate[]
 }
 class Queen{
     +Queen(pos:Coordinate,kleur:bool)
@@ -42,8 +47,9 @@ class Bishop{
     +Bishop(pos:Coordinate,kleur:bool)
 }
 class Rook{
-    -hasMoved:bool
+    +moved:bool
     +Rook(pos:Coordinate,kleur:bool)
+    +move(cord:Coordinate):void
 }
 class Pawn{
     -end:int
@@ -51,22 +57,20 @@ class Pawn{
     +Pawn(pos:Coordinate,kleur:bool)
 }
 
+class FenConvertor{
+    +setupPieces(board:Board,FEN):void{static}
+    +boardToFen(board:Board):string{static}
+    +createPiece(letter:string,x:number,y:number):Apiece{static}
 
-class Bot{
-    -color:bool
-    -depth:int
-    + Bot(color:bool,depth:int)
-    -Eval(board:Board):double
-    -minMaxalgo(board:Board, depth:int,color:bool):double
-    +NextMove():Coordinate[]
 }
 
 
+
 class Coordinate{
-    +x:double
-    +y:double
+    + x,y:double
     +Coordinate(x:double,y:double)
-    +zetOm():string
+    +convertToChessCords():string
+    +changeToCord(cord:string):Coordinate {static}
 }
 
 class LegalChecker{
@@ -77,11 +81,11 @@ class LegalChecker{
     -possibleMoves:Coordinate[]
     +LegalChecker(board:Board)
     - updateAttackMap(color:bool):void
+    +castlingPossible(color:bool):bool
     + isChecked(color:bool): bool
     + possibleMoves(piece,isCached):Coordinate[]
     + isEnd(color):int
-    
-    + clone(Boardvirtual):LegalChecker
+    + clone(Board):LegalChecker
 }
 note right : Seperation of concerns: \nchecking legal moves in \nLegalChecker instead of in Board
 
@@ -96,11 +100,9 @@ Board o-- Apiece
 
 Apiece -->Coordinate:has 
 Board ..> Coordinate:uses
-Bot .right.>Board
-Bot ..> Coordinate:uses
+
 Board<-right->LegalChecker:has
 LegalChecker..>Apiece:uses
-Bot..>Apiece:uses
-
+Board <.left.> FenConvertor:uses
+FenConvertor..>Apiece
 @enduml
-

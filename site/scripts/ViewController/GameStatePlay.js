@@ -1,8 +1,8 @@
-import {Board} from "./Model/Board.js";
-import {Coordinate} from "./Coordinate.js";
+import {Board} from "../Model/Board.js";
+import {Coordinate} from "../View/Coordinate.js";
 
 import {MoveCacher} from "./MoveCacher.js";
-import {popup_end} from "./Show.js";
+import {popup_end} from "../View/Show.js";
 import {Draw} from "./Draw.js";
 import {AGamestate} from "./AGamestate.js";
 
@@ -25,20 +25,21 @@ export class GameStatePlay extends AGamestate{
         if(this.botAdversairy){
             undoAantal=2;
         }
-        //checken voor de loop voor onnodige iterates tegen te gaan
-        //checken na de loop voor als je twee keer terug wil maar maar een keer terug kan;
-        if(GameStatePlay.PlayedMoves.moves!==""){
-            for(let i=0;i<undoAantal;i++){
-                if(GameStatePlay.PlayedMoves.moves!==""){
-                    this.ReturnToPreviousBoard();
-                    this.clicked_piece=0;
-                    this.clicked=false;
-                    this.updatePlayedMoves(GameStatePlay.PlayedMoves.GetMoves());
+            //checken voor de loop voor onnodige iterates tegen te gaan
+            //checken na de loop voor als je twee keer terug wil maar maar een keer terug kan;
+            if (GameStatePlay.PlayedMoves.moves !== "") {
+                for (let i = 0; i < undoAantal; i++) {
+                    if (GameStatePlay.PlayedMoves.moves !== "") {
+                        this.ReturnToPreviousBoard();
+                        this.clicked_piece = 0;
+                        this.clicked = false;
+                        this.updatePlayedMoves(GameStatePlay.PlayedMoves.GetMoves());
 
+                    }
                 }
+                this.draw.drawGameboard(this.board);
             }
-            this.draw.drawGameboard(this.board);
-        }
+
         //console.log(GameStatePlay.PlayedMoves.GetMoves());
     }
 
@@ -104,11 +105,17 @@ export class GameStatePlay extends AGamestate{
     closePopup(popup,popupDifficulty,botDiff){
         let difficulty=parseInt(botDiff.value);
         this.botAdversairy= difficulty!==0;
-        console.log("1")
+        let undoknop=document.getElementById("undo_move")
         if(!this.botAdversairy){
+            //wel undoknop hier
+            undoknop.disable=false
+            undoknop.hidden=false
             this.playMove=(event)=>{this.play(event)};
             this.playMoveType=(color, cord)=>{this.playHumanInPlay(color,cord)};
         }else{
+            //geen undomove bij bot (nog niet)
+            undoknop.disable=true
+            undoknop.hidden=true
             this.openPopup(popupDifficulty)
         }
         this.close(popup);

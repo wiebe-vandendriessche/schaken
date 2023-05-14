@@ -1,5 +1,5 @@
-import {GameStatePlay} from "./GameStatePlay.js";
-import {PuzzelGameState} from "./PuzzelGameState.js";
+import {GameStatePlay} from "../ViewController/GameStatePlay.js";
+import {PuzzelGameState} from "../ViewController/PuzzelGameState.js";
 
 
 let canvas = document.getElementById("canvas");

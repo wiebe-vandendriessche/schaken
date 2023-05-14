@@ -1,3 +1,5 @@
+import {Coordinate} from "../../View/Coordinate.js";
+
 export {APiece}
 /**
  * Abstract Class APIECE.
@@ -18,10 +20,12 @@ class APiece {
 
         }
 
-
+        /* te trage methode voor in algoritme bij cloning;
         if (this.constructor == APiece) {
             throw new Error("Abstract classes can't be instantiated.");
         }
+
+         */
     }
 
     clone(imageOnLoad) {
@@ -39,5 +43,32 @@ class APiece {
         this.pos = cord;
     }
 
+    pushMoves(possiblemoves,moves,veld){
+        for (let i = 0; i < moves.length; i++) {
+            let x = this.pos.x;
+            let y = this.pos.y;
+            let blocked = false;
+            while (!blocked) { //zolang
+                x += moves[i].x;
+                y += moves[i].y;
+                //blijft het binnen het bord?
+                if (x === -1 || y === -1 || y === 8 || x == 8) {
+                    blocked = true;
+                } else {
+                    let move = new Coordinate(x, y)
+                    if (veld[y][x] === 0) { //is het vak leeg
+                        possiblemoves.push(move);
+                    } else {
+                        let apiece = veld[y][x];
+                        // staat er een vijand
+                        if (apiece.kleur !== this.kleur) {
+                            possiblemoves.push(move);
+                        }
+                        blocked = true;
+                    }
+                }
+            }
+        }
+    }
 
 }

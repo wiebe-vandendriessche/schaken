@@ -1,5 +1,5 @@
 import {APiece} from "./APiece.js";
-import {Coordinate} from "../../Coordinate.js";
+import {Coordinate} from "../../View/Coordinate.js";
 import {Bisshop} from "./Bisshop.js"
 import {Rook} from "./Rook.js"
 import {Knight} from "./Knight.js";
@@ -57,11 +57,12 @@ class King extends APiece{
 
 
     move(cord) {
-        this.pos = cord;
+        super.move(cord);
         this.moved=true;
     }
     clone(imageOnLoad) {
-        let king=new King(new Coordinate(this.pos.x,this.pos.y),this.kleur,imageOnLoad);
+        let king=new King(new Coordinate(this.pos.x,this.pos.y),
+                                            this.kleur,imageOnLoad);
         king.moved=this.moved;
         return king;
     }

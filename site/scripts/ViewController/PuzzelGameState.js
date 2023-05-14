@@ -1,7 +1,7 @@
 import {GameStatePlay} from "./GameStatePlay.js";
-import {Coordinate} from "./Coordinate.js";
-import {popup_end} from "./Show.js";
-import {FenConvertor} from "./FenConvertor.js";
+import {Coordinate} from "../View/Coordinate.js";
+import {popup_end} from "../View/Show.js";
+import {FenConvertor} from "../Model/FenConvertor.js";
 import {Plot} from "./PlotElo.js";
 import {AGamestate} from "./AGamestate.js";
 
@@ -90,7 +90,7 @@ export class PuzzelGameState extends GameStatePlay{
         this.draw.drawGameboard(this.board);
     }
     genuineClick(piece,cord){
-        if (this.board.possibleMovesPiece(piece).some(cordc=>(cordc.x===cord.x && cordc.y===cord.y))){
+        if (this.board.possibleMoves(piece.pos).some(cordc=>(cordc.x===cord.x && cordc.y===cord.y))){
             return true;
         }
         return false;
@@ -120,7 +120,7 @@ export class PuzzelGameState extends GameStatePlay{
                 ratingelement.textContent=`Moeilijkheid puzzel : `;
                 let rating=parseInt(localStorage.getItem("rating"));
                 this.possibleScore=Math.max(Math.round(this.possibleScore),-20);
-                document.getElementById("elodiv").textContent=` Jouw Score:\n${rating} ${this.possibleScore}`;
+                document.getElementById("elodiv").textContent=` Jouw Score:\n${rating} ${this.possibleScore>=0?"+":"-"} ${Math.abs(this.possibleScore)}`;
                 localStorage.setItem("rating",""+(rating+this.possibleScore));
                 this.updateRating();
                 this.openEndGame(true);

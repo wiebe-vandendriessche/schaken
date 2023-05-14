@@ -1,10 +1,10 @@
-import {Rook} from "./Model/Pieces/Rook.js";
-import {Coordinate} from "./Coordinate.js";
-import {Knight} from "./Model/Pieces/Knight.js";
-import {Pawn} from "./Model/Pieces/Pawn.js";
-import {Bisshop} from "./Model/Pieces/Bisshop.js";
-import {Queen} from "./Model/Pieces/Queen.js";
-import {King} from "./Model/Pieces/King.js";
+import {Rook} from "./Pieces/Rook.js";
+import {Coordinate} from "../View/Coordinate.js";
+import {Knight} from "./Pieces/Knight.js";
+import {Pawn} from "./Pieces/Pawn.js";
+import {Bisshop} from "./Pieces/Bisshop.js";
+import {Queen} from "./Pieces/Queen.js";
+import {King} from "./Pieces/King.js";
 
 export class FenConvertor{
     static setupPieces(board,FEN){//krijgt een string van de vorm rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1 zie https://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation voor meer uitleg over FEN

@@ -1,6 +1,6 @@
 import {APiece} from "./APiece.js";
-import {Coordinate} from "../../Coordinate.js";
-import {pushMoves} from "./Rook.js";
+import {Coordinate} from "../Coordinate.js";
+
 export {Queen}
 class Queen extends APiece{
 
@@ -9,13 +9,15 @@ class Queen extends APiece{
     }
 
 
-    possibleMoves(bord) {
-        let veld=bord.getPieces(); // 2D-array van 64 blokjes met alle pieces erop en nullen waar niks staat
+    possibleMoves(bord) { //Koningin
+        let veld=bord.getPieces(); // 2D-array met alle pieces/nullen
         let possiblemoves=[]; // container voor alle speelbare moves
-        let moves=[new Coordinate(1,-1), new Coordinate(1,1), new Coordinate(-1,1), new Coordinate(-1,-1)]; // moves van de bisschop
-        pushMoves(possiblemoves,moves,this,veld); // imported function
-        moves=[new Coordinate(0,1), new Coordinate(0,-1), new Coordinate(1,0), new Coordinate(-1,0)];// mmoves van de rook
-        pushMoves(possiblemoves,moves,this,veld);
+        // richtingen van de loper+Toren (X en +)
+        let moves=[new Coordinate(1,-1), new Coordinate(1,1),
+            new Coordinate(-1,1), new Coordinate(-1,-1),
+            new Coordinate(0,1), new Coordinate(0,-1),
+            new Coordinate(1,0), new Coordinate(-1,0)];
+        this.pushMoves(possiblemoves,moves,veld);
         return possiblemoves;
     }
 

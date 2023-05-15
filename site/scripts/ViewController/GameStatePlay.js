@@ -1,5 +1,11 @@
-import {Coordinate} from "./Coordinate.js";
-import {popup_end} from "./Show.js";
+
+import {Board} from "../Model/Board.js";
+import {Coordinate} from "../Model/Coordinate.js";
+
+import {MoveCacher} from "./MoveCacher.js";
+import {popup_end} from "../View/Show.js";
+import {Draw} from "./Draw.js";
+
 import {AGamestate} from "./AGamestate.js";
 
 //ik weet niet zeker of dit mag en of dit de mooiste oplossing is
@@ -21,6 +27,7 @@ export class GameStatePlay extends AGamestate{
         if(this.botAdversairy){
             undoAantal=2;
         }
+
         //checken voor de loop voor onnodige iterates tegen te gaan
         //checken na de loop voor als je twee keer terug wil maar maar een keer terug kan;
         if(GameStatePlay.PlayedMoves.moves!==""){
@@ -31,10 +38,12 @@ export class GameStatePlay extends AGamestate{
                     this.clicked=false;
                     this.updatePlayedMoves(GameStatePlay.PlayedMoves.GetMoves());
 
+
+                    }
                 }
+                this.draw.drawGameboard(this.board);
             }
-            this.draw.drawGameboard(this.board);
-        }
+
         //console.log(GameStatePlay.PlayedMoves.GetMoves());
     }
 
@@ -74,7 +83,7 @@ export class GameStatePlay extends AGamestate{
 
         const baseURL = window.location.href.split('/').slice(0, -1).join('/');
         this.bot=new Worker(`${baseURL}/scripts/Model/Bot/Bot.js`, { type: "module" });
-
+        console.log(`${baseURL}/scripts/Model/Bot/Bot.js`);
         let data={//opdracht sturen naar de webworker --> zodat volledig async werkt
             "type":"maakbot",
             "color":col,
@@ -90,13 +99,21 @@ export class GameStatePlay extends AGamestate{
         console.log("this.bord->",this.board)
 
     }
-    closePopup(popup,popupDifficulty,enemy){
-        let type=parseInt(enemy.value)
-        this.botAdversairy= type!==0;
+
+    closePopup(popup,popupDifficulty,botDiff){
+        let difficulty=parseInt(botDiff.value);
+        this.botAdversairy= difficulty!==0;
+        let undoknop=document.getElementById("undo_move")
         if(!this.botAdversairy){
+            //wel undoknop hier
+            undoknop.disable=false
+            undoknop.hidden=false
             this.playMove=(event)=>{this.play(event)};
             this.playMoveType=(color, cord)=>{this.playHumanInPlay(color,cord)};
         }else{
+            //geen undomove bij bot (nog niet)
+            undoknop.disable=true
+            undoknop.hidden=true
             this.openPopup(popupDifficulty)
         }
         this.close(popup);
@@ -118,7 +135,7 @@ export class GameStatePlay extends AGamestate{
     setEndPopupText(color,status,popup){
         let text;
         if(status==="checkmate"){
-            let text_color=color?"Withe":"Black";
+            let text_color=color?"White":"Black";
             text=`${text_color} won by ${status}`;
         }else if(status==="stalemate"){//else if gebruikt voor andere eindes zoals 50 zetten zonder capture en 3 zelfde posities
             text=`draw by ${status}`
@@ -143,7 +160,9 @@ export class GameStatePlay extends AGamestate{
             }
             this.playMove=()=>{};
             this.openEndGame(!this.bot.color);
-            this.bot.postMessage(JSON.stringify(data));
+            if(this.bot!==undefined) {
+                this.bot.postMessage(JSON.stringify(data));
+            }
             // even eventlistener van UndoMove en PlayMove uitzetten
             this.undo=()=>{}
         }else{

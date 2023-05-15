@@ -1,7 +1,9 @@
-import {Board} from "./Model/Board.js";
-import {Coordinate} from "./Coordinate.js";
+import {Board} from "../Model/Board.js";
+import {Coordinate} from "../Model/Coordinate.js";
 
 import {MoveCacher} from "./MoveCacher.js";
+
+import {popup_end} from "../View/Show.js";
 
 import {Draw} from "./Draw.js";
 
@@ -10,7 +12,7 @@ import {Draw} from "./Draw.js";
 export class AGamestate {
     static PlayedMoves=new MoveCacher();
 
-    constructor(canvas,colorA,colorB,colorC,colorD,          sound = new Audio("sounds/standard.mp3")) {
+    constructor(canvas,colorA,colorB,colorC,colorD,sound = new Audio("sounds/standard.mp3")) {
 
         this.draw=new Draw(canvas,colorA,colorB,colorC,colorD,5);
 
@@ -92,7 +94,7 @@ export class AGamestate {
         // this.sound = new Audio("sounds/chess.mp3");
         this.sound.play()
             .then(()=>{
-                //console.log(`playing sound ${this.sound.src}`);
+                console.log(`playing sound ${this.sound.src}`);
             })
             .catch(err => console.error(err));
     }

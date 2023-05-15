@@ -1,5 +1,5 @@
 import {APiece} from "./APiece.js";
-import {Coordinate} from "../../Coordinate.js";
+import {Coordinate} from "../Coordinate.js";
 export  {Pawn};
 class Pawn extends APiece {
 
@@ -7,12 +7,9 @@ class Pawn extends APiece {
         super(pos, kleur ? 100 : -100, kleur, kleur ? "w_pawn" : "b_pawn",imageLoad);
         this.moved = false;
         this.endY=kleur?0:7;
-        this.enpasent=null//array[oldcord,newcord]
+
     }
 
-    setEnpasent(oldcord,newcord){
-        this.enpasent=[oldcord,newcord]
-    }
 
 
     move(cord) {
@@ -21,26 +18,26 @@ class Pawn extends APiece {
     }
 
     possibleMoves(bord) {
-        let veld = bord.getPieces();
+        let veld = bord.getPieces(); //vraag de 2D-array van pieces
         let possiblemoves = [];
         let x = this.pos.x;
-
         let y = this.pos.y;
-        let factor = this.kleur ? -1 : 1
-        //console.log(veld[y]);
-        //console.log(y + 2 * factor);
+
+        let factor = this.kleur ? -1 : 1 // gaat het naar onder of naar boven
 
         if (!this.moved && veld[y + 1 * factor][x] === 0 && veld[y + 2 * factor][x] === 0) {
             possiblemoves.push(new Coordinate(x, y + 1 * factor));
             possiblemoves.push(new Coordinate(x, y + 2 * factor));
-        } else if (veld[y + 1 * factor][x] == 0) {
+        } else if (veld[y + 1 * factor][x] === 0) {
             possiblemoves.push(new Coordinate(x, y + 1 * factor))
         }
+        //!!! is duplicate code mare is veel efficienter dan nu attackmoves() oproepen (4 seconden verschil op diepte 4) !!!!
         if (x !== 7 && veld[y + factor * 1][x + 1] !== 0) {
             if (veld[y + factor * 1][x + 1].kleur !== this.kleur) {
                 possiblemoves.push(new Coordinate(x + 1, y + factor * 1));
             }
         }
+
         if (x !== 0 && veld[y + factor * 1][x - 1] !== 0) {
             if (veld[y + factor * 1][x - 1].kleur !== this.kleur) {
                 possiblemoves.push(new Coordinate(x - 1, y + factor * 1));
@@ -48,19 +45,22 @@ class Pawn extends APiece {
         }
         return possiblemoves;
     }
-    attackMoves(board) {
+    attackMoves(board) { //wordt niet gebruikt in possiblemoves wegens efficientie is wel nodig voor functionaliteit om attackmaps te maken
         let veld = board.getPieces();
         let possiblemoves = [];
         let x = this.pos.x;
         let y = this.pos.y;
         let factor = this.kleur ? -1 : 1;
         let piece;
+        //staat er een vijand diagonaal
+        //rechtsvoor (bij een uiterst linkse pion kan dit niet)
         if (x !== 7 ) {
             piece=veld[y + factor * 1][x + 1];
             if (piece===0||piece.kleur !== this.kleur) {
                 possiblemoves.push(new Coordinate(x + 1, y + factor * 1));
             }
         }
+        //linksvoor (bij een uiterst rechtse pion kan dit niet)
         if (x !== 0 ) {
             piece=veld[y + factor * 1][x - 1];
             if (piece===0||piece.kleur !== this.kleur) {

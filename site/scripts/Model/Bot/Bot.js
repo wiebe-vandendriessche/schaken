@@ -1,6 +1,6 @@
 import {Evaluation} from "./Evaluation.js";
 import {Board} from "../Board.js";
-import {Coordinate} from "../../Coordinate.js";
+import {Coordinate} from "../Coordinate.js";
 
 const board= new Board(true);
 let bot;
@@ -120,7 +120,7 @@ export class Bot{
         let cord = new Coordinate(array[0], array[1]);
         return [cord, array[2]];
     }
-
+/*
     minimax(board, depth, alpha, beta, color){
         let speelveld = board.board;
         if(depth === 0){
@@ -186,4 +186,5 @@ export class Bot{
             return minEval;
         }
     }
+    */
 }

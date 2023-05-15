@@ -11,7 +11,6 @@ document.addEventListener("keydown", function(event) {
         if (schakenCodeIndex === schakenCode.length) {
             let rot = document.getElementById("easterRotate");
             rot.classList.add("easter");
-            alert("Proficiat! Je hebt onze Easteregg gevonden!");
             schakenCodeIndex = 0;
             setTimeout(removeEaster, 1000);
         }

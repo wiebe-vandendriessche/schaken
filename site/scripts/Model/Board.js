@@ -5,15 +5,15 @@ import {Knight} from "./Pieces/Knight.js";
 import {Pawn} from "./Pieces/Pawn.js";
 import {Queen} from "./Pieces/Queen.js";
 import {Rook} from "./Pieces/Rook.js";
-import {Coordinate} from "../Coordinate.js";
+import {Coordinate} from "./Coordinate.js";
 import {LegalChecker} from "./LegalChecker.js";
-import {FenConvertor} from "../FenConvertor.js";
+import {FenConvertor} from "./FenConvertor.js";
 
 
 export {Board};
 
 class Board {
-    amountOfMoves;
+
 
     constructor(setup) {
         this.board = [[], [], [], [], [], [], [], []];
@@ -30,16 +30,14 @@ class Board {
 
     possibleMoves(cord) {
         let piece = this.board[cord.y][cord.x];
+        //eerste klik op de pion bij spelen ->cachen
         return this.legalchecker.possibleMoves(piece,false);
     }
-
-    getPieces() {
-        return this.board;
-    }
-
     moveWithCheck(piece,cord){
+        //tweede klik -> al gecached
         let realmoves=this.legalchecker.possibleMoves(piece,true);
-        if(realmoves.some((move)=>JSON.stringify(move)===JSON.stringify(cord))){
+        if(realmoves.some(move=>move.x===cord.x && move.y===cord.y)){
+            //verzet het schaakstuk in 2D-array en wijzigt zijn coord
             this.move(piece,cord);
             this.amountOfMoves++;
             return true;
@@ -47,26 +45,33 @@ class Board {
             return false;
         }
     }
-    possibleMovesPiece(piece){
-        return this.legalchecker.possibleMoves(piece,false);
+
+    getPieces() {
+        return this.board;
     }
 
 
+
+
     move(piece,cord){
-        this.board[piece.pos.y][piece.pos.x] = 0;
-        this.board[cord.y][cord.x] = piece;
-        if (piece instanceof King && Math.abs(piece.pos.x-cord.x)>1){//if castle
+        this.board[piece.pos.y][piece.pos.x] = 0; //vakje wordt leeg
+        this.board[cord.y][cord.x] = piece; //verplaats naar cord
+        //kijken voor rokeren (altijd een zet die verder gaat dan 1 vakje)
+        if (piece.getType().endsWith("king") && Math.abs(piece.pos.x-cord.x)>1){
+            //rechts
             if (cord.x===6){
                 let rook=this.board[piece.pos.y][7];
                 this.move(rook,new Coordinate(5,piece.pos.y));
             }
+            //links
             if (cord.x===2){
                 let rook=this.board[piece.pos.y][0];
                 this.move(rook,new Coordinate(3,piece.pos.y));
             }
         }
         piece.move(cord);
-        if(piece instanceof Pawn && piece.pos.y===piece.endY){
+        // als het de pion aan einde komt-> promoveren naar queen
+        if(piece.getType().endsWith("pawn") && piece.pos.y===piece.endY){
             this.board[piece.pos.y][piece.pos.x]=new Queen(piece.pos,piece.kleur,true);
         }
     }
@@ -85,7 +90,7 @@ class Board {
                 if (piece!==0){
                     let virtpiece=this.board[y][x].clone(imageOnLoad);
                     newboard.board[y][x]=virtpiece;
-                    if (piece instanceof King){
+                    if (piece.getType().endsWith("king")){
                         if (piece.kleur){
                             newboard.legalchecker.whiteking=virtpiece;
                         }else{

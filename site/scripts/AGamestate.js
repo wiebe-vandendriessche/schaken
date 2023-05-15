@@ -92,7 +92,7 @@ export class AGamestate {
         // this.sound = new Audio("sounds/chess.mp3");
         this.sound.play()
             .then(()=>{
-                console.log(`playing sound ${this.sound.src}`);
+                //console.log(`playing sound ${this.sound.src}`);
             })
             .catch(err => console.error(err));
     }

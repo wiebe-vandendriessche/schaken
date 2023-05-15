@@ -90,10 +90,9 @@ export class GameStatePlay extends AGamestate{
         console.log("this.bord->",this.board)
 
     }
-    closePopup(popup,popupDifficulty,botDiff){
-        let difficulty=parseInt(botDiff.value);
-        this.botAdversairy= difficulty!==0;
-        console.log("1")
+    closePopup(popup,popupDifficulty,enemy){
+        let type=parseInt(enemy.value)
+        this.botAdversairy= type!==0;
         if(!this.botAdversairy){
             this.playMove=(event)=>{this.play(event)};
             this.playMoveType=(color, cord)=>{this.playHumanInPlay(color,cord)};

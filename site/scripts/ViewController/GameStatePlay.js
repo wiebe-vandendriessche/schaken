@@ -17,7 +17,7 @@ export class GameStatePlay extends AGamestate{
     constructor(canvas,colorA,colorB,colorC,colorD,          sound = new Audio("sounds/standard.mp3")) {
         super(canvas,colorA,colorB,colorC,colorD,sound)
         this.botAdversairy=false;
-        this.bodDifficulty=0;
+        this.botDifficulty=0;
         this.bot=undefined;
     }
 
@@ -76,7 +76,7 @@ export class GameStatePlay extends AGamestate{
 
     closePopupDifficulty(popupDifficulty,botDiff,color){
         let col=parseInt(color.value)===0;
-        this.bodDifficulty= botDiff.value;
+        this.botDifficulty= botDiff.value;
         //console.log(col+"     "+this.bodDifficulty);
         this.playMove=this.play;
         this.playMoveType=(color, cord)=>this.playBotInPlay(color,cord);
@@ -87,7 +87,7 @@ export class GameStatePlay extends AGamestate{
         let data={//opdracht sturen naar de webworker --> zodat volledig async werkt
             "type":"maakbot",
             "color":col,
-            "depth":this.bodDifficulty
+            "depth":this.botDifficulty
         }
         data=JSON.stringify(data);
         this.bot.addEventListener("message",(event)=>{ this.botMove(event)})// zodat -> bot zijn move telkens kan terugsturen als wij hem data verzenden

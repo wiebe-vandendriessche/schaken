@@ -1,4 +1,4 @@
-import {Evaluation} from "./Evaluation.js";
+import {Evaluation} from "./Evaluator/Evaluation.js";
 import {Board} from "../Board.js";
 import {Coordinate} from "../Coordinate.js";
 
@@ -14,7 +14,7 @@ self.addEventListener("message",(event)=>{
     //console.log(data.type,data.type==="move")
     if (data.type==="maakbot"){
 
-        bot= new Bot(data.color,+data.depth);
+        bot= new Bot(data.color,+data.depth, new Evaluation());
         if(data.color){
             backdata=move();
 
@@ -43,10 +43,10 @@ function move(){
 }
 
 export class Bot{
-    constructor(color, depth) {
+    constructor(color, depth, evaluation) {
         this.color = color;
         this.depth = depth;
-        this.evaluation = new Evaluation();
+        this.evaluation = evaluation;
     }
 
     negamax(board,depth, alpha, beta, color){
@@ -55,9 +55,9 @@ export class Bot{
         let move = [];
         if(depth === 0) {
             if(color)
-                return [this.evaluation.Evaluate(board), null];
+                return [this.evaluation.evaluate(board), null];
             else
-                return [-this.evaluation.Evaluate(board), null];
+                return [-this.evaluation.evaluate(board), null];
         }
         for(let y = 0; y < 8; y++){
             for(let x = 0; x < 8; x++){
@@ -88,9 +88,9 @@ export class Bot{
         }
         if(bestScore === undefined){
             if(color)
-                return [this.evaluation.Evaluate(board), null];
+                return [this.evaluation.evaluate(board), null];
             else
-                return [-this.evaluation.Evaluate(board), null];
+                return [-this.evaluation.evaluate(board), null];
         }
         return [bestScore, move];
     }
@@ -124,7 +124,7 @@ export class Bot{
     minimax(board, depth, alpha, beta, color){
         let speelveld = board.board;
         if(depth === 0){
-            return this.evaluation.Evaluate(board, color);
+            return this.evaluation.evaluate(board, color);
         }
         if(color){
             let maxEval = undefined;
@@ -152,7 +152,7 @@ export class Bot{
                 }
             }
             if(maxEval === undefined)
-                return this.evaluation.Evaluate(board, color);
+                return this.evaluation.evaluate(board, color);
             return maxEval;
         }
         else{
@@ -182,7 +182,7 @@ export class Bot{
                 }
             }
             if(minEval === undefined)
-                return this.evaluation.Evaluate(board, color);
+                return this.evaluation.evaluate(board, color);
             return minEval;
         }
     }

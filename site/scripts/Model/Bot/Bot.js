@@ -120,7 +120,7 @@ export class Bot{
         let cord = new Coordinate(array[0], array[1]);
         return [cord, array[2]];
     }
-/* 
+/*
     minimax(board, depth, alpha, beta, color){
         let speelveld = board.board;
         if(depth === 0){

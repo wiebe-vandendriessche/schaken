@@ -72,7 +72,7 @@ while(remaining possible moves for white) is (true)
       called for the opposite sided (white)
     end note
     :minEval = min(maxEval, eval);
-    :alpha = min(alpha, eval);
+    :beta = min(alpha, eval);
     if (beta <= alpha) is (true) then
       break
     endif

@@ -1,6 +1,6 @@
 import {Evaluation} from "./Evaluation.js";
 import {Board} from "../Board.js";
-import {Coordinate} from "../../Coordinate.js";
+import {Coordinate} from "../Coordinate.js";
 
 const board= new Board(true);
 let bot;

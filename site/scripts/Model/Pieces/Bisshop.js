@@ -1,7 +1,7 @@
 
 import {APiece} from "./APiece.js";
-import {Coordinate} from "../../Coordinate.js";
-import {pushMoves} from "./Rook.js";
+import {Coordinate} from "../Coordinate.js";
+
 
 export class Bisshop extends APiece{
 
@@ -10,11 +10,13 @@ export class Bisshop extends APiece{
     }
 
 
-    possibleMoves(bord) {
-        let veld=bord.getPieces(); // 2D-array van 64 blokjes met alle pieces erop en nullen waar niks staat
+    possibleMoves(bord) { //loper
+        let veld=bord.getPieces(); // 2D-array met alle pieces/nullen
         let possiblemoves=[]; // container voor alle speelbare moves
-        let moves=[new Coordinate(1,-1), new Coordinate(1,1), new Coordinate(-1,1), new Coordinate(-1,-1)]; // hulparray om forloop te kunnen uitvoeren
-        pushMoves(possiblemoves,moves,this,veld); // imported function
+        // alle beweegingsrichitngen ( bewegen als een kruis X)
+        let moves=[new Coordinate(1,-1), new Coordinate(1,1),
+            new Coordinate(-1,1), new Coordinate(-1,-1)];
+        this.pushMoves(possiblemoves,moves,veld); // functie van Apiece
         return possiblemoves;
     }
 

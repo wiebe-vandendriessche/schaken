@@ -8,66 +8,49 @@ export class LegalChecker{
         this.Board=Board;
         this.whiteking=Board.board[7][4];
         this.blackking=Board.board[0][4];
-        this.possiblemoves=null;
-        this.enpasentcord=null;
+        this.possiblemoves=null; //caching operations
+
         this.attackMapWhite=[[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]];
         this.attackMapBlack=[[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]];
     }
 
-    enpasentPossible(cord,enpasentcord){
-        if(this.enpasentcord!==null && (cord.x+1===this.enpasentcord.x || cord.x-1===this.enpasentcord.x) && cord.y+1===this.enpasentcord.y){
-            return this.enpasentcord;
-        }
-    }
-    addEnpasentSquare(cord){
 
-    }
-    clearEnpassentSquare(){
-
-    }
 
 
     castlingPossible(color){ // king checked zelf al of hij zelf niet gemoved heeft
-
-
         let speelveld=this.Board.getPieces();
-
         let attackmap=this.updateAttackMap(!color);
         let y_axis=color?7:0;// om te weten op welke y as de lege plekken moeten worden gechecked
-        if (attackmap[y_axis][4]>0) {//checked
+        if (attackmap[y_axis][4]>0) {//als koning schaak staat sws niks returnen
             return "";
         }
         let rookleft =speelveld[y_axis][0];
         let rookright=speelveld[y_axis][7];
-
-        let string="";
-        if ((rookleft!==0 && rookleft instanceof Rook )|| (rookright!==0 && rookright instanceof Rook)){
-            if (rookleft!==0 && rookleft instanceof Rook && rookleft.moved===false){
-                let all_empty=true;//al plaatsen leeg
-                for (let i = 1; i < 4; i++) {
-                    if(speelveld[y_axis][i]!==0 || attackmap[y_axis][i]>0 ){
-                        all_empty=false;
-                    }
-                }
-                if (all_empty){
-                   string+="left";
+        let string=""; //
+        if (rookleft!==0 && rookleft.getType().endsWith("rook") && rookleft.moved===false){
+            let all_empty=true;//al plaatsen leeg
+            for (let i = 1; i < 4; i++) {
+                //kijken of geen stukken
+                if(speelveld[y_axis][i]!==0 || attackmap[y_axis][i]>0 ){
+                    all_empty=false;
                 }
             }
-            if (rookright!==undefined && rookright instanceof Rook && rookright.moved===false){
-                let all_empty=true;//al plaatsen leeg
-                for (let i = 5; i < 7; i++) {
-                    if(speelveld[y_axis][i]!==0 || attackmap[y_axis][i]>0 ){
-                        all_empty=false;
-                    }
-                }
-                if (all_empty){
-                    string+="right";
-                }
+            if (all_empty){
+                string+="left";
             }
         }
-        // console.log(string);
+        if (rookright!==0 && rookright.getType().endsWith("rook") && rookright.moved===false){
+            let all_empty=true;//al plaatsen leeg
+            for (let i = 5; i < 7; i++) {
+                if(speelveld[y_axis][i]!==0 || attackmap[y_axis][i]>0 ){
+                    all_empty=false;
+                }
+            }
+            if (all_empty){
+                string+="right";
+            }
+        }
         return string;
-
     }
 
 
@@ -86,7 +69,7 @@ export class LegalChecker{
                 let piece=speelveld[y][x];
                 if (piece!==0 && piece.kleur===color){
                     let posmoves;
-                    if((piece instanceof Pawn)||(piece instanceof King)){
+                    if((piece.getType().endsWith("pawn"))||(piece.getType().endsWith("king"))){
                         posmoves=piece.attackMoves(this.Board);
                     }else{
                         posmoves=piece.possibleMoves(this.Board);
@@ -106,7 +89,6 @@ export class LegalChecker{
         let attackmap=this.updateAttackMap(!color);
         let king= color? this.whiteking: this.blackking;
         if (attackmap[king.pos.y][king.pos.x]!==0){
-
             return true;
         }else{
 
@@ -127,10 +109,8 @@ export class LegalChecker{
                 if (!cloneBoard.legalchecker.isChecked(piece.kleur)){
                     realmoves.push(coord);
                 }
-
             }
             this.possiblemoves=realmoves;
-
             return realmoves;
         }
     }
@@ -141,7 +121,7 @@ export class LegalChecker{
         for (let y = 0; y < 8; y++) {
             for (let x = 0; x < 8; x++) {
                 let piece= speelveld[y][x];
-                if (piece!==0 && ( piece instanceof King)){
+                if (piece!==0 && ( piece.getType().endsWith("king"))){
                     if (piece.kleur===true){
                         lchecker.whiteking=piece;
                     }else{

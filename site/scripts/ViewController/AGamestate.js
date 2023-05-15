@@ -93,9 +93,9 @@ export class AGamestate {
     playSound(){
         // this.sound = new Audio("sounds/chess.mp3");
         this.sound.play()
-            /*.then(()=>{
+            .then(()=>{
                 console.log(`playing sound ${this.sound.src}`);
             })
-            .catch(err => console.error(err));*/
+            .catch(err => console.error(err));
     }
 }

@@ -99,6 +99,7 @@ export class GameStatePlay extends AGamestate{
         console.log("this.bord->",this.board)
 
     }
+
     closePopup(popup,popupDifficulty,botDiff){
         let difficulty=parseInt(botDiff.value);
         this.botAdversairy= difficulty!==0;

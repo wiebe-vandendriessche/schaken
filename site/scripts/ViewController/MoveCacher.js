@@ -15,8 +15,6 @@ class MoveCacher{
         }else if(piece instanceof Knight){
             firstLetter="N"
         }
-
-
         this.allBoards.push(board.clone(true));
         if(amountOfMoves % 2===1){
             let number=Math.ceil(amountOfMoves/2)

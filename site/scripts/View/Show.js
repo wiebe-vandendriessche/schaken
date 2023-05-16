@@ -87,5 +87,5 @@ window.addEventListener("load", () => {
 
 resignbutton.addEventListener("click", () => {
     gameState.openPopup(popup_end);
-    gameState.setEndPopupText(gameState, "resign", popup_end)
+    gameState.setEndPopupText(gameState.board.amountOfMoves%2!==0, "resign", popup_end)
 })

@@ -134,14 +134,13 @@ export class GameStatePlay extends AGamestate{
 
     setEndPopupText(color,status,popup){
         let text;
+        let text_color=color?"Wit":"zwart";
         if(status==="checkmate"){
-            let text_color=color?"White":"Black";
-            text=`${text_color} won by ${status}`;
+            text=`${text_color} is gewonnen door schaakmat`;
         }else if(status==="stalemate"){//else if gebruikt voor andere eindes zoals 50 zetten zonder capture en 3 zelfde posities
-            text=`draw by ${status}`
+            text=`spelen gelijk door pat`
         }else if(status==="resign"){
-            let text_color=!color?"White":"Black";
-            text=`${text_color} won by ${status}ation`
+            text=`${text_color} wint door opgave`
         }
         popup.children[1].textContent=text;
     }

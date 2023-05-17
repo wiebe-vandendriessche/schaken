@@ -16,7 +16,7 @@ export class PuzzelGameState extends GameStatePlay{
 
         this.amountofPuzzels=100;
         this.playedPuzzels=[];
-        this.soundwrong=new Audio("../sounds/wrong.mp3");
+        this.soundwrong=new Audio("sounds/wrong.mp3");
         this.possibleScore=0;
         this.amountOfMistakes=0;
         this.plot=new Plot("Vooruitgang");
@@ -49,12 +49,11 @@ export class PuzzelGameState extends GameStatePlay{
         if (this.playedPuzzels.length>=this.amountofPuzzels){
             this.playedPuzzels=[];// maakt de played puzzels leeg als ze alemaal gespeeld;
         }
-        while(this.playedPuzzels.some(id=>id==index)){
+        while(this.playedPuzzels.some(id=>id===index)){
             index=Math.floor(Math.random()*this.amountofPuzzels);
         }
         this.playedPuzzels.push(index);
         return index;
-
     }
 
     selectFenOfPuzzel(data){
@@ -82,7 +81,7 @@ export class PuzzelGameState extends GameStatePlay{
         }else{
             if (this.genuineClick(this.clickedPiece,cord)) { // kijken of player niet gwn een andere pion aanklikt of misklikt
                 console.log("fout");
-                this.soundwrong.play();
+                this.soundwrong.play().catch(err => console.error(err));
                 this.possibleScore -= 5;
                 this.amountOfMistakes += 1;
             }
@@ -130,7 +129,7 @@ export class PuzzelGameState extends GameStatePlay{
     }
     updateRating(){
         let rating= localStorage.getItem("rating");
-        if (rating==undefined){
+        if (rating===undefined){
             localStorage.setItem("rating","1000");
             rating=1000;
         }else{

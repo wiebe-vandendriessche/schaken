@@ -32,7 +32,7 @@ export class AGamestate {
         this.sound = sound;
 
 
-        if (this.constructor == AGamestate) {
+        if (this.constructor === AGamestate) {
             throw new Error("Abstract classes can't be instantiated.");
         }
     }
@@ -91,11 +91,7 @@ export class AGamestate {
     }
 
     playSound(){
-        // this.sound = new Audio("sounds/chess.mp3");
         this.sound.play()
-            .then(()=>{
-                console.log(`playing sound ${this.sound.src}`);
-            })
             .catch(err => console.error(err));
     }
 }

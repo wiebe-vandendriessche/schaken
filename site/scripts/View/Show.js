@@ -31,11 +31,16 @@ if (localStorage.getItem('color1')) {
 
 
 //default geluid instellen
-let sound = new Audio("sounds/standard.mp3");
+let sound;
 if(localStorage.getItem("sound")){
     let src = localStorage.getItem("sound")
     sound = new Audio(src);
     sound.muted = JSON.parse(localStorage.getItem("muted"));
+}
+else{
+    localStorage.setItem("sound", "sounds/standard.mp3");
+    sound =  new Audio("sounds/standard.mp3");
+    localStorage.setItem("muted", sound.muted);
 }
 
 // juiste gamestate bepalen

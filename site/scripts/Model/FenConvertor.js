@@ -7,11 +7,13 @@ import {Queen} from "./Pieces/Queen.js";
 import {King} from "./Pieces/King.js";
 
 export class FenConvertor{
+
     static setupPieces(board,FEN){//krijgt een string van de vorm rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1 zie https://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation voor meer uitleg over FEN
         let Information=FEN.split(" ");
         let boardFEN=Information[0]
         let y = 0;
         let x = 0;
+        let castlestring=Information[2];
 
         for(let i=0;i<boardFEN.length;i++){
             let letterFen=boardFEN[i];
@@ -19,7 +21,7 @@ export class FenConvertor{
                 x=0;
                 y+=1;
             }else if(isNaN(letterFen)){
-                board.board[y][x]=this.createPiece(letterFen,x,y);
+                board.board[y][x]=this.createPiece(letterFen,x,y,castlestring);
                 x+=1;
             }else {
                 let cijferFen=parseInt(letterFen);
@@ -106,11 +108,15 @@ export class FenConvertor{
         Fen +=`${Math.floor(board.amountOfMoves/2)}`;
         return Fen
     }
-     static createPiece(letter, x, y){
+     static createPiece(letter, x, y, castelstring){
         let color= letter===letter.toUpperCase()
         letter=letter.toUpperCase()
         if (letter==="R"){
-            return new Rook(new Coordinate(x,y),color,true);
+            let rook = new Rook(new Coordinate(x,y),color,true);
+            if(FenConvertor.rookCastle(castelstring,color,x,y)){
+                rook.moved=true;
+            }
+            return rook;
         }else if (letter==="N"){
             return new Knight(new Coordinate(x,y),color,true);
         }else if (letter==="P"){
@@ -130,7 +136,46 @@ export class FenConvertor{
         }else if (letter==="Q"){
             return new Queen(new Coordinate(x,y),color,true);
         }else  {
-            return new King(new Coordinate(x,y),color,true);
+            let king=new King(new Coordinate(x,y),color,true);
+            if(FenConvertor.kingCastle(castelstring,color)){
+                king.moved=true;
+            }
+            return king;
         }
     }
+
+     static kingCastle(castlestring,color){
+         let queenchek="q";
+         let kingcheck="k";
+         if(color){
+             queenchek=queenchek.toUpperCase();
+             kingcheck=kingcheck.toUpperCase();
+         }
+         return !(castlestring.includes(kingcheck)&&castlestring.includes(queenchek));
+
+    }
+
+    static rookCastle(castlestring,color,x,y){
+        let queenchek="q";
+        let kingcheck="k";
+        let ychek=0;
+        if(color){
+            queenchek=queenchek.toUpperCase();
+            kingcheck=kingcheck.toUpperCase();
+            ychek=7;
+        }
+        //effectief chekken van de rook
+        if(y===ychek){
+            if(x===7){
+                return !castlestring.includes(kingcheck);
+            }else if(x===0){
+                return !castlestring.includes(queenchek);
+            }
+        }
+        return false;
+
+    }
+
+
+
 }

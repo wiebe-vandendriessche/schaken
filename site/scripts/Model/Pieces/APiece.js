@@ -52,7 +52,7 @@ class APiece {
                 x += moves[i].x;
                 y += moves[i].y;
                 //blijft het binnen het bord?
-                if (x === -1 || y === -1 || y === 8 || x == 8) {
+                if (x === -1 || y === -1 || y === 8 || x === 8) {
                     blocked = true;
                 } else {
                     let move = new Coordinate(x, y)

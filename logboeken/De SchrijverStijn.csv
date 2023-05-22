@@ -20,6 +20,11 @@ Datum,Start,Einde,Plaats,Omschrijving
 03/05/23,09:30,12:30,Contacturen,Minimax vervangen door Negamax voor minder duplicate code
 08/05/23,20:30,23:15,Thuis,Code lezen + geluid toevoegen + code mergen
 10/05/23,09:30,12:30,Contacturen, Geluid kunnen aan en uitzetten en het geluid kunnen kiezen
-14/05/23,13:00,19:00,Thuis,Aan verslag gewerkt + testen
+14/05/23,13:00,19:00,Thuis,Aan verslag gewerkt +schema's gemaakt + testen
 14/05/23,21:00,22:00,Thuis,strategy pattern implementeren op de evaluatie + dependency injection + testen
 17/05/23,09:30,12:30,Contacturen, andere projecten testen
+18/05/23,10:00,11:00,Thuis,Verdere bugs vinden in de site
+20/05/23,13:00,15:00,Thuis,Aan verslag gewerkt + opzoekwerk gedaan voor het verslag
+21/05/23,18:00,19:00,Thuis,Referenties gemaakt + verslag aanvullen
+22/05/23,14:00,15:00,Thuis,Verslag herlezen en fouten verbeterd + overal referenties verbeteren
+22/05/23,18:30,19:00,Thuis,Verslag herlezen en fouten verbeterd + overal referenties verbeteren

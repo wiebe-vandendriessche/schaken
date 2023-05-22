@@ -55,9 +55,9 @@ class Pawn{
 class Bot{
     -color:bool
     -depth:int
-    + Bot(color:bool,depth:int)
-    -Eval(board:Board):double
-    -minMaxalgo(board:Board, depth:int,color:bool):double
+    -evaluation:IEvaluation
+    +Bot(color:bool,alpha:int,beta:int,depth:int,evaluation:IEvaluation)
+    -negamax(board:Board, depth:int,color:bool):[int,Coordinate[]]
     +NextMove():Coordinate[]
 }
 
@@ -96,11 +96,11 @@ Board o-- Apiece
 
 Apiece -->Coordinate:has 
 Board ..> Coordinate:uses
-Bot .right.>Board
-Bot ..> Coordinate:uses
+' Bot .right.>Board
+' Bot ..> Coordinate:uses
 Board<-right->LegalChecker:has
 LegalChecker..>Apiece:uses
-Bot..>Apiece:uses
+' Bot..>Apiece:uses
 
 @enduml
 

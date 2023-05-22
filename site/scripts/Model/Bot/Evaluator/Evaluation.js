@@ -14,11 +14,9 @@ export class Evaluation extends IEvaluation{
     checkmate(board){
         let val = 0;
         if (board.legalchecker.isChecked(true) && board.isEnd(true) === "checkmate") {
-            // console.log("HONK");
             val += -10000;
         }
         if (board.legalchecker.isChecked(false) && board.isEnd(false) === "checkmate") {
-            // console.log("HOKN");
             val += 10000;
         }
         return val;
@@ -35,9 +33,9 @@ export class Evaluation extends IEvaluation{
                     score += piece.value;
                     if (type.includes("king")) {
                         if (piece.kleur) {
-                            this.whiteking = piece
+                            this.whiteking = piece;
                         } else {
-                            this.blackking = piece
+                            this.blackking = piece;
                         }
                     } else {
                         score += this.tableDictionary.get(type)[y][x];
@@ -73,8 +71,7 @@ export class Evaluation extends IEvaluation{
             [3, 2, 1, 0, 0, 1, 2, 3],
             [4, 3, 2, 1, 1, 2, 3, 4],
             [5, 4, 3, 2, 2, 3, 4, 5],
-            [6, 5, 4, 3, 3, 4, 5, 6]
-        ];
+            [6, 5, 4, 3, 3, 4, 5, 6]];
         this.tableDictionary.set("w_pawn",
             [[0, 0, 0, 0, 0, 0, 0, 0],
             [10, 10, 10, 10, 10, 10, 10, 10],
@@ -104,7 +101,7 @@ export class Evaluation extends IEvaluation{
             [-1, 0, 1, 1, 1, 1, 0, -1],
             [-1, 1, 1, 1, 1, 1, 1, -1],
             [-1, 1, 0, 0, 0, 0, 1, -1],
-            [-2, -1, -1, -1, -1, -1, -1, -2]])
+            [-2, -1, -1, -1, -1, -1, -1, -2]]);
         this.tableDictionary.set("b_bishop", this.tableDictionary.get("w_bishop").slice().reverse().map(row => row.map(value => -1 * value)));
         this.tableDictionary.set("w_rook",
             [[0, 0, 0, 0, 0, 0, 0, 0],

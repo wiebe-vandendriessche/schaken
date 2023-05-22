@@ -1,0 +1,18 @@
+@startuml evaluation
+skinparam ClassAttributeIconSize 0
+
+Interface IEvaluation{
+    + evaluate(board:Board):int
+}
+
+class Evaluation{
+    + Evaluation()
+    + evaluate(board:Board):int
+    - squareTables()
+    - checkmate(board:Board):int
+    - materialCount(board:Board):int
+}
+
+IEvaluation <|.. Evaluation
+
+@enduml

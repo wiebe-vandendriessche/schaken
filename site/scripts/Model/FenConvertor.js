@@ -145,31 +145,31 @@ export class FenConvertor{
     }
 
      static kingCastle(castlestring,color){
-         let queenchek="q";
+         let queencheck="q";
          let kingcheck="k";
          if(color){
-             queenchek=queenchek.toUpperCase();
+             queencheck=queencheck.toUpperCase();
              kingcheck=kingcheck.toUpperCase();
          }
-         return !(castlestring.includes(kingcheck)&&castlestring.includes(queenchek));
+         return !(castlestring.includes(kingcheck)&&castlestring.includes(queencheck));
 
     }
 
     static rookCastle(castlestring,color,x,y){
-        let queenchek="q";
+        let queencheck="q";
         let kingcheck="k";
-        let ychek=0;
+        let ycheck=0;
         if(color){
-            queenchek=queenchek.toUpperCase();
+            queencheck=queencheck.toUpperCase();
             kingcheck=kingcheck.toUpperCase();
-            ychek=7;
+            ycheck=7;
         }
         //effectief chekken van de rook
-        if(y===ychek){
+        if(y===ycheck){
             if(x===7){
                 return !castlestring.includes(kingcheck);
             }else if(x===0){
-                return !castlestring.includes(queenchek);
+                return !castlestring.includes(queencheck);
             }
         }
         return false;

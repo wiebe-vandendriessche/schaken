@@ -14,7 +14,7 @@ export class PuzzelGameState extends GameStatePlay{
         this.currentPuzzel=undefined;
         this.movesPuzzel=undefined;
 
-        this.amountofPuzzels=100;
+        this.amountofPuzzels=79;
         this.playedPuzzels=[];
         this.soundwrong=new Audio("sounds/wrong.mp3");
         this.possibleScore=0;

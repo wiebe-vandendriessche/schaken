@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
+        <style>
+        .unsupported-message {
+            color: red;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 2em;
+            font-size: 1.5em;
+        }
+        </style>
     <meta charset="UTF-8">
     <!--titel-->
     <title>Schaken/Puzzel</title>
@@ -131,6 +140,7 @@
 
 
     <section class="home-section">
+        
         <div class="row">
             <div class="home-content">
                 <i class='bx bx-menu' onclick="SidebarToggle()"></i>
@@ -139,6 +149,9 @@
         </div>
         <div class="row">
             <div class="row title">
+                <div class="unsupported-message">
+            Puzzel functionaliteit wordt niet meer ondersteund.
+        </div>
                 <h1 class="title-color" id="type_gamestate">Puzzels</h1>
             </div>
             <div class="col-8" id="canvas_element">
